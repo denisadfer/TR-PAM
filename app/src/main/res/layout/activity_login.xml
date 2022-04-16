@@ -19,7 +19,7 @@
             android:id="@+id/user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="username or email"
+            android:hint="@string/useroremail"
             android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -36,7 +36,7 @@
             android:id="@+id/pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="password"
+            android:hint="@string/password"
             android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -45,14 +45,16 @@
         android:id="@+id/login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:backgroundTint="@color/primary"
+        android:text="@string/login"
         android:layout_marginTop="15dp"/>
 
     <Button
         android:id="@+id/regis_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:backgroundTint="@color/primary"
+        android:text="@string/register"
         android:layout_marginTop="15dp"/>
 
 

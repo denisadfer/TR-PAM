@@ -19,7 +19,7 @@
             android:id="@+id/fullname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="full name"
+            android:hint="@string/fullname"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -35,7 +35,7 @@
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="username"
+            android:hint="@string/username"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -51,7 +51,7 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -67,7 +67,7 @@
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="phone number"
+            android:hint="@string/phonenumber"
             android:inputType="numberSigned"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -84,7 +84,7 @@
             android:id="@+id/pass1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="password"
+            android:hint="@string/password"
             android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -101,7 +101,7 @@
             android:id="@+id/pass2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="confirm password"
+            android:hint="@string/confirmpass"
             android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -111,7 +111,8 @@
         android:id="@+id/regis_btn1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
+        android:backgroundTint="@color/primary"
+        android:text="@string/register"
         android:layout_marginTop="15dp"/>
 
 

@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     Button btnLogout;
-    TextView viewTes;
+    TextView TxtName;
     private FirebaseUser firebaseUser;
 
     @Override
@@ -22,14 +22,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnLogout = findViewById(R.id.logout_btn);
-        viewTes = findViewById(R.id.texttes);
+        TxtName = findViewById(R.id.textName);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (firebaseUser!= null) {
-            viewTes.setText(firebaseUser.getDisplayName());
+            TxtName.setText("Welcome, "+firebaseUser.getDisplayName());
         } else {
-            viewTes.setText("Data Name is empty");
+            TxtName.setText("Data Name is empty");
         }
 
         btnLogout.setOnClickListener(view -> {

@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TRpam</string>
+    <string name="logout">Logout</string>
+    <string name="fullname">Full name</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="phonenumber">Phone number</string>
+    <string name="password">Password</string>
+    <string name="confirmpass">Confirm password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="useroremail">Username or Email</string>
 </resources>
