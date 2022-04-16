@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "819625958872",
+    "firebase_url": "https://trpam-5bcc4-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "trpam-5bcc4",
     "storage_bucket": "trpam-5bcc4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:819625958872:android:7ecb67a7d3b1cf179ce6ad",
+        "mobilesdk_app_id": "1:819625958872:android:adf2a9b8319421f79ce6ad",
         "android_client_info": {
           "package_name": "com.dnx.trpam"
         }

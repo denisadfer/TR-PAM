@@ -2,6 +2,7 @@ package com.dnx.trpam;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     TextView TxtName;
     private FirebaseUser firebaseUser;
 
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
