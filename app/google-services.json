@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "819625958872",
+    "project_id": "trpam-5bcc4",
+    "storage_bucket": "trpam-5bcc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819625958872:android:7ecb67a7d3b1cf179ce6ad",
+        "android_client_info": {
+          "package_name": "com.dnx.trpam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819625958872-sqt7ddcc6quvkketmcirhc577m60qbqq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFOULtNmK1z86ZVBzKlUj57mgV4KKkD4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819625958872-sqt7ddcc6quvkketmcirhc577m60qbqq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
