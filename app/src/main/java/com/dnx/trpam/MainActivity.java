@@ -1,21 +1,23 @@
 package com.dnx.trpam;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
-    Button btnLogout;
-    TextView TxtName;
-    private FirebaseUser firebaseUser;
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+
 
 
     @SuppressLint("SetTextI18n")
@@ -24,21 +26,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnLogout = findViewById(R.id.logout_btn);
-        TxtName = findViewById(R.id.textName);
+        // kita set default nya Home Fragment
+        loadFragment(new HomeFragment());
+        // inisialisasi BottomNavigaionView
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bn_main);
+        // beri listener pada saat item/menu bottomnavigation terpilih
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
 
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (firebaseUser!= null) {
-            TxtName.setText("Welcome, "+firebaseUser.getDisplayName());
-        } else {
-            TxtName.setText("Data Name is empty");
+    }
+
+    // method untuk load fragment yang sesuai
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fl_container, fragment)
+                    .commit();
+            return true;
         }
+        return false;
+    }
 
-        btnLogout.setOnClickListener(view -> {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-            finish();
-        });
+    // method listener untuk logika pemilihan
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        Fragment fragment = null;
+        switch (item.getItemId()){
+            case R.id.home_menu:
+                fragment = new HomeFragment();
+                break;
+            case R.id.search_menu:
+                fragment = new SearchFragment();
+                break;
+            case R.id.nft_menu:
+                fragment = new MynftFragment();
+                break;
+            case R.id.profile_menu:
+                fragment = new ProfileFragment();
+                break;
+        }
+        return loadFragment(fragment);
     }
 }
