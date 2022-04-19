@@ -17,8 +17,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText editName, editUser, editPass, editPass2, editEmail, editPhone;
@@ -51,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("DataUser");
 
 
-        mFirebaseInstance.getReference("app_title").setValue("TR PAM1");
+        mFirebaseInstance.getReference("app_title").setValue("TR PAM");
 
         btnRegis.setOnClickListener(view -> {
             String vName = editName.getText().toString();
@@ -99,40 +102,55 @@ public class RegisterActivity extends AppCompatActivity {
 
             if (vPass.equals(vPass2)){
                 progressDialog.show();
-                mAuth.createUserWithEmailAndPassword(vEmail, vPass)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-                                    FirebaseUser user = task.getResult().getUser();
-                                    if (user!=null){
-                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                                .setDisplayName(vName).build();
+                mFirebaseDatabase.child("DataUser").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.child(vUser).exists()){
+                            Toast.makeText(getApplicationContext(), "Username's already exist", Toast.LENGTH_SHORT).show();
+                        }else{
+                            mAuth.createUserWithEmailAndPassword(vEmail, vPass)
+                                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()){
+                                                FirebaseUser user = task.getResult().getUser();
+                                                if (user!=null){
+                                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                            .setDisplayName(vUser).build();
 
-                                        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                User inputUser = new User(vName, vEmail, vPhone, vUser);
+                                                    user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            User inputUser = new User(vName, vEmail, vPhone, vUser);
 
-                                                mFirebaseDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(inputUser);
-                                                reload();
+                                                            mFirebaseDatabase.child(vUser).setValue(inputUser);
+                                                            reload();
 
 
+                                                        }
+
+                                                    });
+
+                                                }else {
+                                                    Toast.makeText(getApplicationContext(), "Register Error",
+                                                            Toast.LENGTH_SHORT).show();
+                                                }
+                                            }else {
+                                                Toast.makeText(getApplicationContext(), task.getException().getMessage(),
+                                                        Toast.LENGTH_SHORT).show();
                                             }
+                                            progressDialog.dismiss();
+                                        }
+                                    });
+                        }
+                    }
 
-                                        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                                    }else {
-                                        Toast.makeText(getApplicationContext(), "Register Error",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                }else {
-                                    Toast.makeText(getApplicationContext(), task.getException().getMessage(),
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            progressDialog.dismiss();
-                            }
-                        });
+                    }
+                });
+
             }else {
                 Toast.makeText(this, "Your password doesn't matched", Toast.LENGTH_SHORT).show();
             }

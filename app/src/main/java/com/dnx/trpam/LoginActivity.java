@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
@@ -64,11 +66,17 @@ public class LoginActivity extends AppCompatActivity {
                     }else {
                         Toast.makeText(getApplicationContext(), "Login failed",
                                 Toast.LENGTH_SHORT).show();
+
                     }
 
                 }else{
-                    Toast.makeText(getApplicationContext(), "Login failed",
-                            Toast.LENGTH_SHORT).show();
+                    if (task.getException() instanceof FirebaseAuthInvalidUserException){
+                        editUser.setError("Email not registered");
+                        editUser.requestFocus();
+                    } else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException){
+                        editPass.setError("Password is incorrect");
+                        editPass.requestFocus();
+                    }
                 }
 
             }
