@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(RegisterActivity.this);
         progressDialog.setTitle("Loading");
-        progressDialog.setMessage("Waiting for Log in");
+        progressDialog.setMessage("Waiting for Login");
         progressDialog.setCancelable(false);
 
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             if (vPass.equals(vPass2)){
                 progressDialog.show();
-                mFirebaseDatabase.child("DataUser").addValueEventListener(new ValueEventListener() {
+                mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.child(vUser).exists()){
@@ -123,14 +123,10 @@ public class RegisterActivity extends AppCompatActivity {
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             User inputUser = new User(vName, vEmail, vPhone, vUser);
 
-                                                            mFirebaseDatabase.child(vUser).setValue(inputUser);
+                                                            mFirebaseDatabase.child("DataUser").child(vUser).setValue(inputUser);
                                                             reload();
-
-
                                                         }
-
                                                     });
-
                                                 }else {
                                                     Toast.makeText(getApplicationContext(), "Register Error",
                                                             Toast.LENGTH_SHORT).show();
@@ -161,8 +157,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void reload(){
         startActivity(new Intent(getApplicationContext(),MainActivity.class));
-
-
     }
 
     @Override

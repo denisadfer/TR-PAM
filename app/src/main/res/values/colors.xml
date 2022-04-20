@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#044CD0</color>
     <color name="danger">#D72503</color>
+    <color name="success">#28A745</color>
+    <color name="edit">#3D90BC</color>
 </resources>

@@ -37,11 +37,18 @@
             android:text="@string/fullname"/>
 
         <Button
+            android:id="@+id/edit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/edit"
+            android:layout_marginTop="50dp"
+            android:text="@string/edit" />
+
+        <Button
             android:id="@+id/logout_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/danger"
-            android:layout_marginTop="50dp"
             android:text="@string/logout" />
     </LinearLayout>
 
