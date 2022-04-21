@@ -30,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mFirebaseDatabase;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +52,11 @@ public class RegisterActivity extends AppCompatActivity {
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
 
 
-        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference("DataUser");
+        DatabaseReference mFirebaseDatabase = mFirebaseInstance.getReference();
 
 
         mFirebaseInstance.getReference("app_title").setValue("TR PAM");
+
 
         btnRegis.setOnClickListener(view -> {
             String vName = editName.getText().toString();
@@ -101,13 +103,12 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
             if (vPass.equals(vPass2)){
-                progressDialog.show();
-                mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
+
+                mFirebaseDatabase.child("DataUser").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.child(vUser).exists()){
-                            Toast.makeText(getApplicationContext(), "Username's already exist", Toast.LENGTH_SHORT).show();
-                        }else{
+                        if (!snapshot.child(vUser).exists()){
+                            progressDialog.show();
                             mAuth.createUserWithEmailAndPassword(vEmail, vPass)
                                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                         @Override
@@ -125,6 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                             mFirebaseDatabase.child("DataUser").child(vUser).setValue(inputUser);
                                                             reload();
+
                                                         }
                                                     });
                                                 }else {
@@ -138,6 +140,10 @@ public class RegisterActivity extends AppCompatActivity {
                                             progressDialog.dismiss();
                                         }
                                     });
+
+                        }else{
+                            editUser.setError("Username's already exist!");
+                            editUser.requestFocus();
                         }
                     }
 
@@ -146,6 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     }
                 });
+
 
             }else {
                 Toast.makeText(this, "Your password doesn't matched", Toast.LENGTH_SHORT).show();
