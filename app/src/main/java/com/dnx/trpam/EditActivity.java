@@ -50,6 +50,7 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //getData from Firebase
+
             }
 
             @Override
