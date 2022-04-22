@@ -9,11 +9,13 @@
     <string name="confirmpass">Confirm password</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
-    <string name="edit">Edit</string>
+    <string name="edit">Edit Profile</string>
+    <string name="changepass">Change Password</string>
     <string name="profile">Profile</string>
     <string name="oldpassword">Old Password</string>
     <string name="newpassword">New Password</string>
     <string name="save">Save</string>
+    <string name="text">Change password for email:</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -3,7 +3,7 @@
     package="com.dnx.trpam">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +12,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.TRpam">
+        <activity
+            android:name=".ChangePassActivity"
+            android:exported="false" />
         <activity
             android:name=".AddMynft"
             android:exported="false" />

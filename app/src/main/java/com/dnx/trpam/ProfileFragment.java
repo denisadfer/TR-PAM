@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     TextView txtName,txtEmail;
-    Button btnLogout, btnEdit;
+    Button btnLogout, btnEdit, btnChange;
 
     @Nullable
     @Override
@@ -28,6 +28,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         txtEmail = view.findViewById(R.id.profile_email);
         btnLogout = (Button) view.findViewById(R.id.logout_btn);
         btnEdit = (Button) view.findViewById(R.id.edit_btn);
+        btnChange = (Button) view.findViewById(R.id.change_pass_btn);
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -41,6 +42,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         btnLogout.setOnClickListener(this);
         btnEdit.setOnClickListener(this);
+        btnChange.setOnClickListener(this);
 
         return view;
     }
@@ -55,6 +57,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.edit_btn:
                 startActivity(new Intent(getActivity(), EditActivity.class));
+                break;
+            case R.id.change_pass_btn:
+                startActivity(new Intent(getActivity(), ChangePassActivity.class));
                 break;
         }
     }

@@ -45,6 +45,14 @@
             android:text="@string/edit" />
 
         <Button
+            android:id="@+id/change_pass_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/warning"
+            android:textColor="@color/black"
+            android:text="@string/changepass" />
+
+        <Button
             android:id="@+id/logout_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

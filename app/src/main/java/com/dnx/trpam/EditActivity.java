@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class EditActivity extends AppCompatActivity {
-    EditText editName, editUser, editPass, editPass2, editEmail, editPhone;
+    EditText editName, editUser, editPass, editEmail, editPhone;
     Button btnSave;
 
     @Override
@@ -31,7 +35,6 @@ public class EditActivity extends AppCompatActivity {
         editUser = findViewById(R.id.username);
         editPhone = findViewById(R.id.phone);
         editPass = findViewById(R.id.pass1);
-        editPass2 = findViewById(R.id.pass2);
         btnSave = findViewById(R.id.save_btn);
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -54,12 +57,9 @@ public class EditActivity extends AppCompatActivity {
                             String email = editEmail.getText().toString();
                             String userName = editUser.getText().toString();
                             String phone = editPhone.getText().toString();
-                            //String pass =
-                            //String pass2 =
+                            String pass = editPass.getText().toString();
 
-                            editData(name, email, userName, phone);
-                            Toast.makeText(getApplicationContext(),"Updated Successfully", Toast.LENGTH_LONG).show();
-                            finish();
+                            editData(name, email, userName, phone, pass);
                         }
                     });
                 }
@@ -73,12 +73,9 @@ public class EditActivity extends AppCompatActivity {
 
     }
 
-    public void editData(String name, String email, String userName, String phone){
+    public void editData(String name, String email, String userName, String phone, String pass){
         if(!TextUtils.isEmpty(name))
             FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("name").setValue(name);
-
-        if(!TextUtils.isEmpty(email))
-            FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("email").setValue(email);
 
         if(!TextUtils.isEmpty(userName))
             FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("username").setValue(userName);
@@ -86,5 +83,25 @@ public class EditActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(phone))
             FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("phone").setValue(phone);
 
+        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass))
+            FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("email").setValue(email);
+        AuthCredential credential = EmailAuthProvider.getCredential(email, pass);
+        FirebaseAuth.getInstance().getCurrentUser().reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    FirebaseAuth.getInstance().getCurrentUser().updateEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(getApplicationContext(),"Update Successfully", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    });
+                } else {
+                    editPass.setError("Password is incorrect");
+                    editPass.requestFocus();
+                }
+            }
+        });
     }
 }
