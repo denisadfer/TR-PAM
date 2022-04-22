@@ -8,14 +8,27 @@
     <string name="password">Password</string>
     <string name="confirmpass">Confirm password</string>
     <string name="register">Register</string>
+    <string name="language">Language :</string>
+    <string name="country">EN-US</string>
     <string name="login">Login</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="mynft">My NFT</string>
+    <string name="profile">Profile</string>
+    <string name="welcome">Welcome,</string>
+    <string name="buy">Buy</string>
+    <string name="createnft">Create NFT</string>
+    <string name="newitem">Create New Item</string>
+    <string name="setimage">Set Image</string>
+    <string name="owned">Owned By</string>
+    <string name="namenft">NFT Name</string>
+    <string name="token">NFT Token</string>
     <string name="edit">Edit Profile</string>
     <string name="changepass">Change Password</string>
-    <string name="profile">Profile</string>
     <string name="oldpassword">Old Password</string>
     <string name="newpassword">New Password</string>
     <string name="save">Save</string>
-    <string name="text">Change password for email:</string>
+    <string name="text">Change password for email :</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -46,7 +46,7 @@
             android:id="@+id/detail_nft_listing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Buy"/>
+            android:text="@string/buy"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -75,7 +75,7 @@ public class AddMynft extends AppCompatActivity {
         storageref = FirebaseStorage.getInstance().getReference().child("Nft_images");
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        owner_nft.setText("Owned By " + firebaseUser.getDisplayName());
+        owner_nft.setText(getResources().getString(R.string.owned) + " " + firebaseUser.getDisplayName());
 
         img_nft.setOnClickListener(new View.OnClickListener() {
             @Override

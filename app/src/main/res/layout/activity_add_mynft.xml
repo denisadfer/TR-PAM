@@ -19,7 +19,7 @@
             android:id="@+id/create_tag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create New Item"
+            android:text="@string/newitem"
             android:textSize="40sp"
             android:textStyle="bold"/>
 
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Set Image"
+                android:text="@string/setimage"
                 android:textStyle="bold"
                 android:textSize="16sp" />
 
@@ -49,21 +49,21 @@
                 android:id="@+id/create_owner_nft"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Created By user"
+                android:text="@string/owned"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="10dp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="@string/namenft"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Nft name"
+                android:hint="@string/namenft"
                 android:layout_marginBottom="10dp">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/create_title_nft"
@@ -74,7 +74,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Token"
+                android:text="@string/token"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
             <TextView
@@ -83,14 +83,14 @@
                 android:layout_height="wrap_content"
                 android:maxLines="5"
                 android:ellipsize="end"
-                android:text="Nft Token"
+                android:text="@string/token"
                 android:padding="15dp"
                 />
             <Button
                 android:id="@+id/create_btn_nft"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Create Nft"/>
+                android:text="@string/createnft"/>
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>

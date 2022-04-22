@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment{
         datarefQ = dataref.orderByChild("price").startAfter(0);
 
         if (firebaseUser!= null) {
-            TxtName.setText("Welcome, "+firebaseUser.getDisplayName());
+            TxtName.setText(getResources().getString(R.string.welcome)+" "+firebaseUser.getDisplayName());
         } else {
             TxtName.setText("Data Name is empty");
         }
