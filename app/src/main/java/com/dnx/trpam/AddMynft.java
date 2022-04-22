@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -195,7 +196,7 @@ public class AddMynft extends AppCompatActivity {
     private void select_image (){
         title_nft.setText("");
         token_nft.setText("");
-        img_nft.setImageBitmap(null);
+        img_nft.setImageResource(R.drawable.ic_baseline_image_24);
 
         Intent intent = new Intent(Intent.ACTION_PICK);
 
@@ -220,13 +221,11 @@ public class AddMynft extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==100 && resultCode==RESULT_OK && data!=null){
             imageUri = data.getData();
-            InputStream inputStream = null;
             IsImageAdded = true;
+//            Glide.with(this).load(imageUri).into(img_nft);
             img_nft.setImageURI(imageUri);
+
             try {
-//                inputStream = getContentResolver().openInputStream(imageUri);
-//
-//                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
 
@@ -237,7 +236,6 @@ public class AddMynft extends AppCompatActivity {
                 byte [] bytes = stream.toByteArray();
 
                 token_img = Base64.encodeToString(bytes,Base64.DEFAULT);
-//                token_img = String.valueOf(imageUri);
 
 
             } catch (IOException e) {

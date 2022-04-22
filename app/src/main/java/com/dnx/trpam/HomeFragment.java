@@ -1,6 +1,7 @@
 package com.dnx.trpam;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,18 +65,24 @@ public class HomeFragment extends Fragment{
         adapter = new FirebaseRecyclerAdapter<NftPost, HomeViewHolder>(nft_options) {
             @Override
             protected void onBindViewHolder(@NonNull HomeViewHolder holder, int position, @NonNull NftPost model) {
-                if (model.getPrice() != 0) {
-                    holder.price.setText(String.valueOf(model.getPrice()));
 
-                } else {
-                    holder.price.setText("Not listing yet");
-                    holder.buy.setEnabled(false);
+                if (model.getOwner().equals(firebaseUser.getDisplayName())){
+                    holder.buy.setText("Detail");
                 }
+                holder.price.setText(String.valueOf(model.getPrice()));
                 holder.title.setText(model.getTitle());
                 holder.owner.setText(model.getOwner());
 
 
                 Picasso.get().load(model.getImg()).into(holder.imageView);
+                holder.buy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(),DetailNftActivity.class);
+                        intent.putExtra("Nft_Post_key",getRef(holder.getAdapterPosition()).getKey());
+                        startActivity(intent);
+                    }
+                });
 
             }
 
