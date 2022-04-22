@@ -19,6 +19,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +33,7 @@ public class HomeFragment extends Fragment{
     FirebaseRecyclerOptions<NftPost> nft_options;
     FirebaseRecyclerAdapter<NftPost,HomeViewHolder>adapter;
     DatabaseReference dataref;
+    Query datarefQ;
 
     @Nullable
     @Override
@@ -41,6 +43,8 @@ public class HomeFragment extends Fragment{
         homeRecycler = view.findViewById(R.id.home_recycler);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
+        // yang baru di post nftnya atau belum dijual maka ga akan ditampilkan di list home
+        datarefQ = dataref.orderByChild("price").startAfter(0);
 
         if (firebaseUser!= null) {
             TxtName.setText("Welcome, "+firebaseUser.getDisplayName());
@@ -56,14 +60,23 @@ public class HomeFragment extends Fragment{
     }
 
     private void LoadNFT() {
-        nft_options = new FirebaseRecyclerOptions.Builder<NftPost>().setQuery(dataref,NftPost.class).build();
+        nft_options = new FirebaseRecyclerOptions.Builder<NftPost>().setQuery(datarefQ,NftPost.class).build();
         adapter = new FirebaseRecyclerAdapter<NftPost, HomeViewHolder>(nft_options) {
             @Override
             protected void onBindViewHolder(@NonNull HomeViewHolder holder, int position, @NonNull NftPost model) {
+                if (model.getPrice() != 0) {
+                    holder.price.setText(String.valueOf(model.getPrice()));
+
+                } else {
+                    holder.price.setText("Not listing yet");
+                    holder.buy.setEnabled(false);
+                }
                 holder.title.setText(model.getTitle());
                 holder.owner.setText(model.getOwner());
-                holder.price.setText(String.valueOf(model.getPrice()));
+
+
                 Picasso.get().load(model.getImg()).into(holder.imageView);
+
             }
 
             @NonNull

@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_nft"
+    <Button
+        android:id="@+id/sell_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="My NFT page"
+        android:text="Create NFT"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
 </RelativeLayout>
