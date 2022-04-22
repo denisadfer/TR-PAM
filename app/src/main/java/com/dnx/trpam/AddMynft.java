@@ -11,8 +11,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +28,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -38,6 +40,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 public class AddMynft extends AppCompatActivity {
@@ -50,6 +55,7 @@ public class AddMynft extends AppCompatActivity {
     DatabaseReference dataref;
     StorageReference storageref;
     Uri imageUri;
+
 
     boolean IsImageAdded=false;
 
@@ -92,9 +98,48 @@ public class AddMynft extends AppCompatActivity {
                 String title = title_nft.getText().toString();
                 String token = token_nft.getText().toString();
                 int price = 0;
-                if (IsImageAdded!=false && title!=null && token!=null){
-                    uploadImage(owner,title,token, price);
+
+                if (!IsImageAdded) {
+                    Toast.makeText(getApplicationContext(), "Please choose Image to create NFT", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                if (title.isEmpty()){
+                    title_nft.setError("Please, input the title");
+                    title_nft.requestFocus();
+                    return;
+                }
+                if (IsImageAdded==true && title!=null && token!=null){
+                    dataref.orderByChild("token").equalTo(token);
+                    dataref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            boolean IstokenAdded=false;
+                            for (DataSnapshot nft : snapshot.getChildren()){
+                                NftPost nftPost = nft.getValue(NftPost.class);
+
+                                if (nftPost.getToken().equals(token)){
+                                    IstokenAdded=true;
+                                }
+                            }
+                            if (!IstokenAdded){
+                                uploadImage(owner,title,token, price);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Nft's already exist", Toast.LENGTH_SHORT).show();
+                            }
+//
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }
+
             }
         });
 
@@ -152,7 +197,7 @@ public class AddMynft extends AppCompatActivity {
         token_nft.setText("");
         img_nft.setImageBitmap(null);
 
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_PICK);
 
         intent.setType("image/*");
 
@@ -175,10 +220,14 @@ public class AddMynft extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==100 && resultCode==RESULT_OK && data!=null){
             imageUri = data.getData();
+            InputStream inputStream = null;
             IsImageAdded = true;
             img_nft.setImageURI(imageUri);
-
             try {
+//                inputStream = getContentResolver().openInputStream(imageUri);
+//
+//                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -188,15 +237,35 @@ public class AddMynft extends AppCompatActivity {
                 byte [] bytes = stream.toByteArray();
 
                 token_img = Base64.encodeToString(bytes,Base64.DEFAULT);
+//                token_img = String.valueOf(imageUri);
+
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            token_nft.setText(token_img);
+            token_nft.setText(md5hash(token_img));
 
         }
     }
 
+    private String md5hash(String token_img) {
+        try {
+            // Create MD5 Hash
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(token_img.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            // Create Hex String
+            StringBuffer hexString = new StringBuffer();
+            for (int i=0; i<messageDigest.length; i++)
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
 
 }
