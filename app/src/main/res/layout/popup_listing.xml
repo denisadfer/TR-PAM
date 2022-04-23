@@ -24,6 +24,7 @@
             android:layout_below="@+id/close_popup_btn"
             >
             <ImageView
+                android:id="@+id/popup_img_nft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/test"

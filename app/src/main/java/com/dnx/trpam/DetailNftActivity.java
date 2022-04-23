@@ -2,17 +2,25 @@ package com.dnx.trpam;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,23 +29,28 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.util.HashMap;
 
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
 public class DetailNftActivity extends AppCompatActivity {
 
-    TextView nft_owner, nft_price, nft_token, nft_title;
+    TextView nft_owner, nft_price, nft_token, nft_title, history_nodata;
     Button nft_listing, nft_buy;
     ImageView nft_img;
-    DatabaseReference dataref;
+    DatabaseReference dataref, dataref2;
     private FirebaseUser firebaseUser;
     LinearLayout nft_linear;
     Dialog mdialog;
-
+    RecyclerView history_recycler;
+    FirebaseRecyclerOptions<History> nft_options;
+    FirebaseRecyclerAdapter<History,HistoryViewHolder> adapter;
+    Query datarefQ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +59,7 @@ public class DetailNftActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mdialog = new Dialog(this);
 
+        history_recycler = findViewById(R.id.detail_recycler);
         nft_owner = findViewById(R.id.detail_nft_owner);
         nft_price = findViewById(R.id.detail_nft_price);
         nft_token = findViewById(R.id.detail_nft_token);
@@ -54,7 +68,10 @@ public class DetailNftActivity extends AppCompatActivity {
         nft_listing = findViewById(R.id.detail_nft_listing);
         nft_buy = findViewById(R.id.detail_nft_buy);
         nft_linear = findViewById(R.id.detail_nft_linearBtn);
+        history_nodata = findViewById(R.id.history_nodata);
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
+        dataref2 = FirebaseDatabase.getInstance().getReference().child("History");
+
         NftPost nftAdd_price = new NftPost();
 
         String Nft_key = getIntent().getStringExtra("Nft_Post_key");
@@ -84,6 +101,10 @@ public class DetailNftActivity extends AppCompatActivity {
                         nft_linear.setVisibility(View.VISIBLE);
                         nft_buy.setVisibility(View.GONE);
                     }
+                    datarefQ = dataref2.orderByChild("token").equalTo(token);
+                    history_recycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    history_recycler.setHasFixedSize(true);
+                    LoadHistory();
 
                 }
             }
@@ -94,16 +115,21 @@ public class DetailNftActivity extends AppCompatActivity {
             }
         });
 
+
+
         nft_listing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Button close_popup;
                 EditText popup_price;
                 ProSwipeButton swipe_listing;
+                ImageView popup_img;
                 mdialog.setContentView(R.layout.popup_listing);
                 popup_price = mdialog.findViewById(R.id.popup_price);
                 swipe_listing = mdialog.findViewById(R.id.swipe_listing);
                 close_popup = mdialog.findViewById(R.id.close_popup_btn);
+                popup_img = mdialog.findViewById(R.id.popup_img_nft);
+                Picasso.get().load(nftAdd_price.getImg()).into(popup_img);
                 mdialog.show();
                 close_popup.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -119,6 +145,10 @@ public class DetailNftActivity extends AppCompatActivity {
                             public void run() {
                                 swipe_listing.showResultIcon(true);
                                 nftAdd_price.setPrice(Double.parseDouble(popup_price.getText().toString()));
+                                String buyer = "";
+                                String aksi = "Listing NFT for";
+                                History history = new History(nftAdd_price.owner, buyer,popup_price.getText().toString(),aksi, nftAdd_price.token);
+                                dataref2.push().setValue(history);
                                 dataref.child(Nft_key).setValue(nftAdd_price).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
@@ -133,16 +163,65 @@ public class DetailNftActivity extends AppCompatActivity {
 
                                     }
                                 });
-
                             }
                         },2000);
-
-
                     }
                 });
-
             }
         });
 
+
     }
+
+    private void LoadHistory() {
+        nft_options = new FirebaseRecyclerOptions.Builder<History>().setQuery(datarefQ,History.class).build();
+        adapter = new FirebaseRecyclerAdapter<History, HistoryViewHolder>(nft_options) {
+            // Add this
+            @Override
+            public void onDataChanged() {
+                // do your thing
+                if(getItemCount() == 0)
+                    history_nodata.setVisibility(View.VISIBLE);
+            }
+            @Override
+            protected void onBindViewHolder(@NonNull HistoryViewHolder holder, int position, @NonNull History model) {
+                holder.owner.setText(model.getOwner());
+                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+                holder.dateH.setText(dateFormat.format(model.dateBuy));
+                holder.action.setText(model.getAksi());
+                if (model.getBuyer() != null){
+                    holder.newOwner.setText(model.getBuyer());
+                } else {
+                    holder.newOwner.setVisibility(View.GONE);
+                }
+                if (model.getPrice().equals("0")){
+                    holder.price.setVisibility(View.GONE);
+
+                } else {
+                    holder.price.setText(model.getPrice());
+                }
+            }
+
+            @NonNull
+            @Override
+            public HistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_history,parent,false);
+                return new HistoryViewHolder(view);
+            }
+        };
+        adapter.startListening();
+        history_recycler.setAdapter(adapter);
+    }
+
+//        @Override
+//    public void onStart() {
+//        super.onStart();
+//        adapter.startListening();
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        adapter.stopListening();
+//    }
 }

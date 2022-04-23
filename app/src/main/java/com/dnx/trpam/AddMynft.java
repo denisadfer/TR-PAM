@@ -53,7 +53,7 @@ public class AddMynft extends AppCompatActivity {
     EditText title_nft;
     ImageView img_nft;
     String token_img;
-    DatabaseReference dataref;
+    DatabaseReference dataref, dataref2;
     StorageReference storageref;
     Uri imageUri;
 
@@ -72,6 +72,7 @@ public class AddMynft extends AppCompatActivity {
         img_nft = findViewById(R.id.create_img_nft);
 
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
+        dataref2 = FirebaseDatabase.getInstance().getReference().child("History");
         storageref = FirebaseStorage.getInstance().getReference().child("Nft_images");
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -107,6 +108,10 @@ public class AddMynft extends AppCompatActivity {
                 if (title.isEmpty()){
                     title_nft.setError("Please, input the title");
                     title_nft.requestFocus();
+                    return;
+                }
+                if (token.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Please add your image", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (IsImageAdded==true && title!=null && token!=null){
@@ -166,12 +171,16 @@ public class AddMynft extends AppCompatActivity {
                         hashMap.put("price",price);
                         hashMap.put("title",title);
                         hashMap.put("token",token);
-
+                        String buyer = "";
+                        String aksi = "Created Nft";
+                        History history = new History(owner,buyer,String.valueOf(price),aksi,token);
+                        dataref2.push().setValue(history);
                         dataref.push().setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 pd.dismiss();
                                 finish();
+                                startActivity(new Intent(getApplicationContext(),MynftFragment.class));
                             }
                         });
                     }

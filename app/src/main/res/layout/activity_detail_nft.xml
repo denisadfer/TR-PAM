@@ -2,59 +2,96 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".DetailNftActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp"
-    tools:context=".DetailNftActivity">
-
+    >
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_scrollview">
+
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/detail_nft_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nft Title"
                 android:textSize="50sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <ImageView
                 android:id="@+id/detail_nft_img"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:src="@drawable/ic_baseline_image_24"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_baseline_image_24" />
+
             <TextView
                 android:id="@+id/detail_nft_owner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:text="Owned By User"
                 android:textSize="16sp"
-                android:text="Owned By User"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/detail_nft_token"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Token : "/>
+                android:text="Token : " />
+
             <TextView
                 android:id="@+id/detail_nft_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Harga : "/>
+                android:text="Harga : " />
 
             <Button
                 android:id="@+id/detail_nft_listing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Listing"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
-    </ScrollView>
 
-    <Button
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/detail_scrollview">
+        <TextView
+            android:id="@+id/tes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/history_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="No History"
+            android:visibility="gone"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/detail_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tes"/>
+    </RelativeLayout>
+
+
+        <Button
         android:id="@+id/detail_nft_buy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
