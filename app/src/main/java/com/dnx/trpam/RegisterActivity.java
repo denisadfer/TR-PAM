@@ -151,7 +151,10 @@ public class RegisterActivity extends AppCompatActivity {
                                                     user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
-                                                            User inputUser = new User(vName, vEmail, vPhone, vUser);
+                                                            int balance = 0;
+
+
+                                                            User inputUser = new User(vName, vEmail, vPhone, vUser, (double) balance);
 
                                                             mFirebaseDatabase.child("DataUser").child(vUser).setValue(inputUser);
                                                             reload();

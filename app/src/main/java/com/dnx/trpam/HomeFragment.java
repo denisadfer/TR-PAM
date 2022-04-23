@@ -18,22 +18,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class HomeFragment extends Fragment{
-    TextView TxtName;
+    TextView TxtName, balance;
     ImageView cardImg;
     RecyclerView homeRecycler;
     private FirebaseUser firebaseUser;
     FirebaseRecyclerOptions<NftPost> nft_options;
     FirebaseRecyclerAdapter<NftPost,HomeViewHolder>adapter;
-    DatabaseReference dataref;
+    DatabaseReference dataref, dataref2;
     Query datarefQ;
 
     @Nullable
@@ -41,9 +44,25 @@ public class HomeFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         TxtName = view.findViewById(R.id.textName);
+        balance = view.findViewById(R.id.home_balance);
         homeRecycler = view.findViewById(R.id.home_recycler);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
+        dataref2 = FirebaseDatabase.getInstance().getReference().child("DataUser");
+
+        dataref2.child(firebaseUser.getDisplayName()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    balance.setText(snapshot.child("balance").getValue().toString() + " ETH");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         // yang baru di post nftnya atau belum dijual maka ga akan ditampilkan di list home
         datarefQ = dataref.orderByChild("price").startAfter(0);
 

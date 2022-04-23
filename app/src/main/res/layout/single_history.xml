@@ -40,22 +40,23 @@
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/history_nft_newowner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="NewOwner"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:visibility="visible"/>
         <TextView
             android:id="@+id/history_nft_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Price"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:visibility="visible"/>
-        <TextView
-            android:id="@+id/history_nft_neworner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="NewOner"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="18sp"

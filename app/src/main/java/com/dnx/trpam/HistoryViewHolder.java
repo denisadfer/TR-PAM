@@ -14,7 +14,7 @@ public class HistoryViewHolder extends RecyclerView.ViewHolder {
         dateH = itemView.findViewById(R.id.history_nft_date);
         owner = itemView.findViewById(R.id.history_nft_owner);
         action = itemView.findViewById(R.id.history_nft_action);
-        newOwner = itemView.findViewById(R.id.history_nft_neworner);
+        newOwner = itemView.findViewById(R.id.history_nft_newowner);
         price = itemView.findViewById(R.id.history_nft_price);
     }
 }
