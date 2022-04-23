@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="450dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/close_popup_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_baseline_close_24"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="5dp"/>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_popup"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:cardCornerRadius="250dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/close_popup_btn"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/test"
+                android:scaleType="centerCrop"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textinput_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/card_popup"
+            android:hint="Listing Price"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/popup_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <in.shadowfax.proswipebutton.ProSwipeButton
+            android:id="@+id/swipe_listing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            app:bg_color="@color/primary"
+            app:btn_text="Swipe to Sell Nft"/>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
