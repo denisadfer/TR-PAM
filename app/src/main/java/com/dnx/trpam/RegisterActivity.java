@@ -29,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
     private DatabaseReference mFirebaseDatabase;
+    boolean isExist=false;
 
 
     @Override
@@ -104,10 +105,20 @@ public class RegisterActivity extends AppCompatActivity {
 
             if (vPass.equals(vPass2)){
 
-                mFirebaseDatabase.child("DataUser").addValueEventListener(new ValueEventListener() {
+                mFirebaseDatabase.child("DataUser").orderByChild("username").equalTo(vUser).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (!snapshot.child(vUser).exists()){
+                        isExist=false;
+
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            User user = dataSnapshot.getValue(User.class);
+
+                            if (user.getUsername().equals(vUser)){
+                                isExist=true;
+                            }
+                        }
+
+                        if (!isExist) {
                             progressDialog.show();
                             mAuth.createUserWithEmailAndPassword(vEmail, vPass)
                                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -126,6 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                             mFirebaseDatabase.child("DataUser").child(vUser).setValue(inputUser);
                                                             reload();
+                                                            finish();
 
                                                         }
                                                     });
@@ -140,8 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             progressDialog.dismiss();
                                         }
                                     });
-
-                        }else{
+                        } else {
                             editUser.setError("Username's already exist!");
                             editUser.requestFocus();
                         }

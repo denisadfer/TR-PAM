@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,10 +22,11 @@ import com.squareup.picasso.Picasso;
 public class DetailNftActivity extends AppCompatActivity {
 
     TextView nft_owner, nft_price, nft_token, nft_title;
-    Button nft_listing;
+    Button nft_listing, nft_buy;
     ImageView nft_img;
     DatabaseReference dataref;
     private FirebaseUser firebaseUser;
+    LinearLayout nft_linear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class DetailNftActivity extends AppCompatActivity {
         nft_title = findViewById(R.id.detail_nft_title);
         nft_img = findViewById(R.id.detail_nft_img);
         nft_listing = findViewById(R.id.detail_nft_listing);
+        nft_buy = findViewById(R.id.detail_nft_buy);
+        nft_linear = findViewById(R.id.detail_nft_linearBtn);
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
 
         String Nft_key = getIntent().getStringExtra("Nft_Post_key");
@@ -59,6 +63,8 @@ public class DetailNftActivity extends AppCompatActivity {
                     nft_token.setText(token);
                     if (owner.equals(firebaseUser.getDisplayName())){
                         nft_listing.setVisibility(View.GONE);
+                        nft_linear.setVisibility(View.VISIBLE);
+                        nft_buy.setVisibility(View.GONE);
                     }
 
                 }
