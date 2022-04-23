@@ -31,6 +31,7 @@
     <string name="text">Ubah kata sandi untuk email :</string>
     <string name="searchview">Cari NFT</string>
     <string name="notfound">&#160;tidak ditemukan.</string>
+    <string name="donthavenft">Anda tidak memiliki NFT</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
