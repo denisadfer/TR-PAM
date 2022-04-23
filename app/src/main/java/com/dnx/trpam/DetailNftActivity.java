@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
@@ -89,6 +90,15 @@ public class DetailNftActivity extends AppCompatActivity {
                     String price = snapshot.child("price").getValue().toString();
                     String token = snapshot.child("token").getValue().toString();
                     String img = snapshot.child("img").getValue().toString();
+
+                    nft_img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(DetailNftActivity.this, NFTPreview.class);
+                            intent.putExtra("img", img);
+                            startActivity(intent);
+                        }
+                    });
 
                     nftAdd_price.setImg(img);
                     nftAdd_price.setTitle(title);
