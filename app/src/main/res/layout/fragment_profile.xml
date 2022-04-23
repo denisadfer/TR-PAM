@@ -66,22 +66,19 @@
         android:orientation="horizontal"
         android:layout_marginTop="560dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <Button
+            android:id="@+id/changelang"
             android:text="@string/language"
-            android:layout_marginLeft="20dp"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/country"/>
+            android:textSize="10dp"
+            android:backgroundTint="@color/edit"
+            android:layout_marginLeft="20dp"/>
 
         <ImageView
             android:src="@mipmap/flag"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="-2dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="5dp"/>
     </LinearLayout>
 

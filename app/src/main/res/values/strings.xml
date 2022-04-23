@@ -8,8 +8,8 @@
     <string name="password">Password</string>
     <string name="confirmpass">Confirm password</string>
     <string name="register">Register</string>
-    <string name="language">Language :</string>
-    <string name="country">EN-US</string>
+    <string name="language">Language</string>
+    <string name="country">Choose Language...</string>
     <string name="login">Login</string>
     <string name="home">Home</string>
     <string name="search">Search</string>

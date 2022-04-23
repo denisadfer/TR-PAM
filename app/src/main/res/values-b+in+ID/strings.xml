@@ -8,8 +8,8 @@
     <string name="password">Kata Sandi</string>
     <string name="confirmpass">Konfirmasi Kata Sandi</string>
     <string name="register">Daftar</string>
-    <string name="language">Bahasa :</string>
-    <string name="country">ID</string>
+    <string name="language">Bahasa</string>
+    <string name="country">Pilih Bahasa...</string>
     <string name="login">Masuk</string>
     <string name="home">Beranda</string>
     <string name="search">Cari</string>
