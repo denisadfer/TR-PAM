@@ -47,10 +47,11 @@ public class SearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                datarefQ = dataref.orderByChild("title").equalTo(query);
+                textView.setText("\"" + query + "\""+getResources().getString(R.string.notfound));
+                datarefQ = dataref.orderByChild("title").startAt(query).endAt(query + "\uf8ff");;
                 searchRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
                 searchRecycler.setHasFixedSize(true);
-                LoadNFT(query);
+                LoadNFT();
 
                 return false;
             }
@@ -63,13 +64,12 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-    public void LoadNFT(String query) {
+    public void LoadNFT() {
         nft_options = new FirebaseRecyclerOptions.Builder<NftPost>().setQuery(datarefQ,NftPost.class).build();
         adapter = new FirebaseRecyclerAdapter<NftPost, HomeViewHolder>(nft_options) {
             @Override
             public void onDataChanged() {
                 if(getItemCount() == 0)
-                    textView.setText("\"" + query + "\""+getResources().getString(R.string.notfound));
                     textView.setVisibility(View.VISIBLE);
             }
 
