@@ -24,7 +24,10 @@ public class SearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                textView.setText(query);
+                //if NFT found
+                //code
+                //if NFT not found
+                textView.setText("\"" + query + "\""+getResources().getString(R.string.notfound));
                 return false;
             }
 

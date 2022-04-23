@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:queryHint="Search for a NFT"
+        android:layout_marginRight="20dp"
+        android:queryHint="@string/searchview"
         android:iconifiedByDefault="false"/>
 
     <TextView

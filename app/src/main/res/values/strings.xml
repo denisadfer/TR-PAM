@@ -29,6 +29,8 @@
     <string name="newpassword">New Password</string>
     <string name="save">Save</string>
     <string name="text">Change password for email :</string>
+    <string name="searchview">Search for a NFT</string>
+    <string name="notfound">&#160;not found.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
