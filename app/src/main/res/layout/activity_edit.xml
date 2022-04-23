@@ -16,43 +16,11 @@
         app:boxBackgroundColor="@color/white"
         >
         <EditText
-            android:id="@+id/fullnameedit"
+            android:id="@+id/fullname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/fullname"
             />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:boxBackgroundMode="outline"
-        app:boxBackgroundColor="@color/white"
-        >
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/username"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:boxBackgroundMode="outline"
-        app:boxBackgroundColor="@color/white"
-        >
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

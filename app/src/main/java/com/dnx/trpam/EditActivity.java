@@ -23,16 +23,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class EditActivity extends AppCompatActivity {
-    EditText editName, editUser, editPass, editEmail, editPhone;
+    EditText editName, editPass, editPhone;
     Button btnSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        editName = findViewById(R.id.fullnameedit);
-        editEmail = findViewById(R.id.email);
-        editUser = findViewById(R.id.username);
+        editName = findViewById(R.id.fullname);
         editPhone = findViewById(R.id.phone);
         editPass = findViewById(R.id.pass1);
         btnSave = findViewById(R.id.save_btn);
@@ -45,21 +43,17 @@ public class EditActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     editName.setText(snapshot.child("name").getValue().toString());
-                    editEmail.setText(snapshot.child("email").getValue().toString());
-                    editUser.setText(snapshot.child("username").getValue().toString());
                     editPhone.setText(snapshot.child("phone").getValue().toString());
-                    //editPass
 
                     btnSave.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             String name = editName.getText().toString();
-                            String email = editEmail.getText().toString();
-                            String userName = editUser.getText().toString();
+                            String userName = snapshot.child("username").getValue().toString();
                             String phone = editPhone.getText().toString();
                             String pass = editPass.getText().toString();
 
-                            editData(name, email, userName, phone, pass);
+                            editData(name, userName, phone, pass);
                         }
                     });
                 }
@@ -73,35 +67,28 @@ public class EditActivity extends AppCompatActivity {
 
     }
 
-    public void editData(String name, String email, String userName, String phone, String pass){
-        if(!TextUtils.isEmpty(name))
-            FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("name").setValue(name);
+    public void editData(String name, String userName, String phone, String pass){
+        if(!TextUtils.isEmpty(pass)) {
+            String email= FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            AuthCredential credential = EmailAuthProvider.getCredential(email, pass);
+            FirebaseAuth.getInstance().getCurrentUser().reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        if (!TextUtils.isEmpty(name))
+                            FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("name").setValue(name);
 
-        if(!TextUtils.isEmpty(userName))
-            FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("username").setValue(userName);
+                        if (!TextUtils.isEmpty(phone))
+                            FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("phone").setValue(phone);
 
-        if(!TextUtils.isEmpty(phone))
-            FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("phone").setValue(phone);
-
-        if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass))
-            FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("email").setValue(email);
-        AuthCredential credential = EmailAuthProvider.getCredential(email, pass);
-        FirebaseAuth.getInstance().getCurrentUser().reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    FirebaseAuth.getInstance().getCurrentUser().updateEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(getApplicationContext(),"Update Successfully", Toast.LENGTH_LONG).show();
-                            finish();
-                        }
-                    });
-                } else {
-                    editPass.setError("Password is incorrect");
-                    editPass.requestFocus();
+                        Toast.makeText(getApplicationContext(), "Update Successfully", Toast.LENGTH_LONG).show();
+                        finish();
+                    } else {
+                        editPass.setError("Password is incorrect");
+                        editPass.requestFocus();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
