@@ -40,6 +40,7 @@
             android:layout_margin="10dp"
             android:layout_below="@+id/card_popup"
             android:hint="Listing Price"
+            app:errorEnabled="true"
             >
 
             <com.google.android.material.textfield.TextInputEditText

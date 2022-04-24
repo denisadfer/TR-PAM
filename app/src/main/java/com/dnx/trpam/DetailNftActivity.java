@@ -1,33 +1,38 @@
 package com.dnx.trpam;
 
-import android.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionManager;
+
 import android.app.Dialog;
-import android.app.DownloadManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+import android.media.Image;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.os.Environment;
+import android.net.Uri;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.content.DialogInterface;
+import android.app.AlertDialog;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +46,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.text.DateFormat;
+import java.util.HashMap;
 
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
@@ -48,10 +54,11 @@ public class DetailNftActivity extends AppCompatActivity {
 
     TextView nft_owner, nft_price, nft_token, nft_title, history_nodata;
     Button nft_listing, nft_buy, nft_edit, nft_delete, nft_download;
-    ImageView nft_img;
+    ImageView nft_img, arrow_button1, arrow_button2, arrow_button3, arrow_button4, arrow_button5;
+    CardView base_card1, base_card2, base_card3, base_card4, base_card5;
     DatabaseReference dataref, dataref2, dataref3, dataref4;
     private FirebaseUser firebaseUser;
-    LinearLayout nft_linear;
+    LinearLayout nft_linear, hidden_view1, hidden_view2, hidden_view3, hidden_view4, hidden_view5;
     Dialog mdialog;
     RecyclerView history_recycler;
     FirebaseRecyclerOptions<History> nft_options;
@@ -80,6 +87,22 @@ public class DetailNftActivity extends AppCompatActivity {
         nft_download = findViewById(R.id.detail_nft_download);
         nft_linear = findViewById(R.id.detail_nft_linearBtn);
         history_nodata = findViewById(R.id.history_nodata);
+        base_card1 = findViewById(R.id.base_cardview1);
+        base_card2 = findViewById(R.id.base_cardview2);
+        base_card3 = findViewById(R.id.base_cardview3);
+        base_card4 = findViewById(R.id.base_cardview4);
+        base_card5 = findViewById(R.id.base_cardview5);
+        arrow_button1 = findViewById(R.id.arrow_button1);
+        arrow_button2 = findViewById(R.id.arrow_button2);
+        arrow_button3 = findViewById(R.id.arrow_button3);
+        arrow_button4 = findViewById(R.id.arrow_button4);
+        arrow_button5 = findViewById(R.id.arrow_button5);
+        hidden_view1 = findViewById(R.id.hidden_view1);
+        hidden_view2 = findViewById(R.id.hidden_view2);
+        hidden_view3 = findViewById(R.id.hidden_view3);
+        hidden_view4 = findViewById(R.id.hidden_view4);
+        hidden_view5 = findViewById(R.id.hidden_view5);
+
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
         dataref2 = FirebaseDatabase.getInstance().getReference().child("History");
         dataref3 = FirebaseDatabase.getInstance().getReference().child("DataUser");
@@ -125,13 +148,14 @@ public class DetailNftActivity extends AppCompatActivity {
                     nft_price.setText(price);
                     nft_token.setText(token);
                     if (owner.equals(firebaseUser.getDisplayName())){
-                        nft_listing.setVisibility(View.VISIBLE);
+                        base_card1.setVisibility(View.VISIBLE);
                         nft_linear.setVisibility(View.VISIBLE);
                         nft_buy.setVisibility(View.GONE);
                     }
                     datarefQ = dataref2.orderByChild("token").equalTo(token);
                     history_recycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    history_recycler.setHasFixedSize(true);
+                    //  karna gamuncul kalo pake ini
+                    //  history_recycler.setHasFixedSize(true);
                     LoadHistory();
 
                 }
@@ -143,17 +167,107 @@ public class DetailNftActivity extends AppCompatActivity {
             }
         });
 
+        //fungsi liat liat
+        base_card1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hidden_view1.getVisibility() == View.VISIBLE) {
+                    TransitionManager.beginDelayedTransition(base_card1,
+                            new AutoTransition());
+                    hidden_view1.setVisibility(View.GONE);
+                    arrow_button1.setImageResource(R.drawable.ic_baseline_expand_more_24);
+                } else {
+
+                    TransitionManager.beginDelayedTransition(base_card1,
+                            new AutoTransition());
+                    hidden_view1.setVisibility(View.VISIBLE);
+                    arrow_button1.setImageResource(R.drawable.ic_baseline_expand_less_24);
+                }
+            }
+        });
+        base_card2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hidden_view2.getVisibility() == View.VISIBLE) {
+                    TransitionManager.beginDelayedTransition(base_card2,
+                            new AutoTransition());
+                    hidden_view2.setVisibility(View.GONE);
+                    arrow_button2.setImageResource(R.drawable.ic_baseline_expand_more_24);
+                } else {
+
+                    TransitionManager.beginDelayedTransition(base_card2,
+                            new AutoTransition());
+                    hidden_view2.setVisibility(View.VISIBLE);
+                    arrow_button2.setImageResource(R.drawable.ic_baseline_expand_less_24);
+                }
+            }
+        });
+        base_card3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hidden_view3.getVisibility() == View.VISIBLE) {
+                    TransitionManager.beginDelayedTransition(base_card3,
+                            new AutoTransition());
+                    hidden_view3.setVisibility(View.GONE);
+                    arrow_button3.setImageResource(R.drawable.ic_baseline_expand_more_24);
+                } else {
+
+                    TransitionManager.beginDelayedTransition(base_card3,
+                            new AutoTransition());
+                    hidden_view3.setVisibility(View.VISIBLE);
+                    arrow_button3.setImageResource(R.drawable.ic_baseline_expand_less_24);
+                }
+            }
+        });
+        base_card4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hidden_view4.getVisibility() == View.VISIBLE) {
+                    TransitionManager.beginDelayedTransition(base_card4,
+                            new AutoTransition());
+                    hidden_view4.setVisibility(View.GONE);
+                    arrow_button4.setImageResource(R.drawable.ic_baseline_expand_more_24);
+                } else {
+
+                    TransitionManager.beginDelayedTransition(base_card4,
+                            new AutoTransition());
+                    hidden_view4.setVisibility(View.VISIBLE);
+                    arrow_button4.setImageResource(R.drawable.ic_baseline_expand_less_24);
+                }
+            }
+        });
+        base_card5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (hidden_view5.getVisibility() == View.VISIBLE) {
+                    TransitionManager.beginDelayedTransition(base_card5,
+                            new AutoTransition());
+                    hidden_view5.setVisibility(View.GONE);
+                    arrow_button5.setImageResource(R.drawable.ic_baseline_expand_more_24);
+                } else {
+
+                    TransitionManager.beginDelayedTransition(base_card5,
+                            new AutoTransition());
+                    hidden_view5.setVisibility(View.VISIBLE);
+                    arrow_button5.setImageResource(R.drawable.ic_baseline_expand_less_24);
+                }
+            }
+        });
+
+        //fungsi inti nft
         nft_listing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Button close_popup;
                 EditText popup_price;
                 ProSwipeButton swipe_listing;
+                TextInputLayout popup_listing_lay;
                 ImageView popup_img;
                 mdialog.setContentView(R.layout.popup_listing);
                 popup_price = mdialog.findViewById(R.id.popup_price);
                 swipe_listing = mdialog.findViewById(R.id.swipe_listing);
                 close_popup = mdialog.findViewById(R.id.close_popup_btn);
+                popup_listing_lay = mdialog.findViewById(R.id.textinput_price);
                 popup_img = mdialog.findViewById(R.id.popup_img_nft);
                 Picasso.get().load(nftAdd_price.getImg()).into(popup_img);
                 mdialog.show();
@@ -169,39 +283,43 @@ public class DetailNftActivity extends AppCompatActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                swipe_listing.showResultIcon(true);
+                                if (Double.parseDouble(popup_price.getText().toString()) >0){
+                                    swipe_listing.showResultIcon(true);
 
-                                nftAdd_price.setPrice(Double.parseDouble(popup_price.getText().toString()));
-                                String buyer = "";
-                                String aksi = "Listing NFT for";
-                                String notif_listing = "You have sell your NFT "+ nft_title.getText().toString() + " for "+ popup_price.getText().toString() + " ETH";
+                                    nftAdd_price.setPrice(Double.parseDouble(popup_price.getText().toString()));
+                                    String buyer = "";
+                                    String aksi = "Listing NFT for";
+                                    String notif_listing = "You have sell your NFT "+ nft_title.getText().toString() + " for "+ popup_price.getText().toString() + " ETH";
 
-                                History history = new History(nftAdd_price.owner, buyer,popup_price.getText().toString(),aksi, nftAdd_price.token);
-                                Notif notif_lister = new Notif(notif_listing, firebaseUser.getDisplayName(),"yes");
+                                    History history = new History(nftAdd_price.owner, buyer,popup_price.getText().toString(),aksi, nftAdd_price.token);
+                                    Notif notif_lister = new Notif(notif_listing, firebaseUser.getDisplayName(),"yes");
 
-                                dataref4.push().setValue(notif_lister);
-                                dataref2.push().setValue(history);
-                                dataref.child(Nft_key).setValue(nftAdd_price).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                mdialog.dismiss();
-                                                finish();
-                                                startActivity(getIntent());
-                                            }
-                                        },1000);
+                                    dataref4.push().setValue(notif_lister);
+                                    dataref2.push().setValue(history);
+                                    dataref.child(Nft_key).setValue(nftAdd_price).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    mdialog.dismiss();
+                                                    finish();
+                                                    startActivity(getIntent());
+                                                }
+                                            },1000);
 
-                                    }
-                                });
+                                        }
+                                    });
+                                } else {
+                                    swipe_listing.showResultIcon(false);
+                                    popup_listing_lay.setError("You can't listing NFT as a free");
+                                }
                             }
                         },2000);
                     }
                 });
             }
         });
-
         nft_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -312,7 +430,6 @@ public class DetailNftActivity extends AppCompatActivity {
                 });
             }
         });
-
         nft_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -334,7 +451,6 @@ public class DetailNftActivity extends AppCompatActivity {
                 });
             }
         });
-
         nft_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -352,6 +468,7 @@ public class DetailNftActivity extends AppCompatActivity {
 
             }
         });
+
 
     }
 
@@ -431,4 +548,5 @@ public class DetailNftActivity extends AppCompatActivity {
 //        super.onStop();
 //        adapter.stopListening();
 //    }
+
 }

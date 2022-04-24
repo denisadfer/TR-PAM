@@ -7,91 +7,613 @@
     android:layout_height="match_parent"
     android:padding="15dp"
     >
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_scrollview">
 
-        <LinearLayout
 
+    <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:id="@+id/detail_scrollview"
+            android:layout_marginBottom="70dp"
+            >
 
-            <TextView
-                android:id="@+id/detail_nft_title"
+            <LinearLayout
+                android:id="@+id/linear_below_scroll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nft Title"
-                android:textSize="50sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/detail_nft_img"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_baseline_image_24" />
+                <TextView
+                    android:id="@+id/detail_nft_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nft Title"
+                    android:textSize="50sp"
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
 
-            <TextView
-                android:id="@+id/detail_nft_owner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Owned By User"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Owned By : "
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/detail_nft_owner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="User"
+                        android:textSize="16sp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/detail_nft_img"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_baseline_image_24" />
+                </LinearLayout>
+                <!--Base CardView-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/base_cardview"
+                    style="@style/Base.CardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    >
+                    <!--Bagian TOP yang terlihat-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:layout_margin="10dp">
 
-            <TextView
-                android:id="@+id/detail_nft_token"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Token : " />
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/eth"
+                                />
+                        </LinearLayout>
 
-            <TextView
-                android:id="@+id/detail_nft_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Harga : " />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Price : "
+                                android:textColor="@color/primary"
+                                android:textSize="25sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/detail_nft_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="999 ETH"
+                                android:textColor="@color/primary"
+                                android:textSize="25sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <!--Base CardView-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/base_cardview1"
+                    style="@style/Base.CardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:visibility="gone"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        >
 
-            <Button
-                android:id="@+id/detail_nft_listing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Listing"
-                android:visibility="gone" />
-        </LinearLayout>
+                        <!--Bagian TOP yang terlihat-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_margin="10dp">
 
-    </ScrollView>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/detail_scrollview">
-        <TextView
-            android:id="@+id/tes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="History"
-            android:textStyle="bold"
-            />
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_baseline_attach_money_24"
+                                    />
+                            </LinearLayout>
 
-        <TextView
-            android:id="@+id/history_nodata"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="No History"
-            android:visibility="gone"
-            />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:gravity="center">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:text="Listing"
+                                    android:textColor="@color/primary"
+                                    android:textSize="25sp"
+                                    android:textStyle="bold" />
+                                <!--This is ImageButton for the expansion icon.-->
+                                <ImageView
+                                    android:id="@+id/arrow_button1"
+                                    android:layout_width="40dp"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_expand_more_24"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Bagian GONE yang akan muncul setelah di klik-->
+                        <LinearLayout
+                            android:id="@+id/hidden_view1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            >
+                            <!--Child LinearLayout 1-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp">
+                                <Button
+                                    android:id="@+id/detail_nft_listing"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Listing"
+                                    android:visibility="visible" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <!--Base CardView-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/base_cardview2"
+                    style="@style/Base.CardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        >
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/detail_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tes"/>
-    </RelativeLayout>
+                        <!--Bagian TOP yang terlihat-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:id="@+id/icon_deskripsi"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_baseline_deskripsi_24"
+                                    />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:gravity="center">
+                                <TextView
+                                    android:id="@+id/heading"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:text="Description"
+                                    android:textColor="@color/primary"
+                                    android:textSize="25sp"
+                                    android:textStyle="bold" />
+                                <!--This is ImageButton for the expansion icon.-->
+                                <ImageView
+                                    android:id="@+id/arrow_button2"
+                                    android:layout_width="40dp"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_expand_more_24"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Bagian GONE yang akan muncul setelah di klik-->
+                        <LinearLayout
+                            android:id="@+id/hidden_view2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            >
+                            <!--Child LinearLayout 1-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Created By "
+                                    android:textColor="#000000"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"/>
+
+                                <TextView
+                                    android:id="@+id/detail_nft_creator"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="User"
+                                    android:textColor="@color/primary"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!--Base CardView-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/base_cardview3"
+                    style="@style/Base.CardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        >
+
+                        <!--Bagian TOP yang terlihat-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_baseline_about_24"
+                                    />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:gravity="center">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:text="About The NFT"
+                                    android:textColor="@color/primary"
+                                    android:textSize="25sp"
+                                    android:textStyle="bold" />
+                                <!--This is ImageButton for the expansion icon.-->
+                                <ImageView
+                                    android:id="@+id/arrow_button3"
+                                    android:layout_width="40dp"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_expand_more_24"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Bagian GONE yang akan muncul setelah di klik-->
+                        <LinearLayout
+                            android:id="@+id/hidden_view3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            >
+                            <!--Child LinearLayout 1-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp">
+                                <TextView
+                                    android:id="@+id/detail_nft_deskripsi"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Created By Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                    android:textColor="#000000"
+                                    android:textSize="14sp"
+                                    />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <!--Base CardView-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/base_cardview4"
+                    style="@style/Base.CardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        >
+
+                        <!--Bagian TOP yang terlihat-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_baseline_detil_24"
+                                    />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:gravity="center">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:text="Details"
+                                    android:textColor="@color/primary"
+                                    android:textSize="25sp"
+                                    android:textStyle="bold" />
+                                <!--This is ImageButton for the expansion icon.-->
+                                <ImageView
+                                    android:id="@+id/arrow_button4"
+                                    android:layout_width="40dp"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_expand_more_24"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Bagian GONE yang akan muncul setelah di klik-->
+                        <LinearLayout
+                            android:id="@+id/hidden_view4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            >
+                            <!--Child LinearLayout 1-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="5dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Owner Full Name: "
+                                    android:textColor="#000000"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    />
+                                <TextView
+                                    android:id="@+id/detail_nft_owner_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Owner name "
+                                    android:textColor="@color/primary"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    />
+                            </LinearLayout>
+                            <!--Child LinearLayout 2-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Contact Owner : "
+                                    android:textColor="#000000"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    />
+                                <TextView
+                                    android:id="@+id/detail_nft_owner_telp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Owner telp"
+                                    android:textColor="@color/primary"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    />
+                            </LinearLayout>
+                            <!--Child LinearLayout 3-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Token ID : "
+                                    android:textColor="#000000"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    />
+                                <TextView
+                                    android:id="@+id/detail_nft_token"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="NFT Token"
+                                    android:textColor="@color/primary"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <!--Base CardView-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/base_cardview5"
+                    style="@style/Base.CardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        >
+
+                        <!--Bagian TOP yang terlihat-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/ic_baseline_access_time_24"
+                                    />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:gravity="center">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:text="History"
+                                    android:textColor="@color/primary"
+                                    android:textSize="25sp"
+                                    android:textStyle="bold" />
+                                <!--This is ImageButton for the expansion icon.-->
+                                <ImageView
+                                    android:id="@+id/arrow_button5"
+                                    android:layout_width="40dp"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_baseline_expand_more_24"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!--Bagian GONE yang akan muncul setelah di klik-->
+                        <LinearLayout
+                            android:id="@+id/hidden_view5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            >
+                            <TextView
+                                android:id="@+id/history_nodata"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="100dp"
+                                android:gravity="center"
+                                android:text="No History"
+                                android:visibility="gone"
+                                />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/detail_recycler"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
 
 
+        </androidx.core.widget.NestedScrollView>
         <Button
         android:id="@+id/detail_nft_buy"
         android:layout_width="match_parent"

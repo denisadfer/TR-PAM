@@ -74,6 +74,8 @@ public class MynftFragment extends Fragment{
                     }
                 }
                 if (isNotifRead){
+                    notif_isnotnew.setVisibility(View.VISIBLE);
+                    notif_isnew.setVisibility(View.GONE);
                     notif_isnotnew.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -86,7 +88,7 @@ public class MynftFragment extends Fragment{
                     notif_isnew.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            dataref2.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            dataref2.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()){

@@ -33,7 +33,7 @@
         </androidx.cardview.widget.CardView>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textinput_price"
+            android:id="@+id/textinput_price2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -60,7 +60,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_below="@+id/textinput_price"
+            android:layout_below="@+id/textinput_price2"
             android:hint="Your Balance : "
             app:errorEnabled="true"
             >
