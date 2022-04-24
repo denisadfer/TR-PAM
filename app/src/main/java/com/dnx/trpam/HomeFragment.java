@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment{
                     holder.price.setText(String.valueOf(model.getPrice()));
                 } else {
                     holder.price.setText(getResources().getString(R.string.notlisted));
-                    holder.buy.setEnabled(false);
+                    holder.buy.setText("Details");
                 }
 
                 holder.title.setText(model.getTitle());

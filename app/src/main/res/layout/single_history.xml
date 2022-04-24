@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardBackgroundColor="@color/teal_700"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="20dp">
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    app:contentPadding="3dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/primary">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_margin="10dp">
+            android:gravity="center_vertical">
             <TextView
                 android:id="@+id/history_nft_date"
                 android:layout_width="0dp"
@@ -22,49 +24,31 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textSize="18sp"/>
-            <TextView
-                android:id="@+id/history_nft_owner"
-                android:layout_width="0dp"
+            <View
+                android:id="@+id/notif_line"
+                android:layout_width="2dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Owner"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
+                android:background="@color/primary"
+                />
             <TextView
                 android:id="@+id/history_nft_action"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="3"
+                android:layout_marginStart="5dp"
+                android:maxLines="2"
                 android:text="Action"
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textSize="18sp"/>
 
-            <TextView
-                android:id="@+id/history_nft_newowner"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="NewOwner"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:visibility="visible"/>
-            <TextView
-                android:id="@+id/history_nft_price"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Price"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:visibility="visible"/>
-
 
 
 
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
+
+
+
+
+</androidx.cardview.widget.CardView>

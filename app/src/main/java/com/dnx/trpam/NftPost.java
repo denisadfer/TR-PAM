@@ -12,10 +12,22 @@ public class NftPost {
         this.token = token;
         this.owner = owner;
         this.title = title;
+        this.price = price;
         this.desc = desc;
         this.creator = creator;
-        this.price = price;
     }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) { this.desc = desc; }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) { this.creator = creator; }
 
     public String getImg() {
         return img;
@@ -48,18 +60,6 @@ public class NftPost {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) { this.desc = desc; }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) { this.creator = creator; }
 
     public double getPrice() {
         return price;

@@ -1,10 +1,17 @@
 package com.dnx.trpam;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,12 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -39,6 +41,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -81,10 +84,10 @@ public class AddMynft extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(AddMynft.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED) {
                     //kalau tidak di allow permission
                     ActivityCompat.requestPermissions(AddMynft.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
-                            ,100);
+                    ,100);
                 } else {
                     //kalau di allow
                     select_image();
@@ -174,15 +177,14 @@ public class AddMynft extends AppCompatActivity {
                         HashMap hashMap = new HashMap();
                         hashMap.put("img",uri.toString());
                         hashMap.put("owner",owner);
-                        hashMap.put("creator",creator);
                         hashMap.put("price",price);
+                        hashMap.put("creator",creator);
                         hashMap.put("title",title);
-                        hashMap.put("description",desc);
                         hashMap.put("token",token);
-                        String buyer = "";
-                        String aksi = "Created Nft";
+                        hashMap.put("description",desc);
                         String notif_creator = "You Have Created NFT "+ title;
-                        History history = new History(owner,buyer,String.valueOf(price),aksi,token);
+                        String histori_note = owner +" has created NFT ";
+                        History history = new History(histori_note,token);
                         Notif notif = new Notif(notif_creator, owner,"yes");
 
                         dataref3.push().setValue(notif);

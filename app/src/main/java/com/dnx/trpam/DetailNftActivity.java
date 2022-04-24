@@ -173,6 +173,13 @@ public class DetailNftActivity extends AppCompatActivity {
                     nft_desc.setText(desc);
                     nft_price.setText(price);
                     nft_token.setText(token);
+                    if (nft_price.getText().toString().equals("0")){
+                        nft_buy.setVisibility(View.GONE);
+                        if (owner.equals(firebaseUser.getDisplayName())){
+                            base_card1.setVisibility(View.VISIBLE);
+                            nft_linear.setVisibility(View.VISIBLE);
+                        }
+                    }
                     if (owner.equals(firebaseUser.getDisplayName())){
                         base_card1.setVisibility(View.VISIBLE);
                         nft_linear.setVisibility(View.VISIBLE);
@@ -313,11 +320,11 @@ public class DetailNftActivity extends AppCompatActivity {
                                     swipe_listing.showResultIcon(true);
 
                                     nftAdd_price.setPrice(Double.parseDouble(popup_price.getText().toString()));
-                                    String buyer = "";
-                                    String aksi = "Listing NFT for";
-                                    String notif_listing = "You have sell your NFT "+ nft_title.getText().toString() + " for "+ popup_price.getText().toString() + " ETH";
 
-                                    History history = new History(nftAdd_price.owner, buyer,popup_price.getText().toString(),aksi, nftAdd_price.token);
+                                    String notif_listing = "You have sold your NFT "+ nft_title.getText().toString() + " for "+ popup_price.getText().toString() + " ETH";
+                                    String history_note = nftAdd_price.owner + " Sell NFT for "+ popup_price.getText().toString() + " ETH";
+
+                                    History history = new History(history_note, nftAdd_price.token);
                                     Notif notif_lister = new Notif(notif_listing, firebaseUser.getDisplayName(),"yes");
 
                                     dataref4.push().setValue(notif_lister);
@@ -420,12 +427,14 @@ public class DetailNftActivity extends AppCompatActivity {
                                     Double saldo_akhir = saldo-harga;
                                     Double saldo_akhir_penjual = saldo_penjual_nft+harga;
                                     swipe_buy.showResultIcon(true);
-                                    String buyer = firebaseUser.getDisplayName();
-                                    String aksi = "Tranfer Nft to";
-                                    History history = new History(nft_owner.getText().toString(), buyer,nft_price.getText().toString(),aksi, nftAdd_buy.token);
+
+                                    String history_note2 = nft_owner.getText().toString() + " Transfer NFT to "+
+                                            firebaseUser.getDisplayName() + " for "+ nft_price.getText().toString() + " ETH";
                                     String notif_pembeli = "You have Buy NFT "+ nft_title.getText().toString()+ " from "+nft_owner.getText().toString();
                                     String notif_penjual = "Your NFT "+ nft_title.getText().toString() + " has been sold for "+ nft_price.getText().toString()
                                             +" ETH to "+ firebaseUser.getDisplayName();
+
+                                    History history = new History(history_note2, nftAdd_buy.token);
                                     Notif notif = new Notif(notif_pembeli, firebaseUser.getDisplayName(),"yes");
                                     Notif notif2 = new Notif(notif_penjual, nft_owner.getText().toString(),"yes");
 
@@ -528,21 +537,10 @@ public class DetailNftActivity extends AppCompatActivity {
             }
             @Override
             protected void onBindViewHolder(@NonNull HistoryViewHolder holder, int position, @NonNull History model) {
-                holder.owner.setText(model.getOwner());
                 DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
                 holder.dateH.setText(dateFormat.format(model.dateBuy));
                 holder.action.setText(model.getAksi());
-                if (model.getBuyer() != null){
-                    holder.newOwner.setText(model.getBuyer());
-                } else {
-                    holder.newOwner.setVisibility(View.GONE);
-                }
-                if (model.getPrice().equals("0")){
-                    holder.price.setVisibility(View.GONE);
 
-                } else {
-                    holder.price.setText(model.getPrice());
-                }
             }
 
             @NonNull
