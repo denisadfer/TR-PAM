@@ -16,7 +16,8 @@
         android:theme="@style/Theme.TRpam">
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,7 +28,7 @@
             android:exported="false" />
         <activity
             android:name=".NotifActivity"
-            android:exported="false"></activity>
+            android:exported="false"/>
         <activity
             android:name=".DetailNftActivity"
             android:exported="false" />

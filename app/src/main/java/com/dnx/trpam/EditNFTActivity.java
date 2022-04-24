@@ -1,6 +1,10 @@
 package com.dnx.trpam;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 public class EditNFTActivity extends AppCompatActivity {
     EditText descTxt;
     Button saveBtn;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,31 @@ public class EditNFTActivity extends AppCompatActivity {
     private void editDesc(String desc) {
         String Nft_key = getIntent().getStringExtra("Nft_key");
         FirebaseDatabase.getInstance().getReference("Nft_Post").child(Nft_key).child("description").setValue(desc);
+
+        progressDialog = new ProgressDialog(EditNFTActivity.this);
+        progressDialog.setTitle("Loading");
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                progressDialog.dismiss();
+                new AlertDialog.Builder(EditNFTActivity.this)
+                        .setTitle("Description Changed")
+                        .setMessage("Your nft description has been changed successfully")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                finish();
+                            }}).show();
+            }
+        }, 1000);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         finish();
+
     }
 }

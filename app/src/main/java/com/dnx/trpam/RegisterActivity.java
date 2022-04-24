@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText editName, editUser, editPass, editPass2, editEmail, editPhone;
     Button btnRegis;
     TextView loginHere, language;
-    private ProgressDialog progressDialog;
+    private ProgressDialog progressDialog, progressDialog2;
     private FirebaseAuth mAuth;
     private DatabaseReference mFirebaseDatabase;
     boolean isExist=false;
@@ -51,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         editEmail = findViewById(R.id.email);
         editUser = findViewById(R.id.username);
         editPhone = findViewById(R.id.phone);
+        editPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         editPass = findViewById(R.id.pass1);
         editPass2 = findViewById(R.id.pass2);
         btnRegis = findViewById(R.id.regis_btn1);
@@ -65,10 +68,10 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         mAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(RegisterActivity.this);
-        progressDialog.setTitle("Loading");
-        progressDialog.setMessage("Waiting for Login");
-        progressDialog.setCancelable(false);
+        progressDialog2 = new ProgressDialog(RegisterActivity.this);
+        progressDialog2.setTitle("Loading");
+        progressDialog2.setMessage("Waiting for Login");
+        progressDialog2.setCancelable(false);
 
         loginHere.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(),LoginActivity.class));
@@ -143,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
 
                         if (!isExist) {
-                            progressDialog.show();
+                            progressDialog2.show();
                             mAuth.createUserWithEmailAndPassword(vEmail, vPass)
                                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                         @Override
@@ -176,7 +179,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                 Toast.makeText(getApplicationContext(), task.getException().getMessage(),
                                                         Toast.LENGTH_SHORT).show();
                                             }
-                                            progressDialog.dismiss();
+                                            progressDialog2.dismiss();
                                         }
                                     });
                         } else {
@@ -208,10 +211,32 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(i==0){
                     setLocale("en");
-                    recreate();
+                    progressDialog = new ProgressDialog(RegisterActivity.this);
+                    progressDialog.setTitle("Change Language");
+                    progressDialog.setMessage("Please wait...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            progressDialog.dismiss();
+                            recreate();
+                        }
+                    }, 1000);
                 }else if(i==1){
                     setLocale("in");
-                    recreate();
+                    progressDialog = new ProgressDialog(RegisterActivity.this);
+                    progressDialog.setTitle("Change Language");
+                    progressDialog.setMessage("Please wait...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            progressDialog.dismiss();
+                            recreate();
+                        }
+                    }, 1000);
                 }
                 dialogInterface.dismiss();
             }
@@ -249,5 +274,11 @@ public class RegisterActivity extends AppCompatActivity {
         if(currentUser != null){
             reload();
         }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+
     }
 }

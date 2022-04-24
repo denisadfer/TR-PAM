@@ -2,11 +2,13 @@ package com.dnx.trpam;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,7 @@ import java.util.Locale;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
     TextView txtName,txtEmail;
     Button btnLogout, btnEdit, btnChange, btnLang;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -71,11 +74,35 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if(i==0){
                     setLocale("en");
                     saveLocale("en");
-                    getActivity().recreate();
+                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setTitle("Change Language");
+                    progressDialog.setMessage("Please wait...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            progressDialog.dismiss();
+                            getActivity().recreate();
+                        }
+                    }, 1000);
+
                 }else if(i==1){
                     setLocale("in");
                     saveLocale("in");
-                    getActivity().recreate();
+
+                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setTitle("Change Language");
+                    progressDialog.setMessage("Please wait...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            progressDialog.dismiss();
+                            startActivity(new Intent(getActivity(),MainActivity.class));
+                        }
+                    }, 1000);
                 }
                 dialogInterface.dismiss();
             }
@@ -104,9 +131,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.logout_btn:
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-                getActivity().finish();
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("Sign out");
+                progressDialog.setMessage("Please wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        progressDialog.dismiss();
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                    }
+                }, 1000);
+
+
                 break;
             case R.id.edit_btn:
                 startActivity(new Intent(getActivity(), EditActivity.class));

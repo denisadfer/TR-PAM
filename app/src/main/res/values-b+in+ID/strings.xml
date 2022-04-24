@@ -2,7 +2,7 @@
     <string name="app_name">NFT App</string>
     <string name="logout">Keluar</string>
     <string name="fullname">Nama Lengkap</string>
-    <string name="username">Username</string>
+    <string name="username">Nama Pengguna</string>
     <string name="email">Email</string>
     <string name="phonenumber">Nomor Telepon</string>
     <string name="password">Kata Sandi</string>
@@ -27,7 +27,7 @@
     <string name="setimage">Atur Gambar</string>
     <string name="owned">Dimiliki Oleh</string>
     <string name="namenft">Nama NFT</string>
-    <string name="descnft">Deskripsi NFT</string>
+    <string name="descnft">Tentang NFT</string>
     <string name="token">Token NFT</string>
     <string name="edit">Ubah Profil</string>
     <string name="changepass">Ubah Kata Sandi</string>

@@ -26,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class NotifActivity extends AppCompatActivity {
 
@@ -50,7 +52,6 @@ public class NotifActivity extends AppCompatActivity {
         dataref = FirebaseDatabase.getInstance().getReference().child("Notif");
 
         datarefq = dataref.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName());
-
         notif_recycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         notif_recycler.setHasFixedSize(true);
         LoadNotif();
@@ -71,7 +72,7 @@ public class NotifActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull NotifViewHolder holder, int position, @NonNull Notif model) {
-                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm", Locale.getDefault());
                 holder.dateDapet.setText(dateFormat.format(model.dateNotif));
                 holder.isiNotif.setText(model.getNotif());
 

@@ -1,9 +1,11 @@
 package com.dnx.trpam;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,7 @@ public class SearchFragment extends Fragment {
     FirebaseUser firebaseUser;
     DatabaseReference dataref;
     Query datarefQ;
+    private ProgressDialog progressDialog;
     FirebaseRecyclerOptions<NftPost> nft_options;
     FirebaseRecyclerAdapter<NftPost,HomeViewHolder> adapter;
 
@@ -98,10 +101,22 @@ public class SearchFragment extends Fragment {
                 }
                 searchRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
                 searchRecycler.setHasFixedSize(true);
-                LoadNFT();
-                dialogInterface.dismiss();
-                searchView.setQuery("", false);
-                searchView.clearFocus();
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("Loading");
+                progressDialog.setMessage("Please wait...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        progressDialog.dismiss();
+                        LoadNFT();
+                        dialogInterface.dismiss();
+                        searchView.setQuery("", false);
+                        searchView.clearFocus();
+                    }
+                }, 1000);
+
             }
         });
         AlertDialog mDialog = mBuilder.create();

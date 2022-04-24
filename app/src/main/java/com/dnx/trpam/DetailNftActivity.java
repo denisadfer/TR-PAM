@@ -3,6 +3,7 @@ package com.dnx.trpam;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +46,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
@@ -58,6 +62,7 @@ public class DetailNftActivity extends AppCompatActivity {
     LinearLayout nft_linear, hidden_view1, hidden_view2, hidden_view3, hidden_view4, hidden_view5;
     Dialog mdialog;
     RecyclerView history_recycler;
+    private ProgressDialog progressDialog;
     FirebaseRecyclerOptions<History> nft_options;
     FirebaseRecyclerAdapter<History,HistoryViewHolder> adapter;
     Query datarefQ;
@@ -314,37 +319,43 @@ public class DetailNftActivity extends AppCompatActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (Double.parseDouble(popup_price.getText().toString()) >0){
-                                    swipe_listing.showResultIcon(true);
+                                if (!TextUtils.isEmpty(popup_price.getText().toString())){
+                                    if (Double.parseDouble(popup_price.getText().toString()) >0){
+                                        swipe_listing.showResultIcon(true);
 
-                                    nftAdd_price.setPrice(Double.parseDouble(popup_price.getText().toString()));
+                                        nftAdd_price.setPrice(Double.parseDouble(popup_price.getText().toString()));
 
-                                    String notif_listing = "You have sold your NFT "+ nft_title.getText().toString() + " for "+ popup_price.getText().toString() + " ETH";
-                                    String history_note = nftAdd_price.owner + " Sell NFT for "+ popup_price.getText().toString() + " ETH";
+                                        String notif_listing = "You have sold your NFT "+ nft_title.getText().toString() + " for "+ popup_price.getText().toString() + " ETH";
+                                        String history_note = nftAdd_price.owner + " Sell NFT for "+ popup_price.getText().toString() + " ETH";
 
-                                    History history = new History(history_note, nftAdd_price.token);
-                                    Notif notif_lister = new Notif(notif_listing, firebaseUser.getDisplayName(),"yes");
+                                        History history = new History(history_note, nftAdd_price.token);
+                                        Notif notif_lister = new Notif(notif_listing, firebaseUser.getDisplayName(),"yes");
 
-                                    dataref4.push().setValue(notif_lister);
-                                    dataref2.push().setValue(history);
-                                    dataref.child(Nft_key).setValue(nftAdd_price).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    mdialog.dismiss();
-                                                    finish();
-                                                    startActivity(getIntent());
-                                                }
-                                            },1000);
+                                        dataref4.push().setValue(notif_lister);
+                                        dataref2.push().setValue(history);
+                                        dataref.child(Nft_key).setValue(nftAdd_price).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        mdialog.dismiss();
+                                                        finish();
+                                                        startActivity(getIntent());
+                                                    }
+                                                },1000);
 
-                                        }
-                                    });
+                                            }
+                                        });
+                                    } else {
+                                        swipe_listing.showResultIcon(false);
+                                        popup_listing_lay.setError("You can't sell NFT as a free");
+                                    }
                                 } else {
                                     swipe_listing.showResultIcon(false);
-                                    popup_listing_lay.setError("You can't listing NFT as a free");
+                                    popup_listing_lay.setError("Please, input your nft price");
                                 }
+
                             }
                         },2000);
                     }
@@ -473,7 +484,13 @@ public class DetailNftActivity extends AppCompatActivity {
                             String img = snapshot.child("img").getValue().toString();
                             String title = snapshot.child("title").getValue().toString();
                             downloadImage(title, img);
-                            Toast.makeText(getApplicationContext(), "Download Successfully", Toast.LENGTH_SHORT).show();
+                            new AlertDialog.Builder(DetailNftActivity.this)
+                                    .setTitle("Download")
+                                    .setMessage("Download image successfully")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            finish();
+                                        }}).show();
                         }
                     }
 
@@ -493,9 +510,21 @@ public class DetailNftActivity extends AppCompatActivity {
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                dataref.child(Nft_key).removeValue();
-                                Toast.makeText(getApplicationContext(), "Delete Successfully", Toast.LENGTH_SHORT).show();
-                                finish();
+
+                                progressDialog = new ProgressDialog(DetailNftActivity.this);
+                                progressDialog.setTitle("Loading");
+                                progressDialog.setMessage("Please wait...");
+                                progressDialog.setCancelable(false);
+                                progressDialog.show();
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    public void run() {
+                                        progressDialog.dismiss();
+                                        dataref.child(Nft_key).removeValue();
+                                        finish();
+                                    }
+                                }, 1000);
+
                             }})
                         .setNegativeButton(android.R.string.no, null).show();
 
@@ -543,7 +572,7 @@ public class DetailNftActivity extends AppCompatActivity {
             }
             @Override
             protected void onBindViewHolder(@NonNull HistoryViewHolder holder, int position, @NonNull History model) {
-                DateFormat dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm", Locale.getDefault());
                 holder.dateH.setText(dateFormat.format(model.dateBuy));
                 holder.action.setText(model.getAksi());
 

@@ -29,6 +29,7 @@
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/activity_change_pass.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/activity_detail_nft.xml" value="0.22" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/activity_edit.xml" value="0.35520833333333335" />
+        <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/activity_edit_nftactivity.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/activity_login.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/activity_main.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/activity_notif.xml" value="0.35520833333333335" />
@@ -52,7 +53,6 @@
         <entry key="..\:/Users/denis/OneDrive/Documents/tugas/IN323 B PAM (Ocsa)/TR/app/src/main/res/layout/fragment_mynft.xml" value="0.2" />
         <entry key="..\:/Users/denis/OneDrive/Documents/tugas/IN323 B PAM (Ocsa)/TR/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="..\:/Users/denis/OneDrive/Documents/tugas/IN323 B PAM (Ocsa)/TR/app/src/main/res/layout/fragment_search.xml" value="0.22" />
-        <entry key="..\:/Users/denis/OneDrive/Documents/tugas/IN323 B PAM (Ocsa)/TR2/TR-PAM/app/src/main/res/layout/activity_splash.xml" value="0.2" />
       </map>
     </option>
   </component>

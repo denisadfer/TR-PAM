@@ -3,7 +3,12 @@ package com.dnx.trpam;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 public class EditActivity extends AppCompatActivity {
     EditText editName, editPass, editPhone;
     Button btnSave;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,15 +86,34 @@ public class EditActivity extends AppCompatActivity {
 
                         if (!TextUtils.isEmpty(phone))
                             FirebaseDatabase.getInstance().getReference("DataUser").child(userName).child("phone").setValue(phone);
+                        progressDialog = new ProgressDialog(EditActivity.this);
+                        progressDialog.setTitle("Loading");
+                        progressDialog.setMessage("Please wait...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                progressDialog.dismiss();
+                                new AlertDialog.Builder(EditActivity.this)
+                                        .setTitle("Profile changed")
+                                        .setMessage("Your profile has been changed successfully")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+                                                finish();
+                                            }}).show();
+                            }
+                        }, 1000);
 
-                        Toast.makeText(getApplicationContext(), "Update Successfully", Toast.LENGTH_LONG).show();
-                        finish();
                     } else {
                         editPass.setError("Password is incorrect");
                         editPass.requestFocus();
                     }
                 }
             });
+        }else {
+            editPass.setError("Enter your password");
+            editPass.requestFocus();
         }
     }
 }

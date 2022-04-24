@@ -3,6 +3,9 @@ package com.dnx.trpam;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -48,24 +51,48 @@ public class ChangePassActivity extends AppCompatActivity {
 
     public void changePass(String email, String oldPassword, String newPassword) {
         if(!TextUtils.isEmpty(oldPassword) && !TextUtils.isEmpty(newPassword)) {
-            AuthCredential credential = EmailAuthProvider.getCredential(email, oldPassword);
-            FirebaseAuth.getInstance().getCurrentUser().reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        FirebaseAuth.getInstance().getCurrentUser().updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(getApplicationContext(),"Password Changed", Toast.LENGTH_LONG).show();
-                                finish();
-                            }
-                        });
-                    } else {
-                        oldPass.setError("Password is incorrect");
-                        oldPass.requestFocus();
+            if(oldPassword.equals(newPassword)){
+                new AlertDialog.Builder(ChangePassActivity.this)
+                        .setTitle("Password Change Not Successfull")
+                        .setMessage("Your new password not beem changed")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                            }}).show();
+            } else {
+                AuthCredential credential = EmailAuthProvider.getCredential(email, oldPassword);
+                FirebaseAuth.getInstance().getCurrentUser().reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseAuth.getInstance().getCurrentUser().updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    new AlertDialog.Builder(ChangePassActivity.this)
+                                            .setTitle("Password Changed")
+                                            .setMessage("Your password has been changed successfully")
+                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int whichButton) {
+                                                    FirebaseAuth.getInstance().signOut();
+                                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                                }}).show();
+
+                                }
+                            });
+                        } else {
+                            oldPass.setError("Password is incorrect");
+                            oldPass.requestFocus();
+                        }
                     }
-                }
-            });
+                });
+            }
+
+        } else if (TextUtils.isEmpty(oldPassword)){
+            oldPass.setError("Enter your old password");
+            oldPass.requestFocus();
+        } else if (TextUtils.isEmpty(newPassword)){
+            newPass.setError("Enter your new password");
+            newPass.requestFocus();
         }
     }
 

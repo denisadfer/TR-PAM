@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,10 +88,33 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(i==0){
                     setLocale("en");
-                    recreate();
+                    progressDialog = new ProgressDialog(LoginActivity.this);
+                    progressDialog.setTitle("Change Language");
+                    progressDialog.setMessage("Please wait...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            progressDialog.dismiss();
+                            recreate();
+                        }
+                    }, 1000);
                 }else if(i==1){
                     setLocale("in");
-                    recreate();
+                    progressDialog = new ProgressDialog(LoginActivity.this);
+                    progressDialog.setTitle("Change Language");
+                    progressDialog.setMessage("Please wait...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            progressDialog.dismiss();
+                            recreate();
+                        }
+                    }, 1000);
+
                 }
                 dialogInterface.dismiss();
             }
@@ -122,9 +146,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful() && task.getResult()!=null){
                     if (task.getResult().getUser()!=null){
-                        reload();
+                        progressDialog = new ProgressDialog(LoginActivity.this);
+                        progressDialog.setTitle("Sign in");
+                        progressDialog.setMessage("Please wait...");
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                progressDialog.dismiss();
+                                reload();
+                            }
+                        }, 1000);
+
                     }else {
-                        Toast.makeText(getApplicationContext(), "Login failed",
+                        Toast.makeText(getApplicationContext(), "Login failed, server error",
                                 Toast.LENGTH_SHORT).show();
 
                     }
@@ -156,5 +192,15 @@ public class LoginActivity extends AppCompatActivity {
         if(currentUser != null){
             reload();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
     }
 }

@@ -18,7 +18,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="20dp"
                 android:text="Date"/>
             <View
                 android:id="@+id/notif_line"

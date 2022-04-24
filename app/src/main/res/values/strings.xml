@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">NFT App</string>
     <string name="logout">Logout</string>
-    <string name="fullname">Full name</string>
+    <string name="fullname">Your full name</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="phonenumber">Phone number</string>
@@ -27,7 +27,7 @@
     <string name="setimage">Set Image</string>
     <string name="owned">Owned By</string>
     <string name="namenft">NFT Name</string>
-    <string name="descnft">NFT Description</string>
+    <string name="descnft">About NFT</string>
     <string name="token">NFT Token</string>
     <string name="edit">Edit Profile</string>
     <string name="changepass">Change Password</string>
