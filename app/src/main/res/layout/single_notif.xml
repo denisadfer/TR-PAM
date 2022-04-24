@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/primary">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <TextView
+                android:id="@+id/notif_tgl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginHorizontal="40dp"
+                android:text="Date"/>
+            <View
+                android:id="@+id/notif_line"
+                android:layout_width="2dp"
+                android:layout_toEndOf="@+id/notif_tgl"
+                android:layout_height="wrap_content"
+                android:background="#c0c0c0"
+                />
+            <TextView
+                android:id="@+id/notif_notifnya"
+                android:layout_width="wrap_content"
+                android:layout_alignLeft="@+id/notif_line"
+                android:layout_centerInParent="true"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:maxLines="2"
+                android:text="Your Nft has been sold"/>
+
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.cardview.widget.CardView>

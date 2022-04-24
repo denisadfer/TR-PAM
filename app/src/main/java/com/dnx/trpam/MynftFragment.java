@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,15 +31,15 @@ import com.squareup.picasso.Picasso;
 public class MynftFragment extends Fragment{
 
     Button sell_btn;
+    ImageView notif_isnotnew, notif_isnew;
     TextView mynft_nodata;
     RecyclerView recyclerView;
     FirebaseUser firebaseUser;
-    DatabaseReference dataref;
+    DatabaseReference dataref, dataref2;
     FirebaseRecyclerOptions<NftPost> nft_options;
     FirebaseRecyclerAdapter<NftPost,MynftViewHolder> adapter;
     Query datarefQ;
     boolean isHaveNft=false;
-
 
     @Nullable
     @Override
@@ -48,18 +49,81 @@ public class MynftFragment extends Fragment{
         sell_btn = view.findViewById(R.id.sell_btn);
         recyclerView = view.findViewById(R.id.mynft_recycler);
         mynft_nodata = view.findViewById(R.id.mynft_nodata);
+        notif_isnew = view.findViewById(R.id.notif_isnew);
+        notif_isnotnew = view.findViewById(R.id.notif_isnotnew);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
+        dataref2 = FirebaseDatabase.getInstance().getReference().child("Notif");
         datarefQ = dataref.orderByChild("owner").equalTo(firebaseUser.getDisplayName());
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         recyclerView.setHasFixedSize(true);
         LoadNFT();
 
+        dataref2.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName());
+        dataref2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean isNotifRead=true;
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Notif notif = dataSnapshot.getValue(Notif.class);
+
+                    if (notif.getIsNew().equals("yes")){
+                        isNotifRead=false;
+                    }
+                }
+                if (isNotifRead){
+                    notif_isnotnew.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            startActivity(new Intent(getActivity(),NotifActivity.class));
+                        }
+                    });
+                } else {
+                    notif_isnotnew.setVisibility(View.GONE);
+                    notif_isnew.setVisibility(View.VISIBLE);
+                    notif_isnew.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dataref2.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()){
+                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                            Notif notif = dataSnapshot.getValue(Notif.class);
+
+                                            if (notif.getIsNew().equals("yes")){
+                                                String key = dataSnapshot.getKey();
+                                                dataref2.child(key).child("isNew").setValue("no");
+                                                startActivity(new Intent(getActivity(),NotifActivity.class));
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         sell_btn.setOnClickListener(view1 -> {
             startActivity(new Intent(getActivity(),AddMynft.class));
         });
+
+
 
         return view;
     }

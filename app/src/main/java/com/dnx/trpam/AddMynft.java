@@ -53,7 +53,7 @@ public class AddMynft extends AppCompatActivity {
     EditText title_nft;
     ImageView img_nft;
     String token_img;
-    DatabaseReference dataref, dataref2;
+    DatabaseReference dataref, dataref2, dataref3;
     StorageReference storageref;
     Uri imageUri;
 
@@ -73,6 +73,7 @@ public class AddMynft extends AppCompatActivity {
 
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
         dataref2 = FirebaseDatabase.getInstance().getReference().child("History");
+        dataref3 = FirebaseDatabase.getInstance().getReference().child("Notif");
         storageref = FirebaseStorage.getInstance().getReference().child("Nft_images");
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -173,14 +174,18 @@ public class AddMynft extends AppCompatActivity {
                         hashMap.put("token",token);
                         String buyer = "";
                         String aksi = "Created Nft";
+                        String notif_creator = "You Have Created NFT "+ title;
                         History history = new History(owner,buyer,String.valueOf(price),aksi,token);
+                        Notif notif = new Notif(notif_creator, owner,"yes");
+
+                        dataref3.push().setValue(notif);
                         dataref2.push().setValue(history);
                         dataref.push().setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
                                 pd.dismiss();
                                 finish();
-                                startActivity(new Intent(getApplicationContext(),MynftFragment.class));
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
                             }
                         });
                     }
@@ -272,6 +277,13 @@ public class AddMynft extends AppCompatActivity {
             e.printStackTrace();
         }
         return "";
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+
     }
 
 

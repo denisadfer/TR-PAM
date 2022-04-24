@@ -17,6 +17,11 @@
             android:name=".NFTPreview"
             android:exported="false" />
         <activity
+            android:name=".NotifActivity"
+            android:exported="false"
+            >
+        </activity>
+        <activity
             android:name=".DetailNftActivity"
             android:exported="false" />
         <activity

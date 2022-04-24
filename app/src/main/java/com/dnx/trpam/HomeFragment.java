@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment{
     }
 
     private void LoadNFT() {
-        nft_options = new FirebaseRecyclerOptions.Builder<NftPost>().setQuery(datarefQ,NftPost.class).build();
+        nft_options = new FirebaseRecyclerOptions.Builder<NftPost>().setQuery(dataref,NftPost.class).build();
         adapter = new FirebaseRecyclerAdapter<NftPost, HomeViewHolder>(nft_options) {
             @Override
             protected void onBindViewHolder(@NonNull HomeViewHolder holder, int position, @NonNull NftPost model) {
@@ -88,7 +88,13 @@ public class HomeFragment extends Fragment{
                 if (model.getOwner().equals(firebaseUser.getDisplayName())){
                     holder.buy.setText("Detail");
                 }
-                holder.price.setText(String.valueOf(model.getPrice()));
+                if (model.getPrice() > 0){
+                    holder.price.setText(String.valueOf(model.getPrice()));
+                } else {
+                    holder.price.setText("Not Listed Yet");
+                    holder.buy.setEnabled(false);
+                }
+
                 holder.title.setText(model.getTitle());
                 holder.owner.setText(model.getOwner());
 

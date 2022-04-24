@@ -45,7 +45,7 @@ public class DetailNftActivity extends AppCompatActivity {
     TextView nft_owner, nft_price, nft_token, nft_title, history_nodata;
     Button nft_listing, nft_buy;
     ImageView nft_img;
-    DatabaseReference dataref, dataref2, dataref3;
+    DatabaseReference dataref, dataref2, dataref3, dataref4;
     private FirebaseUser firebaseUser;
     LinearLayout nft_linear;
     Dialog mdialog;
@@ -54,6 +54,7 @@ public class DetailNftActivity extends AppCompatActivity {
     FirebaseRecyclerAdapter<History,HistoryViewHolder> adapter;
     Query datarefQ;
     double saldo, harga;
+    double saldo_penjual_nft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class DetailNftActivity extends AppCompatActivity {
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
         dataref2 = FirebaseDatabase.getInstance().getReference().child("History");
         dataref3 = FirebaseDatabase.getInstance().getReference().child("DataUser");
+        dataref4 = FirebaseDatabase.getInstance().getReference().child("Notif");
 
         NftPost nftAdd_price = new NftPost();
         NftPost nftAdd_buy = new NftPost();
@@ -167,7 +169,12 @@ public class DetailNftActivity extends AppCompatActivity {
                                 nftAdd_price.setPrice(Double.parseDouble(popup_price.getText().toString()));
                                 String buyer = "";
                                 String aksi = "Listing NFT for";
+                                String notif_listing = "You have sell your NFT "+ nft_title.getText().toString() + " for "+ popup_price.getText().toString() + " ETH";
+
                                 History history = new History(nftAdd_price.owner, buyer,popup_price.getText().toString(),aksi, nftAdd_price.token);
+                                Notif notif_lister = new Notif(notif_listing, firebaseUser.getDisplayName(),"yes");
+
+                                dataref4.push().setValue(notif_lister);
                                 dataref2.push().setValue(history);
                                 dataref.child(Nft_key).setValue(nftAdd_price).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -224,6 +231,20 @@ public class DetailNftActivity extends AppCompatActivity {
                     }
                 });
 
+                dataref3.child(nft_owner.getText().toString()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()){
+                            saldo_penjual_nft = Double.parseDouble(snapshot.child("balance").getValue().toString());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                 popup_price.setText("Price : "+ nft_price.getText().toString());
 
                 harga = Double.parseDouble(nft_price.getText().toString());
@@ -247,12 +268,22 @@ public class DetailNftActivity extends AppCompatActivity {
 
                                 } else {
                                     Double saldo_akhir = saldo-harga;
+                                    Double saldo_akhir_penjual = saldo_penjual_nft+harga;
                                     swipe_buy.showResultIcon(true);
                                     String buyer = firebaseUser.getDisplayName();
                                     String aksi = "Tranfer Nft to";
                                     History history = new History(nft_owner.getText().toString(), buyer,nft_price.getText().toString(),aksi, nftAdd_buy.token);
+                                    String notif_pembeli = "You have Buy NFT "+ nft_title.getText().toString()+ " from "+nft_owner.getText().toString();
+                                    String notif_penjual = "Your NFT "+ nft_title.getText().toString() + " has been sold for "+ nft_price.getText().toString()
+                                            +" ETH to "+ firebaseUser.getDisplayName();
+                                    Notif notif = new Notif(notif_pembeli, firebaseUser.getDisplayName(),"yes");
+                                    Notif notif2 = new Notif(notif_penjual, nft_owner.getText().toString(),"yes");
+
                                     dataref2.push().setValue(history);
+                                    dataref4.push().setValue(notif);
+                                    dataref4.push().setValue(notif2);
                                     dataref3.child(firebaseUser.getDisplayName()).child("balance").setValue(saldo_akhir);
+                                    dataref3.child(nft_owner.getText().toString()).child("balance").setValue(saldo_akhir_penjual);
                                     dataref.child(Nft_key).setValue(nftAdd_buy).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void unused) {
@@ -317,6 +348,13 @@ public class DetailNftActivity extends AppCompatActivity {
         };
         adapter.startListening();
         history_recycler.setAdapter(adapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        startActivity(new Intent(getApplicationContext(),MainActivity.class));
     }
 
 //        @Override
