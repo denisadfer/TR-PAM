@@ -21,6 +21,8 @@
     <string name="mynft">NFT Saya</string>
     <string name="profile">Profil</string>
     <string name="welcome">Selamat Datang,</string>
+    <string name="topup">Top Up</string>
+    <string name="nominal">Nominal</string>
     <string name="buy">Beli</string>
     <string name="createnft">Buat NFT</string>
     <string name="newitem">Buat Item Baru</string>

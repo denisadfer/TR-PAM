@@ -35,6 +35,14 @@
                 android:text="0.001 ETH"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/topup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="@string/topup"/>
+
         </androidx.cardview.widget.CardView>
 
 

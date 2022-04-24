@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class HomeFragment extends Fragment{
     TextView TxtName, balance;
+    Button topup;
     ImageView cardImg;
     RecyclerView homeRecycler;
     private FirebaseUser firebaseUser;
@@ -46,6 +48,15 @@ public class HomeFragment extends Fragment{
         TxtName = view.findViewById(R.id.textName);
         balance = view.findViewById(R.id.home_balance);
         homeRecycler = view.findViewById(R.id.home_recycler);
+        topup = view.findViewById(R.id.topup);
+
+        topup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),TopUp.class));
+            }
+        });
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
         dataref2 = FirebaseDatabase.getInstance().getReference().child("DataUser");

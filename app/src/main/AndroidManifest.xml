@@ -24,6 +24,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".TopUp"
+            android:exported="false" />
+        <activity
             android:name=".NFTPreview"
             android:exported="false" />
         <activity
