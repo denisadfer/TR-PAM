@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,10 +71,17 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         btnLogin.setOnClickListener(view -> {
+            if (TextUtils.isEmpty(editUser.getText().toString())) {
+                editUser.setError("Please, fill the form");
+                editUser.requestFocus();
+                return;
+            } if (TextUtils.isEmpty(editPass.getText().toString())) {
+                editUser.setError("Please, fill the form");
+                editUser.requestFocus();
+                return;
+            }
             if (editUser.getText().length()>0 && editPass.getText().length()>0){
                 validlogin(editUser.getText().toString(), editPass.getText().toString());
-            }else {
-                Toast.makeText(this, "Please, fill all forms", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +31,7 @@ import com.squareup.picasso.Picasso;
 
 public class SearchFragment extends Fragment {
     SearchView searchView;
-    Button sortBtn;
+    FloatingActionButton sortBtn;
     TextView textView;
     RecyclerView searchRecycler;
     FirebaseUser firebaseUser;
@@ -141,7 +142,7 @@ public class SearchFragment extends Fragment {
                     holder.price.setText(String.valueOf(model.getPrice()));
                 } else {
                     holder.price.setText(getResources().getString(R.string.notlisted));
-                    holder.buy.setEnabled(false);
+                    holder.buy.setText("Details");
                 }
                 holder.title.setText(model.getTitle());
 

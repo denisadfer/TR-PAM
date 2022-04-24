@@ -7,7 +7,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -106,7 +108,13 @@ public class AddMynft extends AppCompatActivity {
                 int price = 0;
 
                 if (!IsImageAdded) {
-                    Toast.makeText(getApplicationContext(), "Please choose Image to create NFT", Toast.LENGTH_SHORT).show();
+                    new AlertDialog.Builder(AddMynft.this)
+                            .setTitle("Something Missing")
+                            .setMessage("Please choose Image to create NFT")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+
+                                }}).show();
                     return;
                 }
                 if (title.isEmpty()){
@@ -120,7 +128,13 @@ public class AddMynft extends AppCompatActivity {
                     return;
                 }
                 if (token.isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Please add your image", Toast.LENGTH_SHORT).show();
+                    new AlertDialog.Builder(AddMynft.this)
+                            .setTitle("Something Missing")
+                            .setMessage("Choose Image to create NFT")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+
+                                }}).show();
                     return;
                 }
                 if (IsImageAdded==true && title!=null && token!=null){
@@ -139,7 +153,13 @@ public class AddMynft extends AppCompatActivity {
                             if (!IstokenAdded){
                                 uploadImage(owner,creator,title,desc,token,price);
                             } else {
-                                Toast.makeText(getApplicationContext(), "Nft's already exist", Toast.LENGTH_SHORT).show();
+                                new AlertDialog.Builder(AddMynft.this)
+                                        .setTitle("Create NFT Failed")
+                                        .setMessage("NFT's already exist, you can't create the same content of NFT")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                            }}).show();
                             }
 //
 
@@ -235,7 +255,13 @@ public class AddMynft extends AppCompatActivity {
         if (requestCode==100 && grantResults[0]==PackageManager.PERMISSION_GRANTED) {
             select_image();
         } else {
-            Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(AddMynft.this)
+                    .setTitle("Permission Denied")
+                    .setMessage("You have to allow permission to continue")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                        }}).show();
         }
     }
 

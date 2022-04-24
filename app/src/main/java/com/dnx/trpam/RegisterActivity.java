@@ -172,7 +172,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                         }
                                                     });
                                                 }else {
-                                                    Toast.makeText(getApplicationContext(), "Register Error",
+                                                    Toast.makeText(getApplicationContext(), "Register failed, server error",
                                                             Toast.LENGTH_SHORT).show();
                                                 }
                                             }else {
@@ -196,7 +196,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
             }else {
-                Toast.makeText(this, "Your password doesn't matched", Toast.LENGTH_SHORT).show();
+                editPass.setError("Your password doesn't matched");
+                editPass.requestFocus();
             }
 
         });
