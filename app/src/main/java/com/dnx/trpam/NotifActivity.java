@@ -52,6 +52,7 @@ public class NotifActivity extends AppCompatActivity {
         dataref = FirebaseDatabase.getInstance().getReference().child("Notif");
 
         datarefq = dataref.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName());
+
         notif_recycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         notif_recycler.setHasFixedSize(true);
         LoadNotif();

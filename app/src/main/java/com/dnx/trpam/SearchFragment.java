@@ -31,7 +31,7 @@ import com.squareup.picasso.Picasso;
 
 public class SearchFragment extends Fragment {
     SearchView searchView;
-    FloatingActionButton sortBtn;
+    FloatingActionButton sortBtn, upBtn;
     TextView textView;
     RecyclerView searchRecycler;
     FirebaseUser firebaseUser;
@@ -49,6 +49,7 @@ public class SearchFragment extends Fragment {
         searchView = view.findViewById(R.id.searchView);
         textView = view.findViewById(R.id.txtSearch);
         searchRecycler = view.findViewById(R.id.search_recycler);
+        upBtn = view.findViewById(R.id.up_btn);
         sortBtn = view.findViewById(R.id.sort_btn);
         sortBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +68,7 @@ public class SearchFragment extends Fragment {
                 searchRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
                 searchRecycler.setHasFixedSize(true);
                 LoadNFT();
+
                 return false;
             }
 
@@ -75,6 +77,36 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
+        searchRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy > 0) { // scrolling down
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            upBtn.setVisibility(View.VISIBLE);
+                        }
+                    }, 100); // delay before hiding
+
+                } else if (dy < 0) { // scrolling up
+
+                    upBtn.setVisibility(View.GONE);
+                }
+            }
+
+        });
+
+        upBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//          homeRecycler.scrollToPosition(0);
+                searchRecycler.smoothScrollToPosition(0);
+
+            }
+        });
+
         return view;
     }
 

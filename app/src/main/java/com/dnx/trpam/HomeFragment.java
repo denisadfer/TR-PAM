@@ -3,6 +3,7 @@ package com.dnx.trpam;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +37,7 @@ public class HomeFragment extends Fragment{
     ImageView cardImg;
     Button topup;
     RecyclerView homeRecycler;
+    FloatingActionButton scrollup;
     private FirebaseUser firebaseUser;
     FirebaseRecyclerOptions<NftPost> nft_options;
     FirebaseRecyclerAdapter<NftPost,HomeViewHolder>adapter;
@@ -49,6 +52,7 @@ public class HomeFragment extends Fragment{
         balance = view.findViewById(R.id.home_balance);
         homeRecycler = view.findViewById(R.id.home_recycler);
         topup = view.findViewById(R.id.topup);
+        scrollup = view.findViewById(R.id.scrollup_home);
 
         topup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +63,41 @@ public class HomeFragment extends Fragment{
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
         dataref2 = FirebaseDatabase.getInstance().getReference().child("DataUser");
+
+
+        // yang baru di post nftnya atau belum dijual maka ga akan ditampilkan di list home
+        datarefQ = dataref.orderByChild("price").startAfter(0);
+
+        if (firebaseUser!= null) {
+            TxtName.setText(getResources().getString(R.string.welcome)+" "+firebaseUser.getDisplayName());
+        } else {
+            TxtName.setText("Data Name is empty");
+        }
+
+        homeRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        homeRecycler.setHasFixedSize(true);
+        LoadNFT();
+
+        homeRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+
+                if (dy > 0) { // scrolling down
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollup.setVisibility(View.VISIBLE);
+                        }
+                    }, 100); // delay hiding
+
+                } else if (dy < 0) { // scrolling up
+
+                    scrollup.setVisibility(View.GONE);
+                }
+            }
+
+        });
 
         dataref2.child(firebaseUser.getDisplayName()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -73,18 +112,15 @@ public class HomeFragment extends Fragment{
 
             }
         });
-        // yang baru di post nftnya atau belum dijual maka ga akan ditampilkan di list home
-        datarefQ = dataref.orderByChild("price").startAfter(0);
 
-        if (firebaseUser!= null) {
-            TxtName.setText(getResources().getString(R.string.welcome)+" "+firebaseUser.getDisplayName());
-        } else {
-            TxtName.setText("Data Name is empty");
-        }
+        scrollup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//          homeRecycler.scrollToPosition(0);
+                homeRecycler.smoothScrollToPosition(0);
 
-        homeRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        homeRecycler.setHasFixedSize(true);
-        LoadNFT();
+            }
+        });
 
         return view;
     }

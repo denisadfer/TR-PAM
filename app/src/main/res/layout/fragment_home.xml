@@ -44,13 +44,29 @@
                 android:text="@string/topup"/>
         </androidx.cardview.widget.CardView>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/home_recycler"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/card_home"
-            android:layout_marginBottom="30dp" />
+            android:layout_below="@+id/card_home">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/home_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollup_home"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/ic_baseline_arrow_upward_24"
+                android:layout_marginBottom="50dp"
+                android:visibility="gone"
+                android:layout_marginEnd="8dp"/>
+
+        </RelativeLayout>
+
 
     </RelativeLayout>
 </RelativeLayout>
