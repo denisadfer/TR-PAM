@@ -2,9 +2,13 @@ package com.dnx.trpam;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +39,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.text.DateFormat;
 
 import in.shadowfax.proswipebutton.ProSwipeButton;
@@ -311,12 +316,13 @@ public class DetailNftActivity extends AppCompatActivity {
         nft_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dataref.child(Nft_key).child("img").addValueEventListener(new ValueEventListener() {
+                dataref.child(Nft_key).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
-                            String img = snapshot.getValue().toString();
-                            //code to download img
+                            String img = snapshot.child("img").getValue().toString();
+                            String title = snapshot.child("title").getValue().toString();
+                            downloadImage(title, img);
                             Toast.makeText(getApplicationContext(), "Download Successfully", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -333,8 +339,8 @@ public class DetailNftActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(DetailNftActivity.this)
-                        .setTitle("Delete NFT")
-                        .setMessage("Are you sure you want to delete this NFT?")
+                        .setTitle(getResources().getString(R.string.del))
+                        .setMessage(getResources().getString(R.string.delcon))
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
@@ -347,6 +353,24 @@ public class DetailNftActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void downloadImage(String filename, String downloadUrlOfImage){
+        try{
+            DownloadManager dm = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+            Uri downloadUri = Uri.parse(downloadUrlOfImage);
+            DownloadManager.Request request = new DownloadManager.Request(downloadUri);
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE)
+                    .setAllowedOverRoaming(false)
+                    .setTitle(filename)
+                    .setMimeType("image/jpeg")
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, File.separator + filename + ".jpg");
+            dm.enqueue(request);
+            Toast.makeText(this, "Downloading...", Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(this, "Download failed", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void LoadHistory() {

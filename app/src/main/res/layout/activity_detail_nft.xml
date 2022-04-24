@@ -111,7 +111,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Edit" />
+            android:text="@string/editimg" />
         <Button
             android:id="@+id/detail_nft_delete"
             android:layout_width="0dp"
@@ -119,13 +119,13 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:text="Delete" />
+            android:text="@string/delimg" />
         <Button
             android:id="@+id/detail_nft_download"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Download" />
+            android:text="@string/download" />
     </LinearLayout>
 
 
