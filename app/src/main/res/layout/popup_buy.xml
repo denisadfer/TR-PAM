@@ -42,6 +42,10 @@
             android:layout_marginTop="10dp"
             android:layout_below="@+id/card_popup_buy"
             android:hint="Price : "
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -63,6 +67,10 @@
             android:layout_below="@+id/textinput_price2"
             android:hint="Your Balance : "
             app:errorEnabled="true"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
             >
 
             <com.google.android.material.textfield.TextInputEditText

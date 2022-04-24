@@ -51,7 +51,7 @@ import java.util.HashMap;
 public class AddMynft extends AppCompatActivity {
 
     Button btn_nft;
-    TextView owner_nft, token_nft;
+    TextView token_nft;
     EditText title_nft, desc_nft;
     ImageView img_nft;
     String token_img;
@@ -67,7 +67,6 @@ public class AddMynft extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_mynft);
 
-        owner_nft = findViewById(R.id.create_owner_nft);
         title_nft = findViewById(R.id.create_title_nft);
         desc_nft = findViewById(R.id.description_nft);
         token_nft = findViewById(R.id.create_token_nft);
@@ -80,7 +79,6 @@ public class AddMynft extends AppCompatActivity {
         storageref = FirebaseStorage.getInstance().getReference().child("Nft_images");
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        owner_nft.setText(getResources().getString(R.string.owned) + " " + firebaseUser.getDisplayName());
 
         img_nft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -291,6 +289,7 @@ public class AddMynft extends AppCompatActivity {
                 e.printStackTrace();
             }
             token_nft.setText(md5hash(token_img));
+            token_nft.setVisibility(View.VISIBLE);
 
         }
     }

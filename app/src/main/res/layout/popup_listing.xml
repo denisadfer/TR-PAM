@@ -3,7 +3,8 @@
     android:layout_width="350dp"
     android:layout_height="450dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,6 +42,10 @@
             android:layout_below="@+id/card_popup"
             android:hint="Listing Price"
             app:errorEnabled="true"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -58,10 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             app:bg_color="@color/primary"
-            app:btn_text="Swipe to Sell Nft"/>
+            app:btn_text="Swipe to Sell Nft" />
 
     </RelativeLayout>
 
