@@ -36,6 +36,7 @@
     <string name="title">Name</string>
     <string name="owner">Owner</string>
     <string name="price">Price</string>
+    <string name="notlisted">Not listed yet</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

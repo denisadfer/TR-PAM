@@ -1,13 +1,9 @@
 package com.dnx.trpam;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -20,10 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,14 +36,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
-import java.util.HashMap;
 
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
 public class DetailNftActivity extends AppCompatActivity {
 
     TextView nft_owner, nft_price, nft_token, nft_title, history_nodata;
-    Button nft_listing, nft_buy;
+    Button nft_listing, nft_buy, nft_edit, nft_delete, nft_download;
     ImageView nft_img;
     DatabaseReference dataref, dataref2, dataref3, dataref4;
     private FirebaseUser firebaseUser;
@@ -71,6 +70,9 @@ public class DetailNftActivity extends AppCompatActivity {
         nft_img = findViewById(R.id.detail_nft_img);
         nft_listing = findViewById(R.id.detail_nft_listing);
         nft_buy = findViewById(R.id.detail_nft_buy);
+        nft_edit = findViewById(R.id.detail_nft_edit);
+        nft_delete = findViewById(R.id.detail_nft_delete);
+        nft_download = findViewById(R.id.detail_nft_download);
         nft_linear = findViewById(R.id.detail_nft_linearBtn);
         history_nodata = findViewById(R.id.history_nodata);
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
@@ -136,8 +138,6 @@ public class DetailNftActivity extends AppCompatActivity {
             }
         });
 
-
-
         nft_listing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -196,6 +196,7 @@ public class DetailNftActivity extends AppCompatActivity {
                 });
             }
         });
+
         nft_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -307,6 +308,44 @@ public class DetailNftActivity extends AppCompatActivity {
             }
         });
 
+        nft_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataref.child(Nft_key).child("img").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            String img = snapshot.getValue().toString();
+                            //code to download img
+                            Toast.makeText(getApplicationContext(), "Download Successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        nft_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(DetailNftActivity.this)
+                        .setTitle("Delete NFT")
+                        .setMessage("Are you sure you want to delete this NFT?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dataref.child(Nft_key).removeValue();
+                                Toast.makeText(getApplicationContext(), "Delete Successfully", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+
+            }
+        });
 
     }
 

@@ -58,16 +58,16 @@ public class SearchFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
                 textView.setText("\"" + query + "\""+getResources().getString(R.string.notfound));
                 datarefQ = dataref.orderByChild("title").startAt(query).endAt(query + "\uf8ff");;
                 searchRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
                 searchRecycler.setHasFixedSize(true);
                 LoadNFT();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
                 return false;
             }
         });
@@ -100,12 +100,12 @@ public class SearchFragment extends Fragment {
                 searchRecycler.setHasFixedSize(true);
                 LoadNFT();
                 dialogInterface.dismiss();
+                searchView.setQuery("", false);
+                searchView.clearFocus();
             }
         });
         AlertDialog mDialog = mBuilder.create();
         mDialog.show();
-        searchView.setQuery("", false);
-        searchView.clearFocus();
     }
 
     public void LoadNFT() {
@@ -122,8 +122,12 @@ public class SearchFragment extends Fragment {
                 textView.setVisibility(View.INVISIBLE);
                 if (model.getOwner().equals(firebaseUser.getDisplayName())){
                     holder.buy.setText("Detail");
+                } if (model.getPrice() > 0){
+                    holder.price.setText(String.valueOf(model.getPrice()));
+                } else {
+                    holder.price.setText(getResources().getString(R.string.notlisted));
+                    holder.buy.setEnabled(false);
                 }
-                holder.price.setText(String.valueOf(model.getPrice()));
                 holder.title.setText(model.getTitle());
                 holder.owner.setText(model.getOwner());
 
