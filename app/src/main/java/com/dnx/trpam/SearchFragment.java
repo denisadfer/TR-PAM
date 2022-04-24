@@ -1,10 +1,13 @@
 package com.dnx.trpam;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -25,6 +28,7 @@ import com.squareup.picasso.Picasso;
 
 public class SearchFragment extends Fragment {
     SearchView searchView;
+    Button sortBtn;
     TextView textView;
     RecyclerView searchRecycler;
     FirebaseUser firebaseUser;
@@ -41,27 +45,67 @@ public class SearchFragment extends Fragment {
         searchView = view.findViewById(R.id.searchView);
         textView = view.findViewById(R.id.txtSearch);
         searchRecycler = view.findViewById(R.id.search_recycler);
+        sortBtn = view.findViewById(R.id.sort_btn);
+        sortBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showSortDialog();
+            }
+        });
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
                 textView.setText("\"" + query + "\""+getResources().getString(R.string.notfound));
                 datarefQ = dataref.orderByChild("title").startAt(query).endAt(query + "\uf8ff");;
                 searchRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
                 searchRecycler.setHasFixedSize(true);
                 LoadNFT();
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
                 return false;
             }
         });
         return view;
+    }
+
+    private void showSortDialog() {
+        final String [] listItems = {
+                getResources().getString(R.string.title),
+                getResources().getString(R.string.owner),
+                getResources().getString(R.string.price)
+        };
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
+        mBuilder.setTitle(getResources().getString(R.string.sort));
+        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch(i) {
+                    case 0:
+                        datarefQ = dataref.orderByChild("title");
+                        break;
+                    case 1:
+                        datarefQ = dataref.orderByChild("owner");
+                        break;
+                    case 2:
+                        datarefQ = dataref.orderByChild("price");
+                        break;
+                }
+                searchRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+                searchRecycler.setHasFixedSize(true);
+                LoadNFT();
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog mDialog = mBuilder.create();
+        mDialog.show();
+        searchView.setQuery("", false);
+        searchView.clearFocus();
     }
 
     public void LoadNFT() {
@@ -83,7 +127,6 @@ public class SearchFragment extends Fragment {
                 holder.title.setText(model.getTitle());
                 holder.owner.setText(model.getOwner());
 
-
                 Picasso.get().load(model.getImg()).into(holder.imageView);
                 holder.buy.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -99,7 +142,6 @@ public class SearchFragment extends Fragment {
             @NonNull
             @Override
             public HomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_home,parent,false);
                 return new HomeViewHolder(view);
             }
