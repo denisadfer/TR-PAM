@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,8 +32,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class HomeFragment extends Fragment{
     TextView TxtName, balance;
-    Button topup;
     ImageView cardImg;
+    Button topup;
     RecyclerView homeRecycler;
     private FirebaseUser firebaseUser;
     FirebaseRecyclerOptions<NftPost> nft_options;
@@ -56,7 +56,6 @@ public class HomeFragment extends Fragment{
                 startActivity(new Intent(getActivity(),TopUp.class));
             }
         });
-
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
         dataref2 = FirebaseDatabase.getInstance().getReference().child("DataUser");
@@ -107,7 +106,6 @@ public class HomeFragment extends Fragment{
                 }
 
                 holder.title.setText(model.getTitle());
-                holder.owner.setText(model.getOwner());
 
 
                 Picasso.get().load(model.getImg()).into(holder.imageView);

@@ -1,95 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
-    android:id="@+id/home_card">
+    android:id="@+id/home_card"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        >
 
         <ImageView
             android:id="@+id/home_img"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="250dp"
             android:scaleType="fitXY"
             android:src="@drawable/test"/>
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:visibility="visible"
-            android:background="#50000000">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_alignParentLeft="true"
+            android:layout_height="match_parent"
+            android:background="#40000000">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp"
-                >
+                android:alpha="0.9"
+                android:background="#E63F535D"
+                android:visibility="visible">
 
-                <TextView
-                    android:id="@+id/nft_name_home"
+                <LinearLayout
+                    android:id="@+id/linear_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:scrollHorizontally="true"
-                    android:shadowColor="#000"
-                    android:shadowRadius="7.0"
-                    android:text="NFT Name"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/nft_owner_home"
+                    <TextView
+                        android:id="@+id/nft_name_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:scrollHorizontally="true"
+                        android:shadowColor="#000"
+                        android:shadowRadius="7.0"
+                        android:text="NFT Name"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_below="@+id/linear_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:scrollHorizontally="true"
-                    android:shadowColor="#000"
-                    android:shadowRadius="7.0"
-                    android:text="NFT Owner"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:orientation="horizontal"
+                    android:alpha="0.9"
+                    android:background="@drawable/corner_bg_price_home"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    >
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/eth"/>
+                    <TextView
+                        android:id="@+id/nft_price_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.99"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:scrollHorizontally="true"
+                        android:shadowColor="#000"
+                        android:shadowRadius="7.0"
+                        android:textColor="#FFFFFF"
+                        android:textSize="20sp"
+                        android:layout_gravity="center"/>
+                </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp">
-                <TextView
-                    android:id="@+id/nft_price_home"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:scrollHorizontally="true"
-                    android:shadowColor="#000"
-                    android:shadowRadius="7.0"
-                    android:text="Price"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
-                <Button
-                    android:id="@+id/nft_buy_home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/buy"
-                    android:backgroundTint="@color/primary"/>
-            </LinearLayout>
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/corner_bg_button_home">
 
+                    <Button
+                        android:id="@+id/nft_buy_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/primary"
+                        android:text="@string/buy"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+            </RelativeLayout>
         </RelativeLayout>
+
+
     </RelativeLayout>
 
 

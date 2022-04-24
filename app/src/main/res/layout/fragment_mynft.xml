@@ -10,42 +10,49 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@color/primary">
-            <ImageView
-                android:id="@+id/notif_isnotnew"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_baseline_notifications_24"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="10dp"
-                android:visibility="visible"/>
-            <ImageView
-                android:id="@+id/notif_isnew"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_baseline_notification_important_24"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="10dp"
-                android:visibility="gone"/>
-            <Button
-                android:id="@+id/sell_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_centerInParent="true"
-                android:gravity="center_vertical"
-                android:text="@string/createnft"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:background="@drawable/bg_mynft">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#4D0B263E">
+                <ImageView
+                    android:id="@+id/notif_isnotnew"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_baseline_notifications_24"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="10dp"
+                    android:visibility="visible"/>
+                <ImageView
+                    android:id="@+id/notif_isnew"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_baseline_notification_important_24"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="10dp"
+                    android:visibility="gone"/>
+                <Button
+                    android:id="@+id/sell_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_vertical"
+                    android:text="@string/createnft"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </RelativeLayout>
+
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/mynft_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="30dp"/>
+                android:layout_marginBottom="30dp" />
             <TextView
                 android:id="@+id/mynft_nodata"
                 android:layout_width="wrap_content"

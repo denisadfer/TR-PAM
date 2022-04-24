@@ -144,7 +144,6 @@ public class SearchFragment extends Fragment {
                     holder.buy.setEnabled(false);
                 }
                 holder.title.setText(model.getTitle());
-                holder.owner.setText(model.getOwner());
 
                 Picasso.get().load(model.getImg()).into(holder.imageView);
                 holder.buy.setOnClickListener(new View.OnClickListener() {

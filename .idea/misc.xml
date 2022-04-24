@@ -10,7 +10,6 @@
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/activity_main.xml" value="0.16304347826086957" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/activity_register.xml" value="0.25" />
-        <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/activity_topup.xml" value="0.20416666666666666" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/fragment_mynft.xml" value="0.1" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
@@ -18,6 +17,8 @@
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/nft_preview.xml" value="0.1" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/menu/bottomnavigation_menu.xml" value="0.109375" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/drawable/circle_popup_img.xml" value="0.37135416666666665" />
+        <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/drawable/corner_bg.xml" value="0.37135416666666665" />
+        <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/drawable/corner_bg_button_home.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/drawable/ic_baseline_expand_more_24.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.37135416666666665" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/drawable/ic_baseline_language_24.xml" value="0.37135416666666665" />
@@ -35,6 +36,7 @@
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/activity_main.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/activity_notif.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/activity_register.xml" value="0.35520833333333335" />
+        <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/activity_top_up.xml" value="0.3546875" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/fragment_mynft.xml" value="0.35520833333333335" />
         <entry key="..\:/Users/DenJudy/Documents/TRpam/app/src/main/res/layout/fragment_profile.xml" value="0.35520833333333335" />
