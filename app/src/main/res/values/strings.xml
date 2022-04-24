@@ -22,6 +22,7 @@
     <string name="setimage">Set Image</string>
     <string name="owned">Owned By</string>
     <string name="namenft">NFT Name</string>
+    <string name="descnft">NFT Description</string>
     <string name="token">NFT Token</string>
     <string name="edit">Edit Profile</string>
     <string name="changepass">Change Password</string>

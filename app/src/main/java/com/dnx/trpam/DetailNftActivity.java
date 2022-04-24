@@ -52,7 +52,7 @@ import in.shadowfax.proswipebutton.ProSwipeButton;
 
 public class DetailNftActivity extends AppCompatActivity {
 
-    TextView nft_owner, nft_price, nft_token, nft_title, history_nodata;
+    TextView nft_owner, nft_price, nft_token, nft_title, nft_creator, nft_desc, nft_owner_fn, nft_owner_telp,history_nodata;
     Button nft_listing, nft_buy, nft_edit, nft_delete, nft_download;
     ImageView nft_img, arrow_button1, arrow_button2, arrow_button3, arrow_button4, arrow_button5;
     CardView base_card1, base_card2, base_card3, base_card4, base_card5;
@@ -76,6 +76,10 @@ public class DetailNftActivity extends AppCompatActivity {
 
         history_recycler = findViewById(R.id.detail_recycler);
         nft_owner = findViewById(R.id.detail_nft_owner);
+        nft_owner_fn = findViewById(R.id.detail_nft_owner_name);
+        nft_owner_telp = findViewById(R.id.detail_nft_owner_telp);
+        nft_creator = findViewById(R.id.detail_nft_creator);
+        nft_desc = findViewById(R.id.detail_nft_deskripsi);
         nft_price = findViewById(R.id.detail_nft_price);
         nft_token = findViewById(R.id.detail_nft_token);
         nft_title = findViewById(R.id.detail_nft_title);
@@ -118,6 +122,22 @@ public class DetailNftActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     String owner = snapshot.child("owner").getValue().toString();
+                    dataref3.child(owner).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String owner_fn = snapshot.child("name").getValue().toString();
+                            String owner_telp = snapshot.child("phone").getValue().toString();
+                            nft_owner_fn.setText(owner_fn);
+                            nft_owner_telp.setText(owner_telp);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    String creator = snapshot.child("creator").getValue().toString();
+                    String desc = snapshot.child("description").getValue().toString();
                     String title = snapshot.child("title").getValue().toString();
                     String price = snapshot.child("price").getValue().toString();
                     String token = snapshot.child("token").getValue().toString();
@@ -134,10 +154,14 @@ public class DetailNftActivity extends AppCompatActivity {
 
                     nftAdd_price.setImg(img);
                     nftAdd_price.setTitle(title);
+                    nftAdd_price.setCreator(creator);
+                    nftAdd_price.setDesc(desc);
                     nftAdd_price.setToken(token);
                     nftAdd_price.setOwner(owner);
                     nftAdd_buy.setImg(img);
                     nftAdd_buy.setTitle(title);
+                    nftAdd_buy.setCreator(creator);
+                    nftAdd_buy.setDesc(desc);
                     nftAdd_buy.setToken(token);
                     nftAdd_buy.setOwner(firebaseUser.getDisplayName());
                     nftAdd_buy.setPrice(0);
@@ -145,6 +169,8 @@ public class DetailNftActivity extends AppCompatActivity {
                     Picasso.get().load(img).into(nft_img);
                     nft_owner.setText(owner);
                     nft_title.setText(title);
+                    nft_creator.setText(creator);
+                    nft_desc.setText(desc);
                     nft_price.setText(price);
                     nft_token.setText(token);
                     if (owner.equals(firebaseUser.getDisplayName())){

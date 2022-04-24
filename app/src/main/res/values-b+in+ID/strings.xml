@@ -22,6 +22,7 @@
     <string name="setimage">Atur Gambar</string>
     <string name="owned">Dimiliki Oleh</string>
     <string name="namenft">Nama NFT</string>
+    <string name="descnft">Deskripsi NFT</string>
     <string name="token">Token NFT</string>
     <string name="edit">Ubah Profil</string>
     <string name="changepass">Ubah Kata Sandi</string>

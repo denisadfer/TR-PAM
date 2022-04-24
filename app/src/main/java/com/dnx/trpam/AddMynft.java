@@ -1,17 +1,10 @@
 package com.dnx.trpam;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,7 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -41,7 +39,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -50,7 +47,7 @@ public class AddMynft extends AppCompatActivity {
 
     Button btn_nft;
     TextView owner_nft, token_nft;
-    EditText title_nft;
+    EditText title_nft, desc_nft;
     ImageView img_nft;
     String token_img;
     DatabaseReference dataref, dataref2, dataref3;
@@ -67,6 +64,7 @@ public class AddMynft extends AppCompatActivity {
 
         owner_nft = findViewById(R.id.create_owner_nft);
         title_nft = findViewById(R.id.create_title_nft);
+        desc_nft = findViewById(R.id.description_nft);
         token_nft = findViewById(R.id.create_token_nft);
         btn_nft = findViewById(R.id.create_btn_nft);
         img_nft = findViewById(R.id.create_img_nft);
@@ -83,10 +81,10 @@ public class AddMynft extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(AddMynft.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+                        != PackageManager.PERMISSION_GRANTED) {
                     //kalau tidak di allow permission
                     ActivityCompat.requestPermissions(AddMynft.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
-                    ,100);
+                            ,100);
                 } else {
                     //kalau di allow
                     select_image();
@@ -98,7 +96,9 @@ public class AddMynft extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String owner = firebaseUser.getDisplayName();
+                String creator = owner;
                 String title = title_nft.getText().toString();
+                String desc = desc_nft.getText().toString();
                 String token = token_nft.getText().toString();
                 int price = 0;
 
@@ -109,6 +109,11 @@ public class AddMynft extends AppCompatActivity {
                 if (title.isEmpty()){
                     title_nft.setError("Please, input the title");
                     title_nft.requestFocus();
+                    return;
+                }
+                if (desc.isEmpty()){
+                    desc_nft.setError("Please, input the description");
+                    desc_nft.requestFocus();
                     return;
                 }
                 if (token.isEmpty()){
@@ -129,7 +134,7 @@ public class AddMynft extends AppCompatActivity {
                                 }
                             }
                             if (!IstokenAdded){
-                                uploadImage(owner,title,token, price);
+                                uploadImage(owner,creator,title,desc,token,price);
                             } else {
                                 Toast.makeText(getApplicationContext(), "Nft's already exist", Toast.LENGTH_SHORT).show();
                             }
@@ -152,7 +157,7 @@ public class AddMynft extends AppCompatActivity {
 
     }
 
-    private void uploadImage(String owner, String title, String token, int price) {
+    private void uploadImage(String owner, String creator, String title, String desc, String token, int price) {
 
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setTitle("Creating Nft...");
@@ -169,8 +174,10 @@ public class AddMynft extends AppCompatActivity {
                         HashMap hashMap = new HashMap();
                         hashMap.put("img",uri.toString());
                         hashMap.put("owner",owner);
+                        hashMap.put("creator",creator);
                         hashMap.put("price",price);
                         hashMap.put("title",title);
+                        hashMap.put("description",desc);
                         hashMap.put("token",token);
                         String buyer = "";
                         String aksi = "Created Nft";
