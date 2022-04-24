@@ -10,7 +10,12 @@
     <string name="register">Daftar</string>
     <string name="language">Bahasa</string>
     <string name="country">Pilih Bahasa...</string>
+    <string name="region">Indonesia</string>
     <string name="login">Masuk</string>
+    <string name="account">Belum memiliki akun?</string>
+    <string name="registernow">Daftar Sekarang</string>
+    <string name="already">Sudah memiliki akun?</string>
+    <string name="loginhere">Masuk Disini</string>
     <string name="home">Beranda</string>
     <string name="search">Cari</string>
     <string name="mynft">NFT Saya</string>

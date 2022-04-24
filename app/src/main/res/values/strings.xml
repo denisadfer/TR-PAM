@@ -10,7 +10,12 @@
     <string name="register">Register</string>
     <string name="language">Language</string>
     <string name="country">Choose Language...</string>
+    <string name="region">English (United State)</string>
     <string name="login">Login</string>
+    <string name="account">Don\'t have an account?</string>
+    <string name="registernow">Register Now</string>
+    <string name="already">Already have an account?</string>
+    <string name="loginhere">Login Here</string>
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="mynft">My NFT</string>

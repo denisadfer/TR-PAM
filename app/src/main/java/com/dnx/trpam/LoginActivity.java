@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,7 +32,8 @@ import java.util.Locale;
 public class LoginActivity extends AppCompatActivity {
 
     EditText editUser, editPass;
-    Button btnLogin, btnRegis, btnLang;
+    Button btnLogin, btnLang;
+    TextView registerNow, language;
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
 
@@ -44,9 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         editUser = findViewById(R.id.user);
         editPass = findViewById(R.id.pass);
         btnLogin = findViewById(R.id.login_btn);
-        btnRegis = findViewById(R.id.regis_btn);
-        btnLang = findViewById(R.id.changelang);
-        btnLang.setOnClickListener(new View.OnClickListener() {
+        registerNow = findViewById(R.id.registerNow);
+        language = findViewById(R.id.language);
+
+        language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showChangeLanguageDialog();
@@ -60,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Waiting for Log in");
         progressDialog.setCancelable(false);
 
-        btnRegis.setOnClickListener(view -> {
+        registerNow.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
 
         });

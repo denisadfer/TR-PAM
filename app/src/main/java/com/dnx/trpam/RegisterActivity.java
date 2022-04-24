@@ -15,6 +15,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,12 +34,12 @@ import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText editName, editUser, editPass, editPass2, editEmail, editPhone;
-    Button btnRegis, btnLang;
+    Button btnRegis;
+    TextView loginHere, language;
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
     private DatabaseReference mFirebaseDatabase;
     boolean isExist=false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,20 +54,25 @@ public class RegisterActivity extends AppCompatActivity {
         editPass = findViewById(R.id.pass1);
         editPass2 = findViewById(R.id.pass2);
         btnRegis = findViewById(R.id.regis_btn1);
-        btnLang = findViewById(R.id.changelang);
-        btnLang.setOnClickListener(new View.OnClickListener() {
+        loginHere = findViewById(R.id.loginHere);
+        language = findViewById(R.id.language);
+
+        language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showChangeLanguageDialog();
             }
         });
 
-
         mAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(RegisterActivity.this);
         progressDialog.setTitle("Loading");
         progressDialog.setMessage("Waiting for Login");
         progressDialog.setCancelable(false);
+
+        loginHere.setOnClickListener(view -> {
+            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+        });
 
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
 
