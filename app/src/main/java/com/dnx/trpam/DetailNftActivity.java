@@ -1,5 +1,25 @@
 package com.dnx.trpam;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -8,31 +28,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.media.Image;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.os.Environment;
-import android.net.Uri;
-import android.app.DownloadManager;
-import android.content.Context;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.content.DialogInterface;
-import android.app.AlertDialog;
-
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,7 +44,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.text.DateFormat;
-import java.util.HashMap;
 
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
@@ -504,6 +501,14 @@ public class DetailNftActivity extends AppCompatActivity {
             }
         });
 
+        nft_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),EditNFTActivity.class);
+                intent.putExtra("Nft_key",Nft_key);
+                startActivity(intent);
+            }
+        });
 
     }
 

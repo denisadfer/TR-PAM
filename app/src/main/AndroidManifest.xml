@@ -35,6 +35,9 @@
             android:name=".EditActivity"
             android:exported="false" />
         <activity
+            android:name=".EditNFTActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="true" />
         <activity
