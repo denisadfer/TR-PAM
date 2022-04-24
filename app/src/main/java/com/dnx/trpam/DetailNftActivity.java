@@ -119,6 +119,13 @@ public class DetailNftActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
                     String owner = snapshot.child("owner").getValue().toString();
+                    String creator = snapshot.child("creator").getValue().toString();
+                    String description = snapshot.child("description").getValue().toString();
+                    String title = snapshot.child("title").getValue().toString();
+                    String price = snapshot.child("price").getValue().toString();
+                    String token = snapshot.child("token").getValue().toString();
+                    String img = snapshot.child("img").getValue().toString();
+
                     dataref3.child(owner).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -133,12 +140,6 @@ public class DetailNftActivity extends AppCompatActivity {
 
                         }
                     });
-                    String creator = snapshot.child("creator").getValue().toString();
-                    String description = snapshot.child("description").getValue().toString();
-                    String title = snapshot.child("title").getValue().toString();
-                    String price = snapshot.child("price").getValue().toString();
-                    String token = snapshot.child("token").getValue().toString();
-                    String img = snapshot.child("img").getValue().toString();
 
                     nft_img.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -152,13 +153,13 @@ public class DetailNftActivity extends AppCompatActivity {
                     nftAdd_price.setImg(img);
                     nftAdd_price.setTitle(title);
                     nftAdd_price.setCreator(creator);
-                    nftAdd_price.setDesc(description);
+                    nftAdd_price.setDescription(description);
                     nftAdd_price.setToken(token);
                     nftAdd_price.setOwner(owner);
                     nftAdd_buy.setImg(img);
                     nftAdd_buy.setTitle(title);
                     nftAdd_buy.setCreator(creator);
-                    nftAdd_buy.setDesc(description);
+                    nftAdd_buy.setDescription(description);
                     nftAdd_buy.setToken(token);
                     nftAdd_buy.setOwner(firebaseUser.getDisplayName());
                     nftAdd_buy.setPrice(0);

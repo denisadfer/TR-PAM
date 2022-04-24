@@ -30,7 +30,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusBottomEnd="10dp">
 
-        <EditText
+            <EditText
                 android:id="@+id/fullname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

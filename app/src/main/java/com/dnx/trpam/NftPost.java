@@ -17,9 +17,11 @@ public class NftPost {
         this.creator = creator;
     }
 
-    public String getDesc() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDesc(String description) { this.description = description; }
+    public void setDescription(String description) { this.description = description; }
 
     public String getCreator() {
         return creator;
