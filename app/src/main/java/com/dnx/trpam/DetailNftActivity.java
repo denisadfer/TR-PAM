@@ -134,7 +134,7 @@ public class DetailNftActivity extends AppCompatActivity {
                         }
                     });
                     String creator = snapshot.child("creator").getValue().toString();
-                    String desc = snapshot.child("description").getValue().toString();
+                    String description = snapshot.child("description").getValue().toString();
                     String title = snapshot.child("title").getValue().toString();
                     String price = snapshot.child("price").getValue().toString();
                     String token = snapshot.child("token").getValue().toString();
@@ -152,13 +152,13 @@ public class DetailNftActivity extends AppCompatActivity {
                     nftAdd_price.setImg(img);
                     nftAdd_price.setTitle(title);
                     nftAdd_price.setCreator(creator);
-                    nftAdd_price.setDesc(desc);
+                    nftAdd_price.setDesc(description);
                     nftAdd_price.setToken(token);
                     nftAdd_price.setOwner(owner);
                     nftAdd_buy.setImg(img);
                     nftAdd_buy.setTitle(title);
                     nftAdd_buy.setCreator(creator);
-                    nftAdd_buy.setDesc(desc);
+                    nftAdd_buy.setDesc(description);
                     nftAdd_buy.setToken(token);
                     nftAdd_buy.setOwner(firebaseUser.getDisplayName());
                     nftAdd_buy.setPrice(0);
@@ -167,7 +167,7 @@ public class DetailNftActivity extends AppCompatActivity {
                     nft_owner.setText(owner);
                     nft_title.setText(title);
                     nft_creator.setText(creator);
-                    nft_desc.setText(desc);
+                    nft_desc.setText(description);
                     nft_price.setText(price);
                     nft_token.setText(token);
                     if (nft_price.getText().toString().equals("0")){

@@ -2,26 +2,24 @@ package com.dnx.trpam;
 
 public class NftPost {
 
-    public String img, token, owner, title, desc, creator;
+    public String img, token, owner, title, description, creator;
     public double price;
 
     public NftPost(){ }
 
-    public NftPost(String img, String token, String owner, String title, String desc, String creator, double price) {
+    public NftPost(String img, String token, String owner, String title, String description, String creator, double price) {
         this.img = img;
         this.token = token;
         this.owner = owner;
         this.title = title;
         this.price = price;
-        this.desc = desc;
+        this.description = description;
         this.creator = creator;
     }
 
-    public String getDesc() {
-        return desc;
-    }
+    public String getDesc() { return description; }
 
-    public void setDesc(String desc) { this.desc = desc; }
+    public void setDesc(String description) { this.description = description; }
 
     public String getCreator() {
         return creator;
