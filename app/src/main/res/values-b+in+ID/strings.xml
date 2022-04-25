@@ -50,6 +50,17 @@
     <string name="download">Unduh</string>
     <string name="del">Hapus NFT</string>
     <string name="delcon">Apakah anda yakin ingin menghapus NFT ini?</string>
+    <string name="passchangeunsuc">Perubahan Kata Sandi Gagal</string>
+    <string name="newpassunsuc">Kata sandi baru anda gagal diubah</string>
+    <string name="passchange">Kata Sandi Berubah</string>
+    <string name="passchangesuc">Kata sandi anda berhasil diubah</string>
+    <string name="passincorrect">Kata sandi salah</string>
+    <string name="enteroldpass">Masukkan kata sandi lama anda</string>
+    <string name="enternewpass">Masukkan kata sandi baru anda</string>
+    <string name="forr">&#160;untuk&#160;</string>
+    <string name="notifsold">Anda menjual NFT&#160;</string>
+    <string name="notifsell">&#160;Menjual NFT untuk&#160;</string>
+    <string name="notenoughbalance">Saldo kurang, silakan isi ulang</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

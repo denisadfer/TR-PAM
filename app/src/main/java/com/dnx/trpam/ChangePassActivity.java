@@ -53,8 +53,8 @@ public class ChangePassActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(oldPassword) && !TextUtils.isEmpty(newPassword)) {
             if(oldPassword.equals(newPassword)){
                 new AlertDialog.Builder(ChangePassActivity.this)
-                        .setTitle("Password Change Not Successfull")
-                        .setMessage("Your new password not beem changed")
+                        .setTitle(getResources().getString(R.string.passchangeunsuc))
+                        .setMessage(getResources().getString(R.string.newpassunsuc))
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -69,8 +69,8 @@ public class ChangePassActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     new AlertDialog.Builder(ChangePassActivity.this)
-                                            .setTitle("Password Changed")
-                                            .setMessage("Your password has been changed successfully")
+                                            .setTitle(getResources().getString(R.string.passchange))
+                                            .setMessage(getResources().getString(R.string.passchangesuc))
                                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog, int whichButton) {
                                                     FirebaseAuth.getInstance().signOut();
@@ -80,7 +80,7 @@ public class ChangePassActivity extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            oldPass.setError("Password is incorrect");
+                            oldPass.setError(getResources().getString(R.string.passincorrect));
                             oldPass.requestFocus();
                         }
                     }
@@ -88,10 +88,10 @@ public class ChangePassActivity extends AppCompatActivity {
             }
 
         } else if (TextUtils.isEmpty(oldPassword)){
-            oldPass.setError("Enter your old password");
+            oldPass.setError(getResources().getString(R.string.enteroldpass));
             oldPass.requestFocus();
         } else if (TextUtils.isEmpty(newPassword)){
-            newPass.setError("Enter your new password");
+            newPass.setError(getResources().getString(R.string.enternewpass));
             newPass.requestFocus();
         }
     }
