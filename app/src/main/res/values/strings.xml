@@ -41,7 +41,8 @@
     <string name="owned">Owned By</string>
     <string name="namenft">NFT Name</string>
     <string name="descnft">About NFT</string>
-    <string name="token">NFT Token</string>
+    <string name="titlenft">NFT Title</string>
+    <string name="token">NFT Token : </string>
     <string name="edit">Edit Profile</string>
     <string name="changepass">Change Password</string>
     <string name="oldpassword">Old Password</string>
@@ -72,6 +73,7 @@
     <string name="notifsold">You have sold your NFT&#160;</string>
     <string name="notifsell">&#160;Sell NFT for&#160;</string>
     <string name="notenoughbalance">Not enough balance, please topup</string>
+    <string name="editnft">Change NFT Details</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

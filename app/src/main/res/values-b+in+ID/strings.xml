@@ -41,6 +41,7 @@
     <string name="owned">Dimiliki Oleh</string>
     <string name="namenft">Nama NFT</string>
     <string name="descnft">Tentang NFT</string>
+    <string name="titlenft">Nama NFT</string>
     <string name="token">Token NFT</string>
     <string name="edit">Ubah Profil</string>
     <string name="changepass">Ubah Kata Sandi</string>
@@ -72,6 +73,7 @@
     <string name="notifsold">Anda menjual NFT&#160;</string>
     <string name="notifsell">&#160;Menjual NFT untuk&#160;</string>
     <string name="notenoughbalance">Saldo kurang, silakan isi ulang</string>
+    <string name="editnft">Ubah Detail NFT</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

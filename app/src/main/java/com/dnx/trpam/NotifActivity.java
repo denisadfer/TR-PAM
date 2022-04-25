@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,10 +36,10 @@ public class NotifActivity extends AppCompatActivity {
     RecyclerView notif_recycler;
     TextView notif_nodoata;
     FirebaseUser firebaseUser;
-    DatabaseReference dataref;
+    DatabaseReference dataref1, dataref2;
     FirebaseRecyclerOptions<Notif> nft_options;
     FirebaseRecyclerAdapter<Notif,NotifViewHolder> adapter;
-    Query datarefq;
+    Query datarefq1, datarefq2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,18 +51,29 @@ public class NotifActivity extends AppCompatActivity {
 
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        dataref = FirebaseDatabase.getInstance().getReference().child("Notif");
+        dataref1 = FirebaseDatabase.getInstance().getReference().child("Notif_ENG");
+        dataref2 = FirebaseDatabase.getInstance().getReference().child("Notif_IN");
 
-        datarefq = dataref.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName());
+        datarefq1 = dataref1.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName());
+        datarefq2 = dataref2.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName());
 
         notif_recycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         notif_recycler.setHasFixedSize(true);
-        LoadNotif();
+
+        SharedPreferences shp = getSharedPreferences(
+                "Settings", Context.MODE_PRIVATE);
+        String language = shp.getString("My_Lang","");
+
+        if (language.equals("in")){
+            LoadNotif(datarefq2);
+        } else {
+            LoadNotif(datarefq1);
+        }
 
 
     }
 
-    private void LoadNotif() {
+    private void LoadNotif(Query datarefq) {
         nft_options = new FirebaseRecyclerOptions.Builder<Notif>().setQuery(datarefq,Notif.class).build();
         adapter = new FirebaseRecyclerAdapter<Notif, NotifViewHolder>(nft_options) {
             // Add this

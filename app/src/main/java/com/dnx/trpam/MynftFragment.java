@@ -35,7 +35,7 @@ public class MynftFragment extends Fragment{
     TextView mynft_nodata;
     RecyclerView recyclerView;
     FirebaseUser firebaseUser;
-    DatabaseReference dataref, dataref2;
+    DatabaseReference dataref, dataref2a, dataref2b;
     FirebaseRecyclerOptions<NftPost> nft_options;
     FirebaseRecyclerAdapter<NftPost,MynftViewHolder> adapter;
     Query datarefQ;
@@ -54,15 +54,17 @@ public class MynftFragment extends Fragment{
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
-        dataref2 = FirebaseDatabase.getInstance().getReference().child("Notif");
+        dataref2a = FirebaseDatabase.getInstance().getReference().child("Notif_ENG");
+        dataref2b = FirebaseDatabase.getInstance().getReference().child("Notif_IN");
         datarefQ = dataref.orderByChild("owner").equalTo(firebaseUser.getDisplayName());
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         recyclerView.setHasFixedSize(true);
         LoadNFT();
 
-        dataref2.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName());
-        dataref2.addListenerForSingleValueEvent(new ValueEventListener() {
+        //cek satu reference aja karna in dan eng dibuat bersamaan
+        dataref2a.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName());
+        dataref2a.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 boolean isNotifRead=true;
@@ -88,7 +90,8 @@ public class MynftFragment extends Fragment{
                     notif_isnew.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            dataref2.addListenerForSingleValueEvent(new ValueEventListener() {
+                            //disini baru dibaca 22nya
+                            dataref2a.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()){
@@ -97,7 +100,28 @@ public class MynftFragment extends Fragment{
 
                                             if (notif.getIsNew().equals("yes")){
                                                 String key = dataSnapshot.getKey();
-                                                dataref2.child(key).child("isNew").setValue("no");
+                                                dataref2a.child(key).child("isNew").setValue("no");
+                                                startActivity(new Intent(getActivity(),NotifActivity.class));
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            dataref2b.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()){
+                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                            Notif notif = dataSnapshot.getValue(Notif.class);
+
+                                            if (notif.getIsNew().equals("yes")){
+                                                String key = dataSnapshot.getKey();
+                                                dataref2b.child(key).child("isNew").setValue("no");
                                                 startActivity(new Intent(getActivity(),NotifActivity.class));
                                             }
                                         }

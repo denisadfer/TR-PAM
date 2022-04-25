@@ -96,26 +96,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </com.google.android.material.textfield.TextInputLayout>
-            <TextView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/token"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:layout_marginBottom="10dp"
-                />
-            <TextView
-                android:id="@+id/create_token_nft"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="5"
-                android:ellipsize="end"
-                android:text="@string/token"
-                android:padding="15dp"
-                android:visibility="gone"
-                android:background="@drawable/corner_plain"
-                />
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/corner_plain"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/token"
+                        android:textSize="16sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/create_token_nft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@string/token"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
 
         </LinearLayout>
         </LinearLayout>

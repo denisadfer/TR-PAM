@@ -9,8 +9,10 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -55,7 +57,7 @@ public class AddMynft extends AppCompatActivity {
     EditText title_nft, desc_nft;
     ImageView img_nft, backnft;
     String token_img;
-    DatabaseReference dataref, dataref2, dataref3;
+    DatabaseReference dataref, dataref2a, dataref2b, dataref3a, dataref3b;
     StorageReference storageref;
     Uri imageUri;
 
@@ -75,8 +77,10 @@ public class AddMynft extends AppCompatActivity {
         backnft = findViewById(R.id.back_addnft);
 
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
-        dataref2 = FirebaseDatabase.getInstance().getReference().child("History");
-        dataref3 = FirebaseDatabase.getInstance().getReference().child("Notif");
+        dataref2a = FirebaseDatabase.getInstance().getReference().child("History_ENG");
+        dataref3a = FirebaseDatabase.getInstance().getReference().child("Notif_ENG");
+        dataref2b = FirebaseDatabase.getInstance().getReference().child("History_IN");
+        dataref3b = FirebaseDatabase.getInstance().getReference().child("Notif_IN");
         storageref = FirebaseStorage.getInstance().getReference().child("Nft_images");
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -210,8 +214,15 @@ public class AddMynft extends AppCompatActivity {
                         History history = new History(histori_note,token);
                         Notif notif = new Notif(notif_creator, owner,"yes");
 
-                        dataref3.push().setValue(notif);
-                        dataref2.push().setValue(history);
+                        String notif_creator_in = "Anda telah membuat NFT dengan nama "+ title;
+                        String histori_note_in = owner +" membuat NFT ";
+                        History history_in = new History(histori_note_in,token);
+                        Notif notif_in = new Notif(notif_creator_in, owner,"yes");
+
+                        dataref3a.push().setValue(notif);
+                        dataref2a.push().setValue(history);
+                        dataref3b.push().setValue(notif_in);
+                        dataref2b.push().setValue(history_in);
                         dataref.push().setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
@@ -293,24 +304,23 @@ public class AddMynft extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            token_nft.setText(md5hash(token_img));
+            token_nft.setText(mhash(token_img));
             token_nft.setVisibility(View.VISIBLE);
 
         }
     }
 
-    private String md5hash(String token_img) {
+    private String mhash(String token_img) {
         try {
-            // Create MD5 Hash
+
             MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
             digest.update(token_img.getBytes());
             byte messageDigest[] = digest.digest();
 
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
+            StringBuffer hexNumber = new StringBuffer();
             for (int i=0; i<messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-            return hexString.toString();
+                hexNumber.append(Integer.toHexString(0xFF & messageDigest[i]));
+            return hexNumber.toString();
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

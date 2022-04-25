@@ -94,5 +94,6 @@ public class TopUp extends AppCompatActivity {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         FirebaseDatabase.getInstance().getReference("DataUser").child(firebaseUser.getDisplayName()).child("balance").setValue(total);
+
     }
 }
