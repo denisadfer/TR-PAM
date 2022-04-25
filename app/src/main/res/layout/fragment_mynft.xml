@@ -31,14 +31,16 @@
                     android:layout_alignParentEnd="true"
                     android:layout_margin="10dp"
                     android:visibility="gone"/>
+
                 <Button
                     android:id="@+id/sell_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
                     android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical"
                     android:text="@string/createnft"
+                    android:backgroundTint="@color/primary"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
             </RelativeLayout>
 

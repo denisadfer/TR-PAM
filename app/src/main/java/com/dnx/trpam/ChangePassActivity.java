@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class ChangePassActivity extends AppCompatActivity {
     TextView txtEmail;
     EditText oldPass, newPass;
     Button saveBtn;
+    ImageView backc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class ChangePassActivity extends AppCompatActivity {
         oldPass = findViewById(R.id.old_pass);
         newPass = findViewById(R.id.new_pass);
         saveBtn = findViewById(R.id.save_btn);
+        backc = findViewById(R.id.back_cange);
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String email = firebaseUser.getEmail();
@@ -47,6 +50,10 @@ public class ChangePassActivity extends AppCompatActivity {
                 changePass(email,oldPassword,newPassword);
             }
         });
+        backc.setOnClickListener(view -> {
+            finish();
+        });
+
     }
 
     public void changePass(String email, String oldPassword, String newPassword) {

@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 public class EditActivity extends AppCompatActivity {
     EditText editName, editPass, editPhone;
     Button btnSave;
+    ImageView backe;
     private ProgressDialog progressDialog;
 
     @Override
@@ -40,6 +42,7 @@ public class EditActivity extends AppCompatActivity {
         editPhone = findViewById(R.id.phone);
         editPass = findViewById(R.id.pass1);
         btnSave = findViewById(R.id.save_btn);
+        backe = findViewById(R.id.back_edit);
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("DataUser");
@@ -71,6 +74,10 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
+
+        backe.setOnClickListener(view -> {
+            finish();
+        });
     }
 
     public void editData(String name, String userName, String phone, String pass){

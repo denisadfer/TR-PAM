@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 public class TopUp extends AppCompatActivity {
     EditText nominal;
     Button btn_topup;
+    ImageView backt;
     ProgressDialog progressDialog;
     double total;
 
@@ -35,6 +37,7 @@ public class TopUp extends AppCompatActivity {
 
         nominal = findViewById(R.id.nominal);
         btn_topup = findViewById(R.id.btn_topup);
+        backt = findViewById(R.id.back_topup);
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("DataUser");
@@ -80,6 +83,10 @@ public class TopUp extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        backt.setOnClickListener(view -> {
+            finish();
         });
     }
 

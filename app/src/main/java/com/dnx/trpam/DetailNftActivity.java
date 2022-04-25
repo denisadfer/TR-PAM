@@ -55,7 +55,7 @@ public class DetailNftActivity extends AppCompatActivity {
 
     TextView nft_owner, nft_price, nft_token, nft_title, nft_creator, nft_desc, nft_owner_fn, nft_owner_telp,history_nodata;
     Button nft_listing, nft_buy, nft_edit, nft_delete, nft_download;
-    ImageView nft_img, arrow_button1, arrow_button2, arrow_button3, arrow_button4, arrow_button5;
+    ImageView nft_img, arrow_button1, arrow_button2, arrow_button3, arrow_button4, arrow_button5, backd;
     CardView base_card1, base_card2, base_card3, base_card4, base_card5;
     DatabaseReference dataref, dataref2, dataref3, dataref4;
     private FirebaseUser firebaseUser;
@@ -108,6 +108,7 @@ public class DetailNftActivity extends AppCompatActivity {
         hidden_view3 = findViewById(R.id.hidden_view3);
         hidden_view4 = findViewById(R.id.hidden_view4);
         hidden_view5 = findViewById(R.id.hidden_view5);
+        backd = findViewById(R.id.back_detail);
 
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
         dataref2 = FirebaseDatabase.getInstance().getReference().child("History");
@@ -201,6 +202,10 @@ public class DetailNftActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+        });
+
+        backd.setOnClickListener(view -> {
+            finish();
         });
 
         //fungsi liat liat

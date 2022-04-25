@@ -53,7 +53,7 @@ public class AddMynft extends AppCompatActivity {
     Button btn_nft;
     TextView token_nft;
     EditText title_nft, desc_nft;
-    ImageView img_nft;
+    ImageView img_nft, backnft;
     String token_img;
     DatabaseReference dataref, dataref2, dataref3;
     StorageReference storageref;
@@ -72,6 +72,7 @@ public class AddMynft extends AppCompatActivity {
         token_nft = findViewById(R.id.create_token_nft);
         btn_nft = findViewById(R.id.create_btn_nft);
         img_nft = findViewById(R.id.create_img_nft);
+        backnft = findViewById(R.id.back_addnft);
 
         dataref = FirebaseDatabase.getInstance().getReference().child("Nft_Post");
         dataref2 = FirebaseDatabase.getInstance().getReference().child("History");
@@ -93,6 +94,10 @@ public class AddMynft extends AppCompatActivity {
                     select_image();
                 }
             }
+        });
+
+        backnft.setOnClickListener(view -> {
+            finish();
         });
 
         btn_nft.setOnClickListener(new View.OnClickListener() {

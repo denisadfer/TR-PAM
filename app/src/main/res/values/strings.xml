@@ -26,7 +26,7 @@
     <string name="buy">Buy</string>
     <string name="createnft">Create NFT</string>
     <string name="newitem">Create New Item</string>
-    <string name="setimage">Set Image</string>
+    <string name="setimage">Pick image : </string>
     <string name="owned">Owned By</string>
     <string name="namenft">NFT Name</string>
     <string name="descnft">About NFT</string>
