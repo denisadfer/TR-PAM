@@ -54,7 +54,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Owned By : "
+                        android:text="@string/ownedby"
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
@@ -62,7 +62,7 @@
                         android:id="@+id/detail_nft_owner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="User"
+                        android:text="@string/username"
                         android:textColor="@color/primary"
                         android:textSize="16sp"
                         android:textStyle="bold"
@@ -123,7 +123,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Price : "
+                                android:text="@string/priceeth"
                                 android:textColor="@color/primary"
                                 android:textSize="25sp"
                                 android:textStyle="bold" />
@@ -269,7 +269,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
-                                    android:text="Description"
+                                    android:text="@string/description"
                                     android:textColor="@color/primary"
                                     android:textSize="25sp"
                                     android:textStyle="bold" />
@@ -302,7 +302,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Created By "
+                                    android:text="@string/created"
                                     android:textColor="#000000"
                                     android:textSize="16sp"
                                     android:textStyle="bold"/>
@@ -311,7 +311,7 @@
                                     android:id="@+id/detail_nft_creator"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="User"
+                                    android:text="@string/username"
                                     android:textColor="@color/primary"
                                     android:textSize="16sp"
                                     android:textStyle="bold"/>
@@ -363,7 +363,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
-                                    android:text="About The NFT"
+                                    android:text="@string/about"
                                     android:textColor="@color/primary"
                                     android:textSize="25sp"
                                     android:textStyle="bold" />
@@ -449,7 +449,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
-                                    android:text="Details"
+                                    android:text="@string/details"
                                     android:textColor="@color/primary"
                                     android:textSize="25sp"
                                     android:textStyle="bold" />
@@ -483,7 +483,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Owner Full Name: "
+                                    android:text="@string/ownerfull"
                                     android:textColor="#000000"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
@@ -511,7 +511,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Contact Owner : "
+                                    android:text="@string/contactowner"
                                     android:textColor="#000000"
                                     android:textSize="16sp"
                                     android:textStyle="bold"
@@ -600,7 +600,7 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="2"
-                                    android:text="History"
+                                    android:text="@string/history"
                                     android:textColor="@color/primary"
                                     android:textSize="25sp"
                                     android:textStyle="bold" />
@@ -651,7 +651,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Buy Now"
+        android:text="@string/buynow"
         android:backgroundTint="@color/primary"
         android:visibility="visible" />
     <LinearLayout
