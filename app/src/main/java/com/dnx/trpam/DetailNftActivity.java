@@ -325,8 +325,8 @@ public class DetailNftActivity extends AppCompatActivity {
 
                                         nftAdd_price.setPrice(Double.parseDouble(popup_price.getText().toString()));
 
-                                        String notif_listing = getResources().getString(R.string.notifsold)+ nft_title.getText().toString() + getResources().getString(R.string.forr)+ popup_price.getText().toString() + " ETH";
-                                        String history_note = nftAdd_price.owner + getResources().getString(R.string.notifsell)+ popup_price.getText().toString() + " ETH";
+                                        String notif_listing = "You have sold your NFT "+ nft_title.getText().toString() + " for "+ popup_price.getText().toString() + " ETH";
+                                        String history_note = nftAdd_price.owner + " Sell NFT for "+ popup_price.getText().toString() + " ETH";
 
                                         History history = new History(history_note, nftAdd_price.token);
                                         Notif notif_lister = new Notif(notif_listing, firebaseUser.getDisplayName(),"yes");

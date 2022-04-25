@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,8 +34,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class HomeFragment extends Fragment{
-    TextView TxtName, balance;
-    ImageView cardImg;
+    TextView TxtName, balance, balance_sensor;
+    ImageView visi_saldo;
     Button topup;
     RecyclerView homeRecycler;
     FloatingActionButton scrollup;
@@ -50,9 +51,11 @@ public class HomeFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         TxtName = view.findViewById(R.id.textName);
         balance = view.findViewById(R.id.home_balance);
+        balance_sensor = view.findViewById(R.id.home_balance_sensor);
         homeRecycler = view.findViewById(R.id.home_recycler);
         topup = view.findViewById(R.id.topup);
         scrollup = view.findViewById(R.id.scrollup_home);
+        visi_saldo = view.findViewById(R.id.visi_saldo);
 
         topup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,14 +71,8 @@ public class HomeFragment extends Fragment{
         // yang baru di post nftnya atau belum dijual maka ga akan ditampilkan di list home
         datarefQ = dataref.orderByChild("price").startAfter(0);
 
-        if (firebaseUser!= null) {
-            TxtName.setText(getResources().getString(R.string.welcome)+" "+firebaseUser.getDisplayName());
-        } else {
-            TxtName.setText("Data Name is empty");
-        }
-
         homeRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        homeRecycler.setHasFixedSize(true);
+//        homeRecycler.setHasFixedSize(true);
         LoadNFT();
 
         homeRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -103,7 +100,7 @@ public class HomeFragment extends Fragment{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    balance.setText(snapshot.child("balance").getValue().toString() + " ETH");
+                    balance.setText(snapshot.child("balance").getValue().toString().trim() + " ETH");
                 }
             }
 
@@ -119,6 +116,21 @@ public class HomeFragment extends Fragment{
 //          homeRecycler.scrollToPosition(0);
                 homeRecycler.smoothScrollToPosition(0);
 
+            }
+        });
+
+        visi_saldo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (balance.getVisibility() == View.VISIBLE){
+                    balance.setVisibility(View.GONE);
+                    balance_sensor.setVisibility(View.VISIBLE);
+                    visi_saldo.setImageResource(R.drawable.ic_baseline_visibility_off_24);
+                } else {
+                    balance.setVisibility(View.VISIBLE);
+                    balance_sensor.setVisibility(View.GONE);
+                    visi_saldo.setImageResource(R.drawable.ic_baseline_visibility_24);
+                }
             }
         });
 
