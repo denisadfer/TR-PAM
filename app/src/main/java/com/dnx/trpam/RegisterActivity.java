@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -14,7 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,7 +38,6 @@ public class RegisterActivity extends AppCompatActivity {
     TextView loginHere, language;
     private ProgressDialog progressDialog, progressDialog2;
     private FirebaseAuth mAuth;
-    private DatabaseReference mFirebaseDatabase;
     boolean isExist=false;
 
     @Override
@@ -60,22 +57,15 @@ public class RegisterActivity extends AppCompatActivity {
         loginHere = findViewById(R.id.loginHere);
         language = findViewById(R.id.language);
 
-        language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showChangeLanguageDialog();
-            }
-        });
+        language.setOnClickListener(view -> showChangeLanguageDialog());
 
         mAuth = FirebaseAuth.getInstance();
         progressDialog2 = new ProgressDialog(RegisterActivity.this);
-        progressDialog2.setTitle("Loading");
-        progressDialog2.setMessage("Waiting for Login");
+        progressDialog2.setTitle(getResources().getString(R.string.loading));
+        progressDialog2.setMessage(getResources().getString(R.string.waiting));
         progressDialog2.setCancelable(false);
 
-        loginHere.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-        });
+        loginHere.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(),LoginActivity.class)));
 
         FirebaseDatabase mFirebaseInstance = FirebaseDatabase.getInstance();
 
@@ -95,37 +85,37 @@ public class RegisterActivity extends AppCompatActivity {
             String vPass2 = editPass2.getText().toString();
 
             if (vName.isEmpty()) {
-                editName.setError("Please, fill the form");
+                editName.setError(getResources().getString(R.string.fillform));
                 editName.requestFocus();
                 return;
             }
             if (vEmail.isEmpty()) {
-                editEmail.setError("Please, fill the form");
+                editEmail.setError(getResources().getString(R.string.fillform));
                 editEmail.requestFocus();
                 return;
             }
             if (!Patterns.EMAIL_ADDRESS.matcher(vEmail).matches()) {
-                editEmail.setError("Your email address doesn't correct");
+                editEmail.setError(getResources().getString(R.string.emailcorrect));
                 editEmail.requestFocus();
                 return;
             }
             if (vUser.isEmpty()) {
-                editUser.setError("Please, fill the form");
+                editUser.setError(getResources().getString(R.string.fillform));
                 editUser.requestFocus();
                 return;
             }
             if (vPhone.isEmpty()) {
-                editPhone.setError("Please, fill the form");
+                editPhone.setError(getResources().getString(R.string.fillform));
                 editPhone.requestFocus();
                 return;
             }
             if (vPass.isEmpty()) {
-                editPass.setError("Please, fill the form");
+                editPass.setError(getResources().getString(R.string.fillform));
                 editPass.requestFocus();
                 return;
             }
             if (vPass2.isEmpty()) {
-                editPass2.setError("Please, fill the form");
+                editPass2.setError(getResources().getString(R.string.fillform));
                 editPass2.requestFocus();
                 return;
             }
@@ -183,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         }
                                     });
                         } else {
-                            editUser.setError("Username's already exist!");
+                            editUser.setError(getResources().getString(R.string.alreadyexist));
                             editUser.requestFocus();
                         }
                     }
@@ -196,7 +186,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
             }else {
-                editPass.setError("Your password doesn't matched");
+                editPass.setError(getResources().getString(R.string.passwordmatch));
                 editPass.requestFocus();
             }
 
@@ -207,40 +197,33 @@ public class RegisterActivity extends AppCompatActivity {
         final String [] listItems = {"English (United States)","Indonesia"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(RegisterActivity.this);
         mBuilder.setTitle(getResources().getString(R.string.country));
-        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(i==0){
-                    setLocale("en");
-                    progressDialog = new ProgressDialog(RegisterActivity.this);
-                    progressDialog.setTitle("Change Language");
-                    progressDialog.setMessage("Please wait...");
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            progressDialog.dismiss();
-                            recreate();
-                        }
-                    }, 1000);
-                }else if(i==1){
-                    setLocale("in");
-                    progressDialog = new ProgressDialog(RegisterActivity.this);
-                    progressDialog.setTitle("Change Language");
-                    progressDialog.setMessage("Please wait...");
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            progressDialog.dismiss();
-                            recreate();
-                        }
-                    }, 1000);
-                }
-                dialogInterface.dismiss();
+        mBuilder.setSingleChoiceItems(listItems, -1, (dialogInterface, i) -> {
+            if(i==0){
+                setLocale("en");
+                progressDialog = new ProgressDialog(RegisterActivity.this);
+                progressDialog.setTitle(getResources().getString(R.string.change));
+                progressDialog.setMessage(getResources().getString(R.string.wait));
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    progressDialog.dismiss();
+                    recreate();
+                }, 1000);
+            }else if(i==1){
+                setLocale("in");
+                progressDialog = new ProgressDialog(RegisterActivity.this);
+                progressDialog.setTitle(getResources().getString(R.string.change));
+                progressDialog.setMessage(getResources().getString(R.string.wait));
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    progressDialog.dismiss();
+                    recreate();
+                }, 1000);
             }
+            dialogInterface.dismiss();
         });
         AlertDialog mDialog = mBuilder.create();
         mDialog.show();

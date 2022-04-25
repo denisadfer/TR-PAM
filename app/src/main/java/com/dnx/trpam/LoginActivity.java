@@ -6,14 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.view.View;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,15 +25,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Locale;
 
 public class LoginActivity extends AppCompatActivity {
 
     EditText editUser, editPass;
-    Button btnLogin, btnLang;
+    Button btnLogin;
     TextView registerNow, language;
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
@@ -51,32 +48,19 @@ public class LoginActivity extends AppCompatActivity {
         registerNow = findViewById(R.id.registerNow);
         language = findViewById(R.id.language);
 
-        language.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showChangeLanguageDialog();
-            }
-        });
-
+        language.setOnClickListener(view -> showChangeLanguageDialog());
 
         mAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.setTitle("Loading");
-        progressDialog.setMessage("Waiting for Log in");
-        progressDialog.setCancelable(false);
 
-        registerNow.setOnClickListener(view -> {
-            startActivity(new Intent(getApplicationContext(),RegisterActivity.class));
-
-        });
+        registerNow.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(),RegisterActivity.class)));
 
         btnLogin.setOnClickListener(view -> {
-            if (TextUtils.isEmpty(editUser.getText().toString())) {
-                editUser.setError("Please, fill the form");
+            if (!Patterns.EMAIL_ADDRESS.matcher(editUser.getText().toString()).matches()) {
+                editUser.setError(getResources().getString(R.string.emailcorrect));
                 editUser.requestFocus();
                 return;
             } if (TextUtils.isEmpty(editPass.getText().toString())) {
-                editUser.setError("Please, fill the form");
+                editUser.setError(getResources().getString(R.string.fillform));
                 editUser.requestFocus();
                 return;
             }
@@ -84,48 +68,40 @@ public class LoginActivity extends AppCompatActivity {
                 validlogin(editUser.getText().toString(), editPass.getText().toString());
             }
         });
-
     }
 
     private void showChangeLanguageDialog(){
         final String [] listItems = {"English (United States)","Indonesia"};
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(LoginActivity.this);
         mBuilder.setTitle(getResources().getString(R.string.country));
-        mBuilder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(i==0){
-                    setLocale("en");
-                    progressDialog = new ProgressDialog(LoginActivity.this);
-                    progressDialog.setTitle("Change Language");
-                    progressDialog.setMessage("Please wait...");
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            progressDialog.dismiss();
-                            recreate();
-                        }
-                    }, 1000);
-                }else if(i==1){
-                    setLocale("in");
-                    progressDialog = new ProgressDialog(LoginActivity.this);
-                    progressDialog.setTitle("Change Language");
-                    progressDialog.setMessage("Please wait...");
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            progressDialog.dismiss();
-                            recreate();
-                        }
-                    }, 1000);
+        mBuilder.setSingleChoiceItems(listItems, -1, (dialogInterface, i) -> {
+            if(i==0){
+                setLocale("en");
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setTitle(getResources().getString(R.string.change));
+                progressDialog.setMessage(getResources().getString(R.string.wait));
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    progressDialog.dismiss();
+                    recreate();
+                }, 1000);
+            }else if(i==1){
+                setLocale("in");
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setTitle(getResources().getString(R.string.change));
+                progressDialog.setMessage(getResources().getString(R.string.wait));
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    progressDialog.dismiss();
+                    recreate();
+                }, 1000);
 
-                }
-                dialogInterface.dismiss();
             }
+            dialogInterface.dismiss();
         });
         AlertDialog mDialog = mBuilder.create();
         mDialog.show();
@@ -155,37 +131,30 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful() && task.getResult()!=null){
                     if (task.getResult().getUser()!=null){
                         progressDialog = new ProgressDialog(LoginActivity.this);
-                        progressDialog.setTitle("Sign in");
-                        progressDialog.setMessage("Please wait...");
+                        progressDialog.setTitle(getResources().getString(R.string.sigin));
+                        progressDialog.setMessage(getResources().getString(R.string.wait));
                         progressDialog.setCancelable(false);
                         progressDialog.show();
                         Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            public void run() {
-                                progressDialog.dismiss();
-                                reload();
-                            }
+                        handler.postDelayed(() -> {
+                            progressDialog.dismiss();
+                            reload();
                         }, 1000);
-
                     }else {
                         Toast.makeText(getApplicationContext(), "Login failed, server error",
                                 Toast.LENGTH_SHORT).show();
-
                     }
-
                 }else{
                     if (task.getException() instanceof FirebaseAuthInvalidUserException){
-                        editUser.setError("Email not registered");
+                        editUser.setError(getResources().getString(R.string.emailregistered));
                         editUser.requestFocus();
                     } else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException){
-                        editPass.setError("Password is incorrect");
+                        editPass.setError(getResources().getString(R.string.passincorrect));
                         editPass.requestFocus();
                     }
                 }
-
             }
         });
-
     }
 
     private void reload(){
@@ -209,6 +178,5 @@ public class LoginActivity extends AppCompatActivity {
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-
     }
 }

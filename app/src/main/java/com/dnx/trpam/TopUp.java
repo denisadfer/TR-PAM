@@ -5,11 +5,9 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -47,34 +45,29 @@ public class TopUp extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
 
-                    btn_topup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            total = 0;
-                            double balance = Double.parseDouble(snapshot.child("balance").getValue().toString());
-                            double topUp = Double.parseDouble(nominal.getText().toString());
-                            total = balance + topUp;
+                    btn_topup.setOnClickListener(view -> {
+                        total = 0;
+                        double balance = Double.parseDouble(snapshot.child("balance").getValue().toString());
+                        double topUp = Double.parseDouble(nominal.getText().toString());
+                        total = balance + topUp;
 
-                            update(total);
-                            progressDialog = new ProgressDialog(TopUp.this);
-                            progressDialog.setTitle("Loading");
-                            progressDialog.setMessage("Please wait...");
-                            progressDialog.setCancelable(false);
-                            progressDialog.show();
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                public void run() {
-                                    progressDialog.dismiss();
-                                    new AlertDialog.Builder(TopUp.this)
-                                            .setTitle("Topup Successfully")
-                                            .setMessage("Your balance : "+ total + " ETH")
-                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int whichButton) {
-                                                    finish();
-                                                }}).show();
-                                }
-                            }, 1000);
-                        }
+                        update(total);
+                        progressDialog = new ProgressDialog(TopUp.this);
+                        progressDialog.setTitle(getResources().getString(R.string.loading));
+                        progressDialog.setMessage(getResources().getString(R.string.wait));
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            progressDialog.dismiss();
+                            new AlertDialog.Builder(TopUp.this)
+                                    .setTitle(getResources().getString(R.string.topupsuccess))
+                                    .setMessage(getResources().getString(R.string.welcome) + total + " ETH")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+                                            finish();
+                                        }}).show();
+                        }, 1000);
                     });
                 }
             }
@@ -85,15 +78,12 @@ public class TopUp extends AppCompatActivity {
             }
         });
 
-        backt.setOnClickListener(view -> {
-            finish();
-        });
+        backt.setOnClickListener(view -> finish());
     }
 
     private void update(double total) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         FirebaseDatabase.getInstance().getReference("DataUser").child(firebaseUser.getDisplayName()).child("balance").setValue(total);
-
     }
 }
