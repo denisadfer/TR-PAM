@@ -18,6 +18,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="350dp"
         android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/user"
         app:boxBackgroundMode="outline"
         app:boxBackgroundColor="@color/white"
         app:boxCornerRadiusTopStart="10dp"
@@ -38,6 +39,7 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        app:startIconDrawable="@drawable/key"
         app:boxBackgroundMode="outline"
         app:boxBackgroundColor="@color/white"
         app:passwordToggleEnabled="true"

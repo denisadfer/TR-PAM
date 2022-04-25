@@ -40,6 +40,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_margin="10dp"
             android:layout_below="@+id/card_popup"
+            app:startIconDrawable="@drawable/eth_24"
             android:hint="Listing Price"
             app:errorEnabled="true"
             app:boxCornerRadiusTopStart="10dp"
