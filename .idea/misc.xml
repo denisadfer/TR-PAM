@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/drawable/ic_baseline_arrow_upward_24.xml" value="0.153" />
+        <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/drawable/ic_baseline_attach_money_24.xml" value="0.153" />
+        <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.153" />
+        <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/drawable/ic_coins_amico__1_.xml" value="0.153" />
+        <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/drawable/ic_launcher_background.xml" value="0.153" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/activity_add_mynft.xml" value="0.21" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/activity_change_pass.xml" value="0.109375" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/activity_detail_nft.xml" value="0.20416666666666666" />
@@ -12,8 +17,8 @@
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/activity_topup.xml" value="0.25" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/fragment_home.xml" value="0.1" />
-        <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/fragment_mynft.xml" value="0.1" />
-        <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
+        <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/fragment_mynft.xml" value="0.18" />
+        <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/fragment_profile.xml" value="0.18" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/fragment_search.xml" value="0.33" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/layout/nft_preview.xml" value="0.1" />
         <entry key="..\:/Kuliah/Semseter 8/Pengembangan Aplikasi Mobile/TR/app/src/main/res/menu/bottomnavigation_menu.xml" value="0.109375" />

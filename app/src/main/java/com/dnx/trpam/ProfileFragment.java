@@ -24,8 +24,8 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Locale;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
-    TextView txtName,txtEmail;
-    Button btnLogout, btnEdit, btnChange, btnLang;
+    TextView txtName,txtEmail, language;
+    Button btnLogout, btnEdit, btnChange;
     private ProgressDialog progressDialog;
 
     @Nullable
@@ -38,8 +38,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         btnLogout = view.findViewById(R.id.logout_btn);
         btnEdit = view.findViewById(R.id.edit_btn);
         btnChange = view.findViewById(R.id.change_pass_btn);
-        btnLang = view.findViewById(R.id.changelang);
-        btnLang.setOnClickListener(view1 -> showChangeLanguageDialog());
+        language = view.findViewById(R.id.language);
+        language.setOnClickListener(view1 -> showChangeLanguageDialog());
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -47,8 +47,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             txtName.setText(firebaseUser.getDisplayName());
             txtEmail.setText(firebaseUser.getEmail());
         } else {
-            txtName.setText("Data Name is empty");
-            txtEmail.setText("Data Email is empty");
+            txtName.setText(getResources().getString(R.string.username));
+            txtEmail.setText(getResources().getString(R.string.email));
         }
 
         btnLogout.setOnClickListener(this);
@@ -110,7 +110,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         editor.putString("My_Lang", lang);
         editor.apply();
     }
-
 
     @Override
     public void onClick(View v) {
