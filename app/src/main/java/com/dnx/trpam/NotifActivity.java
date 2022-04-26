@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -40,6 +41,7 @@ public class NotifActivity extends AppCompatActivity {
     FirebaseRecyclerOptions<Notif> nft_options;
     FirebaseRecyclerAdapter<Notif,NotifViewHolder> adapter;
     Query datarefq1, datarefq2;
+    ImageView backn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class NotifActivity extends AppCompatActivity {
 
         notif_recycler = findViewById(R.id.notif_recycler);
         notif_nodoata = findViewById(R.id.notif_nodata);
+        backn = findViewById(R.id.back_notif);
 
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -69,6 +72,10 @@ public class NotifActivity extends AppCompatActivity {
         } else {
             LoadNotif(datarefq1);
         }
+
+        backn.setOnClickListener(view -> {
+            finish();
+        });
 
 
     }
@@ -111,7 +118,6 @@ public class NotifActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        startActivity(new Intent(getApplicationContext(),MainActivity.class));
 
     }
 

@@ -22,6 +22,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
@@ -89,6 +92,11 @@ public class RegisterActivity extends AppCompatActivity {
                 editName.requestFocus();
                 return;
             }
+            if (vUser.isEmpty()) {
+                editUser.setError(getResources().getString(R.string.fillform));
+                editUser.requestFocus();
+                return;
+            }
             if (vEmail.isEmpty()) {
                 editEmail.setError(getResources().getString(R.string.fillform));
                 editEmail.requestFocus();
@@ -99,11 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
                 editEmail.requestFocus();
                 return;
             }
-            if (vUser.isEmpty()) {
-                editUser.setError(getResources().getString(R.string.fillform));
-                editUser.requestFocus();
-                return;
-            }
+
             if (vPhone.isEmpty()) {
                 editPhone.setError(getResources().getString(R.string.fillform));
                 editPhone.requestFocus();
@@ -158,7 +162,6 @@ public class RegisterActivity extends AppCompatActivity {
                                                             mFirebaseDatabase.child("DataUser").child(vUser).setValue(inputUser);
                                                             reload();
                                                             finish();
-
                                                         }
                                                     });
                                                 }else {
@@ -166,15 +169,33 @@ public class RegisterActivity extends AppCompatActivity {
                                                             Toast.LENGTH_SHORT).show();
                                                 }
                                             }else {
-                                                Toast.makeText(getApplicationContext(), task.getException().getMessage(),
-                                                        Toast.LENGTH_SHORT).show();
+                                                if (task.getException() instanceof FirebaseAuthUserCollisionException){
+                                                    editEmail.setError(getResources().getString(R.string.emailhasadded));
+                                                    editEmail.requestFocus();
+                                                } else if(task.getException() instanceof FirebaseAuthWeakPasswordException) {
+                                                    editPass.setError(getResources().getString(R.string.passmin));
+                                                    editPass.requestFocus();
+                                                }
                                             }
                                             progressDialog2.dismiss();
                                         }
                                     });
                         } else {
-                            editUser.setError(getResources().getString(R.string.alreadyexist));
-                            editUser.requestFocus();
+                            progressDialog = new ProgressDialog(RegisterActivity.this);
+                            progressDialog.setTitle(getResources().getString(R.string.loading));
+                            progressDialog.setMessage(getResources().getString(R.string.wait));
+                            progressDialog.setCancelable(false);
+                            progressDialog.show();
+                            Handler handler = new Handler();
+                            handler.postDelayed(() -> {
+                                progressDialog.dismiss();
+                                new AlertDialog.Builder(RegisterActivity.this)
+                                        .setTitle(getResources().getString(R.string.regis))
+                                        .setMessage(getResources().getString(R.string.alreadyexist))
+                                        .setPositiveButton("OK", (dialog, whichButton) -> {
+
+                                        }).show();
+                            }, 1000);
                         }
                     }
 
@@ -186,8 +207,21 @@ public class RegisterActivity extends AppCompatActivity {
 
 
             }else {
-                editPass.setError(getResources().getString(R.string.passwordmatch));
-                editPass.requestFocus();
+                progressDialog = new ProgressDialog(RegisterActivity.this);
+                progressDialog.setTitle(getResources().getString(R.string.loading));
+                progressDialog.setMessage(getResources().getString(R.string.wait));
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    progressDialog.dismiss();
+                    new AlertDialog.Builder(RegisterActivity.this)
+                            .setTitle(getResources().getString(R.string.regis))
+                            .setMessage(getResources().getString(R.string.passwordmatch))
+                            .setPositiveButton("OK", (dialog, whichButton) -> {
+
+                            }).show();
+                }, 1000);
             }
 
         });
@@ -259,6 +293,7 @@ public class RegisterActivity extends AppCompatActivity {
             reload();
         }
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

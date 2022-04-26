@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +41,7 @@ public class SearchFragment extends Fragment {
     private ProgressDialog progressDialog;
     FirebaseRecyclerOptions<NftPost> nft_options;
     FirebaseRecyclerAdapter<NftPost,HomeViewHolder> adapter;
+    private boolean autorefresh = false;
 
     @Nullable
     @Override
@@ -135,8 +137,8 @@ public class SearchFragment extends Fragment {
                 searchRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
                 searchRecycler.setHasFixedSize(true);
                 progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setTitle("Loading");
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setTitle(getResources().getString(R.string.loading));
+                progressDialog.setMessage(getResources().getString(R.string.wait));
                 progressDialog.setCancelable(false);
                 progressDialog.show();
                 Handler handler = new Handler();
@@ -169,12 +171,12 @@ public class SearchFragment extends Fragment {
             protected void onBindViewHolder(@NonNull HomeViewHolder holder, int position, @NonNull NftPost model) {
                 textView.setVisibility(View.INVISIBLE);
                 if (model.getOwner().equals(firebaseUser.getDisplayName())){
-                    holder.buy.setText("Detail");
+                    holder.buy.setText(getResources().getString(R.string.details));
                 } if (model.getPrice() > 0){
                     holder.price.setText(String.valueOf(model.getPrice()));
                 } else {
                     holder.price.setText(getResources().getString(R.string.notlisted));
-                    holder.buy.setText("Details");
+                    holder.buy.setText(getResources().getString(R.string.details));
                 }
                 holder.title.setText(model.getTitle());
 
@@ -199,6 +201,24 @@ public class SearchFragment extends Fragment {
         };
         adapter.startListening();
         searchRecycler.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Check should we need to refresh the fragment
+        if(autorefresh){
+            // refresh fragment
+            Fragment fragment = new SearchFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fl_container,fragment).commit();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        autorefresh = true;
     }
 
 }

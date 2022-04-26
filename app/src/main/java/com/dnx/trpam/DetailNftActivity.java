@@ -57,7 +57,7 @@ import in.shadowfax.proswipebutton.ProSwipeButton;
 
 public class DetailNftActivity extends AppCompatActivity {
 
-    TextView nft_owner, nft_price, nft_token, nft_title, nft_creator, nft_desc, nft_owner_fn, nft_owner_telp,history_nodata;
+    TextView nft_owner, nft_price, nft_token, nft_title, nft_creator, nft_desc, nft_owner_fn, nft_owner_telp,history_nodata, nft_price_not;
     Button nft_listing, nft_buy, nft_edit, nft_delete, nft_download;
     ImageView nft_img, arrow_button1, arrow_button2, arrow_button3, arrow_button4, arrow_button5, backd;
     CardView base_card1, base_card2, base_card3, base_card4, base_card5;
@@ -88,6 +88,7 @@ public class DetailNftActivity extends AppCompatActivity {
         nft_creator = findViewById(R.id.detail_nft_creator);
         nft_desc = findViewById(R.id.detail_nft_deskripsi);
         nft_price = findViewById(R.id.detail_nft_price);
+        nft_price_not = findViewById(R.id.detail_nft_notlisted);
         nft_token = findViewById(R.id.detail_nft_token);
         nft_title = findViewById(R.id.detail_nft_title);
         nft_img = findViewById(R.id.detail_nft_img);
@@ -121,7 +122,7 @@ public class DetailNftActivity extends AppCompatActivity {
         dataref3 = FirebaseDatabase.getInstance().getReference().child("DataUser");
         dataref4a = FirebaseDatabase.getInstance().getReference().child("Notif_ENG");
         dataref4b = FirebaseDatabase.getInstance().getReference().child("Notif_IN");
-        storageref = FirebaseStorage.getInstance().getReference();
+
 
         NftPost nftAdd_price = new NftPost();
         NftPost nftAdd_buy = new NftPost();
@@ -164,6 +165,8 @@ public class DetailNftActivity extends AppCompatActivity {
                         }
                     });
 
+                    storageref = FirebaseStorage.getInstance().getReferenceFromUrl(img);
+
                     nftAdd_price.setImg(img);
                     nftAdd_price.setTitle(title);
                     nftAdd_price.setCreator(creator);
@@ -183,20 +186,29 @@ public class DetailNftActivity extends AppCompatActivity {
                     nft_title.setText(title);
                     nft_creator.setText(creator);
                     nft_desc.setText(description);
-                    nft_price.setText(price);
+                    if (price.equals("0")){
+                        nft_price.setText(price);
+                        nft_price_not.setVisibility(View.VISIBLE);
+                        nft_price.setVisibility(View.GONE);
+                    } else {
+                        nft_price.setText(price);
+                    }
+
                     nft_token.setText(token);
                     if (nft_price.getText().toString().equals("0")){
-                        nft_buy.setVisibility(View.GONE);
                         if (owner.equals(firebaseUser.getDisplayName())){
                             base_card1.setVisibility(View.VISIBLE);
                             nft_linear.setVisibility(View.VISIBLE);
                         }
+                    } else {
+                        if (owner.equals(firebaseUser.getDisplayName())){
+                            base_card1.setVisibility(View.VISIBLE);
+                            nft_linear.setVisibility(View.VISIBLE);
+                        } else {
+                            nft_buy.setVisibility(View.VISIBLE);
+                        }
                     }
-                    if (owner.equals(firebaseUser.getDisplayName())){
-                        base_card1.setVisibility(View.VISIBLE);
-                        nft_linear.setVisibility(View.VISIBLE);
-                        nft_buy.setVisibility(View.GONE);
-                    }
+
                     datarefQa = dataref2a.orderByChild("token").equalTo(token);
                     datarefQb = dataref2b.orderByChild("token").equalTo(token);
                     history_recycler.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -379,11 +391,11 @@ public class DetailNftActivity extends AppCompatActivity {
                                         });
                                     } else {
                                         swipe_listing.showResultIcon(false);
-                                        popup_listing_lay.setError("You can't sell NFT as a free");
+                                        popup_listing_lay.setError(getResources().getString(R.string.listing_failed));
                                     }
                                 } else {
                                     swipe_listing.showResultIcon(false);
-                                    popup_listing_lay.setError("Please, input your nft price");
+                                    popup_listing_lay.setError(getResources().getString(R.string.listing_failed2));
                                 }
 
                             }
@@ -527,11 +539,10 @@ public class DetailNftActivity extends AppCompatActivity {
                             String title = snapshot.child("title").getValue().toString();
                             downloadImage(title, img);
                             new AlertDialog.Builder(DetailNftActivity.this)
-                                    .setTitle("Download")
-                                    .setMessage("Download image successfully")
+                                    .setTitle(getResources().getString(R.string.download))
+                                    .setMessage(getResources().getString(R.string.download2))
                                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            finish();
                                         }}).show();
                         }
                     }
@@ -554,8 +565,8 @@ public class DetailNftActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int whichButton) {
 
                                 progressDialog = new ProgressDialog(DetailNftActivity.this);
-                                progressDialog.setTitle("Loading");
-                                progressDialog.setMessage("Please wait...");
+                                progressDialog.setTitle(getResources().getString(R.string.loading));
+                                progressDialog.setMessage(getResources().getString(R.string.wait));
                                 progressDialog.setCancelable(false);
                                 progressDialog.show();
                                 Handler handler = new Handler();
@@ -606,10 +617,9 @@ public class DetailNftActivity extends AppCompatActivity {
                                             }
                                         });
 
-                                        storageref.child("Nft_images/"+ Nft_key +".jpg").delete();
+                                        storageref.delete();
 
                                         finish();
-                                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
                                     }
                                 }, 2000);
 
@@ -643,7 +653,6 @@ public class DetailNftActivity extends AppCompatActivity {
                     .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                     .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, File.separator + filename + ".jpg");
             dm.enqueue(request);
-            Toast.makeText(this, "Downloading...", Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toast.makeText(this, "Download failed", Toast.LENGTH_SHORT).show();
         }
@@ -682,7 +691,6 @@ public class DetailNftActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        startActivity(new Intent(getApplicationContext(),MainActivity.class));
     }
 
 //        @Override

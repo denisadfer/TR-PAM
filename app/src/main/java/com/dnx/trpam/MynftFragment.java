@@ -1,5 +1,6 @@
 package com.dnx.trpam;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,7 +33,7 @@ import com.squareup.picasso.Picasso;
 public class MynftFragment extends Fragment{
 
     Button sell_btn;
-    ImageView notif_isnotnew, notif_isnew;
+    ImageView notif_isnotnew;
     TextView mynft_nodata;
     RecyclerView recyclerView;
     FirebaseUser firebaseUser;
@@ -40,6 +42,7 @@ public class MynftFragment extends Fragment{
     FirebaseRecyclerAdapter<NftPost,MynftViewHolder> adapter;
     Query datarefQ;
     boolean isHaveNft=false;
+    private boolean autorefresh = false;
 
     @Nullable
     @Override
@@ -49,7 +52,6 @@ public class MynftFragment extends Fragment{
         sell_btn = view.findViewById(R.id.sell_btn);
         recyclerView = view.findViewById(R.id.mynft_recycler);
         mynft_nodata = view.findViewById(R.id.mynft_nodata);
-        notif_isnew = view.findViewById(R.id.notif_isnew);
         notif_isnotnew = view.findViewById(R.id.notif_isnotnew);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -63,8 +65,7 @@ public class MynftFragment extends Fragment{
         LoadNFT();
 
         //cek satu reference aja karna in dan eng dibuat bersamaan
-        dataref2a.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName());
-        dataref2a.addListenerForSingleValueEvent(new ValueEventListener() {
+        dataref2a.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 boolean isNotifRead=true;
@@ -76,8 +77,6 @@ public class MynftFragment extends Fragment{
                     }
                 }
                 if (isNotifRead){
-                    notif_isnotnew.setVisibility(View.VISIBLE);
-                    notif_isnew.setVisibility(View.GONE);
                     notif_isnotnew.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -85,13 +84,12 @@ public class MynftFragment extends Fragment{
                         }
                     });
                 } else {
-                    notif_isnotnew.setVisibility(View.GONE);
-                    notif_isnew.setVisibility(View.VISIBLE);
-                    notif_isnew.setOnClickListener(new View.OnClickListener() {
+                    notif_isnotnew.setImageResource(R.drawable.ic_baseline_notification_important_24);
+                    notif_isnotnew.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             //disini baru dibaca 22nya
-                            dataref2a.addListenerForSingleValueEvent(new ValueEventListener() {
+                            dataref2a.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()){
@@ -101,7 +99,6 @@ public class MynftFragment extends Fragment{
                                             if (notif.getIsNew().equals("yes")){
                                                 String key = dataSnapshot.getKey();
                                                 dataref2a.child(key).child("isNew").setValue("no");
-                                                startActivity(new Intent(getActivity(),NotifActivity.class));
                                             }
                                         }
                                     }
@@ -112,7 +109,7 @@ public class MynftFragment extends Fragment{
 
                                 }
                             });
-                            dataref2b.addListenerForSingleValueEvent(new ValueEventListener() {
+                            dataref2b.orderByChild("userNotif").equalTo(firebaseUser.getDisplayName()).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()){
@@ -122,7 +119,6 @@ public class MynftFragment extends Fragment{
                                             if (notif.getIsNew().equals("yes")){
                                                 String key = dataSnapshot.getKey();
                                                 dataref2b.child(key).child("isNew").setValue("no");
-                                                startActivity(new Intent(getActivity(),NotifActivity.class));
                                             }
                                         }
                                     }
@@ -133,7 +129,7 @@ public class MynftFragment extends Fragment{
 
                                 }
                             });
-
+                            startActivity(new Intent(getActivity(),NotifActivity.class));
                         }
                     });
                 }
@@ -193,6 +189,25 @@ public class MynftFragment extends Fragment{
         adapter.startListening();
         recyclerView.setAdapter(adapter);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Check should we need to refresh the fragment
+        if(autorefresh){
+            // refresh fragment
+            Fragment fragment = new MynftFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.fl_container,fragment).commit();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        autorefresh = true;
+    }
+
 
 //    @Override
 //    public void onStart() {

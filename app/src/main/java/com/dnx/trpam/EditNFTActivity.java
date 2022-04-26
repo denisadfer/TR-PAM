@@ -50,12 +50,12 @@ public class EditNFTActivity extends AppCompatActivity {
                         String desc = descTxt.getText().toString();
                         String title = tittletxt.getText().toString();
                         if (desc.isEmpty()){
-                            descTxt.setError("Please, input the description");
+                            descTxt.setError(getResources().getString(R.string.addnft_about));
                             descTxt.requestFocus();
                             return;
                         }
                         if (title.isEmpty()){
-                            tittletxt.setError("Please, input the title");
+                            tittletxt.setError(getResources().getString(R.string.addnft_name));
                             tittletxt.requestFocus();
                             return;
                         }
@@ -83,8 +83,8 @@ public class EditNFTActivity extends AppCompatActivity {
 
         String notif_edit = "You have change NFT ("+ title + ") details";
         String history_note = firebaseUser.getDisplayName() +" has change NFT details";
-        String notif_edit_in = "Anda telah merubah rincian NFT ("+ title +")";
-        String history_note_in = firebaseUser.getDisplayName() +" telah merubah rincian NFT";
+        String notif_edit_in = "Anda telah merubah NFT ("+ title +")";
+        String history_note_in = firebaseUser.getDisplayName() +" telah merubah NFT";
 
         History history = new History(history_note, Nft_token);
         Notif notif_lister = new Notif(notif_edit, firebaseUser.getDisplayName(),"yes");
@@ -97,8 +97,8 @@ public class EditNFTActivity extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference("History_IN").push().setValue(history_in);
 
         progressDialog = new ProgressDialog(EditNFTActivity.this);
-        progressDialog.setTitle("Loading");
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setTitle(getResources().getString(R.string.loading));
+        progressDialog.setMessage(getResources().getString(R.string.wait));
         progressDialog.setCancelable(false);
         progressDialog.show();
         Handler handler = new Handler();
@@ -106,8 +106,8 @@ public class EditNFTActivity extends AppCompatActivity {
             public void run() {
                 progressDialog.dismiss();
                 new AlertDialog.Builder(EditNFTActivity.this)
-                        .setTitle("Details Changed")
-                        .setMessage("Your nft details has been changed successfully")
+                        .setTitle(getResources().getString(R.string.edit_dtl))
+                        .setMessage(getResources().getString(R.string.edit_dtl2))
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 finish();

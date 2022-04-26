@@ -60,8 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                 editUser.requestFocus();
                 return;
             } if (TextUtils.isEmpty(editPass.getText().toString())) {
-                editUser.setError(getResources().getString(R.string.fillform));
-                editUser.requestFocus();
+                editPass.setError(getResources().getString(R.string.fillform));
+                editPass.requestFocus();
                 return;
             }
             if (editUser.getText().length()>0 && editPass.getText().length()>0){
@@ -146,11 +146,37 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }else{
                     if (task.getException() instanceof FirebaseAuthInvalidUserException){
-                        editUser.setError(getResources().getString(R.string.emailregistered));
-                        editUser.requestFocus();
+                        progressDialog = new ProgressDialog(LoginActivity.this);
+                        progressDialog.setTitle(getResources().getString(R.string.loading));
+                        progressDialog.setMessage(getResources().getString(R.string.wait));
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            progressDialog.dismiss();
+                            new AlertDialog.Builder(LoginActivity.this)
+                                    .setTitle(getResources().getString(R.string.login1))
+                                    .setMessage(getResources().getString(R.string.emailregistered))
+                                    .setPositiveButton("OK", (dialog, whichButton) -> {
+
+                                    }).show();
+                        }, 1000);
                     } else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException){
-                        editPass.setError(getResources().getString(R.string.passincorrect));
-                        editPass.requestFocus();
+                        progressDialog = new ProgressDialog(LoginActivity.this);
+                        progressDialog.setTitle(getResources().getString(R.string.loading));
+                        progressDialog.setMessage(getResources().getString(R.string.wait));
+                        progressDialog.setCancelable(false);
+                        progressDialog.show();
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            progressDialog.dismiss();
+                            new AlertDialog.Builder(LoginActivity.this)
+                                    .setTitle(getResources().getString(R.string.login1))
+                                    .setMessage(getResources().getString(R.string.passincorrect))
+                                    .setPositiveButton("OK", (dialog, whichButton) -> {
+
+                                    }).show();
+                        }, 1000);
                     }
                 }
             }

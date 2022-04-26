@@ -111,6 +111,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         editor.apply();
     }
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

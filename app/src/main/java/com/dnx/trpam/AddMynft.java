@@ -19,6 +19,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -92,7 +93,7 @@ public class AddMynft extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED) {
                     //kalau tidak di allow permission
                     ActivityCompat.requestPermissions(AddMynft.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}
-                    ,100);
+                    , 100);
                 } else {
                     //kalau di allow
                     select_image();
@@ -116,8 +117,8 @@ public class AddMynft extends AppCompatActivity {
 
                 if (!IsImageAdded) {
                     new AlertDialog.Builder(AddMynft.this)
-                            .setTitle("Something Missing")
-                            .setMessage("Please choose Image to create NFT")
+                            .setTitle(getResources().getString(R.string.addnft_dialog_mis))
+                            .setMessage(getResources().getString(R.string.addnft_dialog_mis2))
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -125,19 +126,19 @@ public class AddMynft extends AppCompatActivity {
                     return;
                 }
                 if (title.isEmpty()){
-                    title_nft.setError("Please, input the title");
+                    title_nft.setError(getResources().getString(R.string.addnft_name));
                     title_nft.requestFocus();
                     return;
                 }
                 if (desc.isEmpty()){
-                    desc_nft.setError("Please, input the description");
+                    desc_nft.setError(getResources().getString(R.string.addnft_about));
                     desc_nft.requestFocus();
                     return;
                 }
                 if (token.isEmpty()){
                     new AlertDialog.Builder(AddMynft.this)
-                            .setTitle("Something Missing")
-                            .setMessage("Choose Image to create NFT")
+                            .setTitle(getResources().getString(R.string.addnft_dialog_mis))
+                            .setMessage(getResources().getString(R.string.addnft_dialog_mis))
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -161,8 +162,8 @@ public class AddMynft extends AppCompatActivity {
                                 uploadImage(owner,creator,title,desc,token,price);
                             } else {
                                 new AlertDialog.Builder(AddMynft.this)
-                                        .setTitle("Create NFT Failed")
-                                        .setMessage("NFT's already exist, you can't create the same content of NFT")
+                                        .setTitle(getResources().getString(R.string.addnft_dialog_failed))
+                                        .setMessage(getResources().getString(R.string.addnft_dialog_failed2))
                                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int whichButton) {
 
@@ -190,14 +191,13 @@ public class AddMynft extends AppCompatActivity {
     private void uploadImage(String owner, String creator, String title, String desc, String token, int price) {
 
         final ProgressDialog pd = new ProgressDialog(this);
-        pd.setTitle("Creating Nft...");
+        pd.setTitle(getResources().getString(R.string.addnft_dialog));
         pd.show();
 
         String key = dataref.push().getKey();
         storageref.child(key+".jpg").putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Snackbar.make(findViewById(android.R.id.content), "Nft Created", Snackbar.LENGTH_LONG).show();
                 storageref.child(key +".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
@@ -228,7 +228,6 @@ public class AddMynft extends AppCompatActivity {
                             public void onSuccess(Void unused) {
                                 pd.dismiss();
                                 finish();
-                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
                             }
                         });
                     }
@@ -244,7 +243,7 @@ public class AddMynft extends AppCompatActivity {
             @Override
             public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
                 double progresPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
-                pd.setMessage("Loading: "+ (int) progresPercent + "%");
+                pd.setMessage(getResources().getString(R.string.addnft_dialog2)+ (int) progresPercent + "%");
             }
         });
     }
@@ -270,13 +269,23 @@ public class AddMynft extends AppCompatActivity {
             select_image();
         } else {
             new AlertDialog.Builder(AddMynft.this)
-                    .setTitle("Permission Denied")
-                    .setMessage("You have to allow permission to continue")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    .setTitle(getResources().getString(R.string.addnft_permiss))
+                    .setMessage(getResources().getString(R.string.addnft_permiss2))
+                    .setPositiveButton(getResources().getString(R.string.oset1), new DialogInterface.OnClickListener() {
+                        @Override
                         public void onClick(DialogInterface dialog, int whichButton) {
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                    Uri.fromParts("package", getPackageName(), null));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }}).setNegativeButton(getResources().getString(R.string.oset2), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
 
-                        }}).show();
+                }
+            }).show();
         }
+
     }
 
     @Override

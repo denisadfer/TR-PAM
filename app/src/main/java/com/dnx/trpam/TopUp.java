@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,42 +41,56 @@ public class TopUp extends AppCompatActivity {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("DataUser");
 
-        databaseReference.child(firebaseUser.getDisplayName()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+        btn_topup.setOnClickListener(view -> {
+            if (TextUtils.isEmpty(nominal.getText().toString())){
+                nominal.setError(getResources().getString(R.string.topup_failed));
+                nominal.requestFocus();
+                return;
+            }
+            if (Double.parseDouble(nominal.getText().toString())>0){
+                databaseReference.child(firebaseUser.getDisplayName()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
 
-                    btn_topup.setOnClickListener(view -> {
-                        total = 0;
-                        double balance = Double.parseDouble(snapshot.child("balance").getValue().toString());
-                        double topUp = Double.parseDouble(nominal.getText().toString());
-                        total = balance + topUp;
 
-                        update(total);
-                        progressDialog = new ProgressDialog(TopUp.this);
-                        progressDialog.setTitle(getResources().getString(R.string.loading));
-                        progressDialog.setMessage(getResources().getString(R.string.wait));
-                        progressDialog.setCancelable(false);
-                        progressDialog.show();
-                        Handler handler = new Handler();
-                        handler.postDelayed(() -> {
-                            progressDialog.dismiss();
-                            new AlertDialog.Builder(TopUp.this)
-                                    .setTitle(getResources().getString(R.string.topupsuccess))
-                                    .setMessage(getResources().getString(R.string.welcome) + total + " ETH")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int whichButton) {
-                                            finish();
-                                        }}).show();
-                        }, 1000);
-                    });
-                }
+
+                            total = 0;
+                            double balance = Double.parseDouble(snapshot.child("balance").getValue().toString());
+                            double topUp = Double.parseDouble(nominal.getText().toString());
+                            total = balance + topUp;
+
+                            update(total);
+                            progressDialog = new ProgressDialog(TopUp.this);
+                            progressDialog.setTitle(getResources().getString(R.string.loading));
+                            progressDialog.setMessage(getResources().getString(R.string.wait));
+                            progressDialog.setCancelable(false);
+                            progressDialog.show();
+                            Handler handler = new Handler();
+                            handler.postDelayed(() -> {
+                                progressDialog.dismiss();
+                                new AlertDialog.Builder(TopUp.this)
+                                        .setTitle(getResources().getString(R.string.topupsuccess))
+                                        .setMessage(getResources().getString(R.string.welcome) + total + " ETH")
+                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+                                                finish();
+                                            }}).show();
+                            }, 1000);
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                nominal.setError(getResources().getString(R.string.topup_failed2));
+                nominal.requestFocus();
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
-            }
         });
 
         backt.setOnClickListener(view -> finish());

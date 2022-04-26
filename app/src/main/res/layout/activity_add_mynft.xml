@@ -36,7 +36,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/newitem"
-                android:textSize="40sp"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/black"
                 android:textStyle="bold"/>
         </LinearLayout>
 
@@ -54,6 +57,7 @@
                 android:layout_marginTop="10dp"
                 android:text="@string/setimage"
                 android:textStyle="bold"
+                android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <ImageView
@@ -112,6 +116,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/token"
                         android:textSize="16sp"
+                        android:layout_marginEnd="10dp"
                         />
 
                     <TextView

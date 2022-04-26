@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +29,7 @@ public class ChangePassActivity extends AppCompatActivity {
     EditText oldPass, newPass;
     Button saveBtn;
     ImageView backc;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,14 +78,23 @@ public class ChangePassActivity extends AppCompatActivity {
                             FirebaseAuth.getInstance().getCurrentUser().updatePassword(newPassword).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
-                                    new AlertDialog.Builder(ChangePassActivity.this)
-                                            .setTitle(getResources().getString(R.string.passchange))
-                                            .setMessage(getResources().getString(R.string.passchangesuc))
-                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int whichButton) {
-                                                    FirebaseAuth.getInstance().signOut();
-                                                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                                                }}).show();
+                                    progressDialog = new ProgressDialog(ChangePassActivity.this);
+                                    progressDialog.setTitle(getResources().getString(R.string.loading));
+                                    progressDialog.setMessage(getResources().getString(R.string.wait));
+                                    progressDialog.setCancelable(false);
+                                    progressDialog.show();
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(() -> {
+                                        progressDialog.dismiss();
+                                        new AlertDialog.Builder(ChangePassActivity.this)
+                                                .setTitle(getResources().getString(R.string.passchange))
+                                                .setMessage(getResources().getString(R.string.passchangesuc))
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                                        FirebaseAuth.getInstance().signOut();
+                                                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                                    }}).show();
+                                    }, 1000);
 
                                 }
                             });

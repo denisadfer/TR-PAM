@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/edit"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/edit"/>
 
             <Button
@@ -81,7 +81,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="70dp">
+                android:layout_marginTop="50dp">
 
                 <ImageView
                     android:id="@+id/imgLang"

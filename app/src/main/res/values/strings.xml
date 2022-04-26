@@ -19,6 +19,8 @@
     <string name="emailcorrect">Your email address doesn\'t correct</string>
     <string name="passwordmatch">Your password doesn\'t matched</string>
     <string name="emailregistered">Email not registered</string>
+    <string name="passmin">Minimum password should be at least 6 characters</string>
+    <string name="emailhasadded">Email is already in use by a different account</string>
     <string name="alreadyexist">Username\'s already exist!</string>
     <string name="signout">Sign out</string>
     <string name="enterpassword">Enter your password</string>
@@ -52,7 +54,7 @@
     <string name="information">There\'s no information</string>
     <string name="createnft">Create NFT</string>
     <string name="newitem">Create New Item</string>
-    <string name="setimage">Pick image : </string>
+    <string name="setimage">Pick Image : </string>
     <string name="owned">Owned By</string>
     <string name="namenft">NFT Name</string>
     <string name="descnft">About NFT</string>
@@ -72,13 +74,15 @@
     <string name="owner">Owner</string>
     <string name="price">Price</string>
     <string name="notlisted">Not listed yet</string>
+    <string name="listing">Listing</string>
+    <string name="listing_p">Listing Price</string>
     <string name="editimg">Edit</string>
     <string name="delimg">Delete</string>
     <string name="download">Download</string>
     <string name="del">Delete NFT</string>
     <string name="delcon">Are you sure you want to delete this NFT?</string>
-    <string name="passchangeunsuc">Password Change Not Successfull</string>
-    <string name="newpassunsuc">Your new password doesn\'t changed</string>
+    <string name="passchangeunsuc">Password Change Failed</string>
+    <string name="newpassunsuc">Please change different password</string>
     <string name="passchange">Password Changed</string>
     <string name="passchangesuc">Your password has been changed successfully</string>
     <string name="passincorrect">Password is incorrect</string>
@@ -89,6 +93,32 @@
     <string name="notifsell">&#160;Sell NFT for&#160;</string>
     <string name="notenoughbalance">Not enough balance, please topup</string>
     <string name="editnft">Change NFT Details</string>
+    <string name="addnft_name">Please, input the title</string>
+    <string name="addnft_about">Please, input the description</string>
+    <string name="addnft_dialog">Creating Nft…</string>
+    <string name="addnft_dialog2">Loading: </string>
+    <string name="addnft_dialog_mis">Something Missing</string>
+    <string name="addnft_dialog_mis2">Please choose image to create NFT</string>
+    <string name="addnft_dialog_failed">Create NFT Failed</string>
+    <string name="addnft_dialog_failed2">NFT\'s already exist, you can\'t create the same content of NFT</string>
+    <string name="addnft_permiss">Permission Denied</string>
+    <string name="addnft_permiss2">You have to allow permission to continue Go to App Settings -> Permissions -> Allowed permission App</string>
+    <string name="download2">Download image successfully</string>
+    <string name="edit_dtl">Details Changed</string>
+    <string name="edit_dtl2">Your nft details has been changed successfully</string>
+    <string name="swipe_listing">Swipe to Listing Nft</string>
+    <string name="swipe_buy">Swipe to Buy Nft</string>
+    <string name="notif">Notification</string>
+    <string name="topup_failed">Please input amount topup</string>
+    <string name="topup_failed2">Amount topup should be greater than zero</string>
+    <string name="listing_failed">You can\'t sell NFT as a free</string>
+    <string name="listing_failed2">Please, input your nft price</string>
+    <string name="exits">Please click BACK again to exit</string>
+    <string name="regis">Registration Failed</string>
+    <string name="login1">Login Failed</string>
+    <string name="oset1">Open Setting</string>
+    <string name="oset2">Cancel</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -23,14 +23,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_margin="10dp"
                     android:visibility="visible"/>
-                <ImageView
-                    android:id="@+id/notif_isnew"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_baseline_notification_important_24"
-                    android:layout_alignParentEnd="true"
-                    android:layout_margin="10dp"
-                    android:visibility="gone"/>
 
                 <Button
                     android:id="@+id/sell_btn"
@@ -38,9 +30,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/primary"
                     android:gravity="center_vertical"
                     android:text="@string/createnft"
-                    android:backgroundTint="@color/primary"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
             </RelativeLayout>
 
