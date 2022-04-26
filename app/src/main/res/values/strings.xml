@@ -52,6 +52,7 @@
     <string name="ownerfull">Owner Full Name : </string>
     <string name="contactowner">Contact Owner : </string>
     <string name="information">There\'s no information</string>
+    <string name="nohistory">No History</string>
     <string name="createnft">Create NFT</string>
     <string name="newitem">Create New Item</string>
     <string name="setimage">Pick Image : </string>

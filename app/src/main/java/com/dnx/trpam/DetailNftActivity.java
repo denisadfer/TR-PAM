@@ -428,7 +428,7 @@ public class DetailNftActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.exists()){
-                            popup_balance.setText("Your Balance : " + snapshot.child("balance").getValue().toString() + " ETH");
+                            popup_balance.setText(getResources().getString(R.string.welcome) + snapshot.child("balance").getValue().toString() + " ETH");
                             saldo = Double.parseDouble(snapshot.child("balance").getValue().toString());
                         }
                     }
@@ -453,7 +453,7 @@ public class DetailNftActivity extends AppCompatActivity {
                     }
                 });
 
-                popup_price.setText("Price : "+ nft_price.getText().toString());
+                popup_price.setText(getResources().getString(R.string.priceeth)+ nft_price.getText().toString());
 
                 harga = Double.parseDouble(nft_price.getText().toString());
 

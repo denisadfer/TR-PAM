@@ -48,13 +48,10 @@ public class TopUp extends AppCompatActivity {
                 return;
             }
             if (Double.parseDouble(nominal.getText().toString())>0){
-                databaseReference.child(firebaseUser.getDisplayName()).addValueEventListener(new ValueEventListener() {
+                databaseReference.child(firebaseUser.getDisplayName()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
-
-
-
                             total = 0;
                             double balance = Double.parseDouble(snapshot.child("balance").getValue().toString());
                             double topUp = Double.parseDouble(nominal.getText().toString());

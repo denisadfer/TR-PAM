@@ -52,9 +52,10 @@
     <string name="ownerfull">Nama Lengkap Pemilik : </string>
     <string name="contactowner">Kontak Pemilik : </string>
     <string name="information">Tidak ada informasi</string>
+    <string name="nohistory">Tidak Ada Riwayat</string>
     <string name="createnft">Buat NFT</string>
     <string name="newitem">Buat Item Baru</string>
-    <string name="setimage">Atur image : </string>
+    <string name="setimage">Atur Gambar : </string>
     <string name="owned">Dimiliki Oleh</string>
     <string name="namenft">Nama NFT</string>
     <string name="descnft">Tentang NFT</string>
