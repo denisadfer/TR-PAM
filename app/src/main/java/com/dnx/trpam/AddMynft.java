@@ -294,7 +294,6 @@ public class AddMynft extends AppCompatActivity {
         if (requestCode==100 && resultCode==RESULT_OK && data!=null){
             imageUri = data.getData();
             IsImageAdded = true;
-//            Glide.with(this).load(imageUri).into(img_nft);
             img_nft.setImageURI(imageUri);
 
             try {

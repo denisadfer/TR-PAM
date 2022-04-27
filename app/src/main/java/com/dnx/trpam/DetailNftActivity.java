@@ -58,7 +58,7 @@ import in.shadowfax.proswipebutton.ProSwipeButton;
 public class DetailNftActivity extends AppCompatActivity {
 
     TextView nft_owner, nft_price, nft_token, nft_title, nft_creator, nft_desc, nft_owner_fn, nft_owner_telp,history_nodata, nft_price_not;
-    Button nft_listing, nft_buy, nft_edit, nft_delete, nft_download;
+    Button nft_listing, nft_buy, nft_edit, nft_delete, nft_download, nft_unlisting;
     ImageView nft_img, arrow_button1, arrow_button2, arrow_button3, arrow_button4, arrow_button5, backd;
     CardView base_card1, base_card2, base_card3, base_card4, base_card5;
     DatabaseReference dataref, dataref2a, dataref3, dataref4a, dataref2b, dataref4b;
@@ -93,6 +93,7 @@ public class DetailNftActivity extends AppCompatActivity {
         nft_title = findViewById(R.id.detail_nft_title);
         nft_img = findViewById(R.id.detail_nft_img);
         nft_listing = findViewById(R.id.detail_nft_listing);
+        nft_unlisting = findViewById(R.id.detail_nft_unlisting);
         nft_buy = findViewById(R.id.detail_nft_buy);
         nft_edit = findViewById(R.id.detail_nft_edit);
         nft_delete = findViewById(R.id.detail_nft_delete);
@@ -404,6 +405,51 @@ public class DetailNftActivity extends AppCompatActivity {
                 });
             }
         });
+        nft_unlisting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(DetailNftActivity.this)
+                        .setTitle(getResources().getString(R.string.unlis))
+                        .setMessage(getResources().getString(R.string.unlis2))
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                progressDialog = new ProgressDialog(DetailNftActivity.this);
+                                progressDialog.setTitle(getResources().getString(R.string.loading));
+                                progressDialog.setMessage(getResources().getString(R.string.wait));
+                                progressDialog.setCancelable(false);
+                                progressDialog.show();
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    public void run() {
+                                        progressDialog.dismiss();
+                                        String notif_unl = "You has unlist NFT ("+ nft_title.getText().toString() +")";
+                                        String notif_unl_in = "Anda telah membatalkan penjualan NFT ("+ nft_title.getText().toString() + ")";
+                                        String history_note = nftAdd_price.owner + " has unlisted NFT";
+                                        String history_note_in = nftAdd_price.owner + " telah membatalkan penjualan NFT";
+
+                                        Notif notif_lister = new Notif(notif_unl, firebaseUser.getDisplayName(),"yes");
+                                        Notif notif_lister_in = new Notif(notif_unl_in, firebaseUser.getDisplayName(),"yes");
+                                        History history = new History(history_note, nftAdd_price.token);
+                                        History history_in = new History(history_note_in, nftAdd_price.token);
+
+                                        dataref4a.push().setValue(notif_lister);
+                                        dataref4b.push().setValue(notif_lister_in);
+                                        dataref2a.push().setValue(history);
+                                        dataref2b.push().setValue(history_in);
+                                        dataref.child(Nft_key).child("price").setValue(0);
+
+                                        finish();
+                                        startActivity(getIntent());
+                                    }
+                                }, 2000);
+
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+
+
+            }
+        });
         nft_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -628,7 +674,6 @@ public class DetailNftActivity extends AppCompatActivity {
 
             }
         });
-
         nft_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

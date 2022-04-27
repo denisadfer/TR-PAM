@@ -76,12 +76,15 @@
     <string name="price">Price</string>
     <string name="notlisted">Not listed yet</string>
     <string name="listing">Listing</string>
+    <string name="listing2">Unlisting</string>
     <string name="listing_p">Listing Price</string>
     <string name="editimg">Edit</string>
     <string name="delimg">Delete</string>
     <string name="download">Download</string>
     <string name="del">Delete NFT</string>
+    <string name="unlis">Unlisting NFT</string>
     <string name="delcon">Are you sure you want to delete this NFT?</string>
+    <string name="unlis2">Are you sure to unlist this NFT?</string>
     <string name="passchangeunsuc">Password Change Failed</string>
     <string name="newpassunsuc">Please change different password</string>
     <string name="passchange">Password Changed</string>
