@@ -125,6 +125,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 handler.postDelayed(() -> {
                     progressDialog.dismiss();
                     FirebaseAuth.getInstance().signOut();
+                    getActivity().finish();
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }, 1000);
                 break;
