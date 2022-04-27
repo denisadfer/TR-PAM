@@ -257,7 +257,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/listing2"
                                     android:backgroundTint="@color/danger"
-                                    android:visibility="visible" />
+                                    android:visibility="gone" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

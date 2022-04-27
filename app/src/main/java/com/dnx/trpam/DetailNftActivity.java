@@ -205,6 +205,7 @@ public class DetailNftActivity extends AppCompatActivity {
                         if (owner.equals(firebaseUser.getDisplayName())){
                             base_card1.setVisibility(View.VISIBLE);
                             nft_linear.setVisibility(View.VISIBLE);
+                            nft_unlisting.setVisibility(View.VISIBLE);
                         } else {
                             nft_buy.setVisibility(View.VISIBLE);
                         }
